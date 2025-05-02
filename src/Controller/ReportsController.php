@@ -17,8 +17,7 @@ class ReportsController extends AppController
      */
     public function index()
     {
-        $query = $this->Reports->find()
-            ->contain(['Users']);
+        $query = $this->Reports->find();
         $reports = $this->paginate($query);
 
         $this->set(compact('reports'));

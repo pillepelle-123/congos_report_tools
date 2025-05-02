@@ -28,6 +28,7 @@ use Cake\Controller\Controller;
  */
 class AppController extends Controller
 {
+    protected $identity;
     /**
      * Initialization hook method.
      *
@@ -42,12 +43,9 @@ class AppController extends Controller
         parent::initialize();
 
         $this->loadComponent('Flash');
+        $this->viewBuilder()->setHelpers(helpers: ['Authentication.Identity']); // wichtig für Views!
 
-        /*
-         * Enable the following component for recommended CakePHP form protection settings.
-         * see https://book.cakephp.org/5/en/controllers/components/form-protection.html
-         */
-        //$this->loadComponent('FormProtection');
+        $this->identity = $this->request->getAttribute('identity');
     }
-    
+
 }

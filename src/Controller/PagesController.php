@@ -31,6 +31,15 @@ use Cake\View\Exception\MissingTemplateException;
  */
 class PagesController extends AppController
 {
+    protected $Reports;
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->Reports = $this->fetchTable('Reports');
+
+
+    }
     /**
      * Displays a view
      *
@@ -44,7 +53,21 @@ class PagesController extends AppController
      * @throws \Cake\View\Exception\MissingTemplateException In debug mode.
      */
     public function display(string ...$path): ?Response
+
+    //$identity = $this->request->getAttribute('identity');
     {
+        // $this->viewBuilder()->setHelpers(['Breadcrumbs.Breadcrumbs']);
+        //$this->Breadcrumbs->add('Home', '/');
+
+        $reports = $this->Reports->find()
+            ->where(['user_id' => $this->identity->get('id')])
+            ->order(['modified' => 'DESC']);
+            //->all();
+        ;
+        // Inhalte an Templates übergeben
+        //$this->set(compact('user', 'reports')); /alte Variante, klappt aber nicht direkt mit $this->user
+        //$this->set(['user' => $this->user, 'reports' => $reports]);
+
         if (!$path) {
             return $this->redirect('/');
         }
@@ -59,7 +82,8 @@ class PagesController extends AppController
         if (!empty($path[1])) {
             $subpage = $path[1];
         }
-        $this->set(compact('page', 'subpage'));
+        $this->set(compact('page', 'subpage', 'reports'));
+        $this->set('title', ucfirst($page));
 
         try {
             return $this->render(implode('/', $path));
@@ -70,4 +94,5 @@ class PagesController extends AppController
             throw new NotFoundException();
         }
     }
+
 }

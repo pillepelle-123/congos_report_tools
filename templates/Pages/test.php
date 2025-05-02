@@ -1,8 +1,3 @@
-<?php
-$this->loadHelper('Authentication.Identity');
-
-?>
-
 <h1>Hallo</h1>
 
 <?php
