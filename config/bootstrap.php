@@ -82,6 +82,8 @@ require CAKE . 'functions.php';
 try {
     Configure::config('default', new PhpConfig());
     Configure::load('app', 'default', false);
+    Configure::write('Users.config', ['users']);
+
 } catch (\Exception $e) {
     exit($e->getMessage() . "\n");
 }
