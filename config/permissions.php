@@ -57,7 +57,7 @@ return [
             'plugin' => 'CakeDC/Users',
             'controller' => 'Users',
             'action' => [
-                // LoginTrait
+                // LoginTrait,
                 'socialLogin',
                 'login',
                 'logout',

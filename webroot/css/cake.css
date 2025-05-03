@@ -1,9 +1,56 @@
 /* Milligram overrides */
 :root {
+    /* CRT Colors grün */
+    --color-crt-waldgrün: #3a4b55;
+    --color-crt-wiesengrün: #59788a;
+    --color-crt-dunkelgrün: #1a3843;
+    --color-crt-hellgrün: #a6bbbe;
+    --color-crt-minze: #8ea6aa;
+    --color-crt-super-hellgrün: #e0ddd8;
+
+    /* CRT Colors blau */  
+    --color-crt-blau-stufe-1: #e5ecf4;
+    --color-crt-blau-stufe-2: #c4d1e0;
+    --color-crt-blau-stufe-3: #a2b7cc;
+    --color-crt-blau-stufe-4: #80a3b8;
+    --color-crt-blau-stufe-5: #5e8fb4;
+    --color-crt-blau-stufe-6: #3c7ba0;
+    --color-crt-blau-stufe-7: #1a669c;
+    --color-crt-blau-stufe-8: #005f8c;
+    --color-crt-blau-stufe-9: #005881;
+    --color-crt-blau-stufe-10: #004e72;
+    --color-crt-blau-stufe-11: #003a53;
+    --color-crt-blau-stufe-12: #002a3c;
+
+    /* CRT Colors grau */
+    --color-crt-grau-stufe-1: #f5f5f5;
+    --color-crt-grau-stufe-2: #d9d9d9;
+    --color-crt-grau-stufe-3: #b2b2b2;
+    --color-crt-grau-stufe-4: #8c8c8c;
+    --color-crt-grau-stufe-5: #666666;
+    --color-crt-grau-stufe-6: #404040;
+    --color-crt-grau-stufe-7: #292929;
+    --color-crt-grau-stufe-8: #222222;
+    --color-crt-grau-stufe-9: #1a1a1a;
+    --color-crt-grau-stufe-10: #000000;
+
+    --color-crt-rot-stufe-1: #fce4e4;
+    --color-crt-rot-stufe-2: #f8d7da;
+    --color-crt-rot-stufe-3: #f5c6cb;
+    --color-crt-rot-stufe-4: #f1b0b7;
+    --color-crt-rot-stufe-5: #ec7a82;
+    --color-crt-rot-stufe-6: #e63946;
+    --color-crt-rot-stufe-7: #d62839;
+    --color-crt-rot-stufe-8: #9d0208;
+    --color-crt-rot-stufe-9: #720026;
+    --color-crt-rot-stufe-10: #4a0000;
+    --color-crt-rot-stufe-11: #3b0a45;
+    --color-crt-rot-stufe-12: #3b0a45;
+
     /* The following are official CakePHP colors */
-    --color-cakephp-red: #d33c43;
+    --color-cakephp-red: #442858;
     --color-cakephp-gray: #404041;
-    --color-cakephp-blue: #2f85ae;
+    --color-cakephp-blue: #1b273d;
     --color-cakephp-lightblue: #34bdd7;
 
     /* These are additional colors */
@@ -13,7 +60,7 @@
     --color-main-bg: #f5f7fa;
     --color-links: var(--color-cakephp-blue);
     --color-links-active: #2a6496;
-    --color-headings: #363637;
+    --color-headings: #1b273d;
 
     --color-message-success-bg: #e3fcec;
     --color-message-success-text: #1f9d55;
@@ -33,52 +80,259 @@
 }
 
 .button, button, input[type='button'], input[type='reset'], input[type='submit'] {
-    background-color: var(--color-cakephp-red);
-    border-color: var(--color-cakephp-red);
+    background-color: var(--color-crt-blau-stufe-4);
+    border: none;
 }
+
 
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 400;
-    background: var(--color-main-bg);
+    background: var(--color-crt-grau-stufe-1);
+    color: var(--color-crt-grau-stufe-7);
 }
 
-.top-nav-links,
+
 .side-nav,
 h1, h2, h3, h4, h5, h6 {
     font-family: "Raleway", sans-serif;
+    font-weight: 400;
+    color: var(--color-crt-grau-stufe-7);
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 400;
-    color: var(--color-headings);
+h1, h4, h5, h6 {
+    font-size: 3.6rem;
 }
+
+h2 {
+    font-size: 3.0rem;
+}
+h3 {
+    font-size: 2.4rem;
+}
+
+
+
+/* Tabellen */
+td, th {
+    border: none;
+    /* border-bottom: 0.1rem solid var(--color-cakephp-blue); */
+    padding: 1.2rem 0.15rem;
+    line-break: anywhere;
+}
+
+th {
+    border-bottom: 0.4rem solid var(--color-crt-blau-stufe-4);
+}
+
+tr:nth-child(even) {
+    background-color: var(--color-white);
+ }
+ 
+/* Links and Buttons */
 
 a {
     color: var(--color-links);
-    transition: color 0.2s linear;
 }
 
 a:hover,
 a:focus,
 a:active {
     color: var(--color-links-active);
-    transition: color 0.2s ease-out;
 }
+
+button a:hover,
+button a:focus {
+    color: var(--color-white);
+}
+
+.action-button-img {
+    cursor: pointer;
+}
+
+.action-button-img:hover {
+    transform: scale(1.2);
+    transition: transform .2s linear;
+}
+
+.button:focus,.button:hover,button:focus,button:hover,input[type='button']:focus,input[type='button']:hover,input[type='reset']:focus,input[type='reset']:hover,input[type='submit']:focus,input[type='submit']:hover{
+    background-color: var(--color-crt-blau-stufe-12);
+    border: none;
+    color: var(--color-white);
+    transition: background .4s,color .4s;
+}
+
+.button-delete-cancel,
+.button-delete-confirm {
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+    border-radius: .4rem;
+}
+
+.button-delete-cancel {
+    background-color: var(--color-crt-blau-stufe-4);
+    transition: background .4s,color .4s;
+}
+
+.button-delete-cancel:hover {
+    background-color: var(--color-crt-blau-stufe-12);
+    transition: background .4s,color .4s;
+}
+
+.button-delete-confirm {
+    background-color: var(--color-crt-rot-stufe-7);
+    transition: background .4s,color .4s;
+}
+
+.button-delete-confirm:hover {
+    background-color: var(--color-crt-rot-stufe-8);
+    transition: background .4s,color .4s;
+}
+
+
+
+input::file-selector-button {
+    background-color: var(--color-crt-blau-stufe-4);
+    height: 38px;
+    font-family: inherit;
+    color: var(--color-white);
+    padding: 0px 30px;
+    border: none;
+    border-radius: 3px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: .1rem;
+    text-transform: uppercase;
+  }
+
+  input::file-selector-button:hover {
+    background-color: var(--color-crt-blau-stufe-12);
+    height: 38px;
+    font-family: inherit;
+    color: var(--color-white);
+    padding: 0px 30px;
+    border: none;
+    border-radius: 3px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: .1rem;
+    text-transform: uppercase;
+    transition: background .4s,color .4s;
+  }
+
+pre {
+    width: 100%;
+    background: var(--color-white);
+    padding: 1rem;
+    border-radius: 0.4rem;
+    overflow-x: auto;
+    font-size: 1.4rem;
+    line-height: 2.0rem;
+    line-break: anywhere;
+    word-break: break-all; 
+    white-space:pre-wrap
+}
+
+/* Nav bar */
+.top-nav-container {
+    display: block;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 112rem;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1rem;
+    margin: 0 auto;
+    background-color: var(--color-crt-blau-stufe-12);
+    color: var(--color-white);
+    box-shadow: 0 5px 3px -2px var(--color-crt-grau-stufe-8);
+}
+.top-nav-title {
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    flex: 1 1 auto;
+}
+
+.top-nav-title img {
+    margin: 11px 0px 0px 10px;
+}
+
+
+.top-nav-title a {
+    font-size: 2.4rem;
+    color: var(--color-white);
+}
+.top-nav-title span {
+    color: var(--color-crt-blau-stufe-4);
+}
+.top-nav-links a {
+    margin: 0 0.5rem;
+    color: var(--color-white);
+}
+.top-nav-title a,
+.top-nav-links a {
+    font-weight: bold;
+}
+.side-nav-item {
+    display: block;
+    padding: 0.5rem 0;
+}
+
+.avatar-circle {
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    display: inline-block;
+    vertical-align: middle;
+}
+.breadcrumb {
+    display: flex;
+    justify-content: baseline;
+    font-size: 1.2rem;
+    width: 100%;
+    display: flex;
+    /*height: 3.4rem;*/
+    padding-top: 1rem;
+    padding: 1rem 2rem;
+    /*border-bottom: 1px solid var(--color-crt-blau-stufe-4);*/
+}
+
+.breadcrumb-links {
+    flex: 1 1 auto;
+}
+.breadcrumb-report {
+    flex: 1 1 auto; 
+    text-align: right;
+}
+
+/* .actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+} */
 
 .side-nav a,
 .top-nav-links a,
 th a,
 .actions a {
-    color: var(--color-lightgray);
+    /*color: var(--color-white);*/
 }
 
-.side-nav a:hover,
-.side-nav a:focus,
-.actions a:hover,
-.actions a:focus {
-    color: var(--color-links-active);
+.side-nav a,
+.top-nav-links a:hover {
+    color: var(--color-crt-blau-stufe-4);
+    transition: .2s linear;
 }
+
 
 /* Utility */
 .table-responsive {
@@ -87,8 +341,11 @@ th a,
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 }
-
 /* Main */
+.container {
+    padding-bottom: 40px;
+}
+
 .content {
     padding: 2rem;
     background: var(--color-white);
@@ -100,43 +357,80 @@ th a,
 .content form {
     margin: 0;
 }
-.actions a {
-    font-weight: bold;
-    padding: 0 0.4rem;
+
+/* ### Seitenspezifisch ### */
+
+/* Index */
+#user_menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
-.actions a:first-child {
-    padding-left: 0;
+#user_menu li {
+    display: inline;
+    margin-right: 4px;
 }
-th {
-    white-space: nowrap;
+.delete-container {
+    display: inline-block;
+}
+.delete-btn {
+    margin-left: 5px;
+}
+.delete-wrapper button {
+    margin-right: 5px;
 }
 
-/* Nav bar */
-.top-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 112rem;
-    padding: 2rem;
-    margin: 0 auto;
+.index-column-actions {
+    text-align: right;
 }
-.top-nav-title a {
-    font-size: 2.4rem;
-    color: var(--color-cakephp-red);
-}
-.top-nav-title span {
-    color: var(--color-cakephp-gray);
-}
-.top-nav-links a {
-    margin: 0 0.5rem;
-}
-.top-nav-title a,
-.top-nav-links a {
+
+.actions a {
     font-weight: bold;
+    padding: 0 0.8rem 0.4rem 0.8rem;
 }
-.side-nav-item {
-    display: block;
-    padding: 0.5rem 0;
+
+.deleteLink:hover, .deleteLink:focus, .deleteLink:active {
+    cursor: pointer;
+}
+
+.btn-danger {
+    background-color: var(--color-crt-rot-stufe-7);
+    border: none;
+    color: var(--color-white);
+}
+.btn-danger:hover {
+    background-color: var(--color-crt-rot-stufe-8);
+    border: none;
+    color: var(--color-white);
+}
+
+.edit-textarea {
+    height: 70rem;
+    width: 100%;
+    resize: none;
+}
+
+/* crt_apps */
+.app-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.app-card {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px;
+    box-shadow: 3px 4px 3px var(--color-crt-grau-stufe-2);
+    /* box-shadow: 0 3px 6px 1px var(--color-crt-grau-stufe-2); */
+
+}
+
+/*.actions a:first-child {
+    padding-left: 0;
+}*/
+th {
+    white-space: nowrap;
 }
 
 /* View action */
@@ -279,6 +573,7 @@ input[type='color'] {
     }
     .top-nav {
         margin: 0 auto;
+        color: var(--color-white);
     }
     .side-nav {
         margin-bottom: 1rem;
