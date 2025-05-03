@@ -17,7 +17,14 @@ class ReportsController extends AppController
      */
     public function index()
     {
-        $query = $this->Reports->find();
+        $query = $this->Reports->find()
+            ->contain(['Users']);
+        if ($this->identity->get('role') === 'admin') { 
+            $query->where(['user_id IS NOT' => null]);
+        } else {
+            $query->where(['user_id' => $this->identity->get('id')]);
+        }
+
         $reports = $this->paginate($query);
 
         $this->set(compact('reports'));
@@ -45,6 +52,7 @@ class ReportsController extends AppController
     {
         $report = $this->Reports->newEmptyEntity();
         if ($this->request->is('post')) {
+            $requestData = $this->request->getData();
             $report = $this->Reports->patchEntity($report, $this->request->getData());
             if ($this->Reports->save($report)) {
                 $this->Flash->success(__('The report has been saved.'));

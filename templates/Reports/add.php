@@ -19,8 +19,13 @@
                 <legend><?= __('Add Report') ?></legend>
                 <?php
                     echo $this->Form->control('name');
-                    echo $this->Form->control('xml');
-                    echo $this->Form->control('user_id', ['options' => $users]);
+                    echo $this->Form->control('xml', ['type' => 'textarea', 'class' => 'form_xml']);
+                    if ($this->Identity->get('role') === 'admin') {
+                        echo $this->Form->control('user_id', ['options' => $users, 'default'=> $this->Identity->get('id')]);
+                    } else {
+                        echo $this->Form->hidden('user_id', ['options' => $users, 'default'=> $this->Identity->get('id')]);
+                    }
+                    //echo $this->Form->control('user_id', ['options' => $users]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

@@ -70,46 +70,33 @@ $cakeDescription = 'Congos Report Tools';
         <div class="breadcrumb-navigation">
             <?php
             
-            if (!empty($this->Breadcrumbs->getCrumbs())): ?>
-                <nav aria-label="breadcrumb">
-                    <?= $this->Breadcrumbs->render([
-                        'class' => 'breadcrumb', // CSS-Klasse, z. B. für Bootstrap
-                        'separator' => '',       // Bootstrap benötigt keinen Separator
-                        'templates' => [
-                            'wrapper' => '<ol class="breadcrumb">{{content}}</ol>',
-                            'item' => '<li class="breadcrumb-item"><a href="{{url}}">{{title}}</a></li>',
-                            'itemWithoutLink' => '<li class="breadcrumb-item active" aria-current="page">{{title}}</li>',
-                        ]
-                    ]) ?>
-                </nav>
-            <?php endif; ?>
-<?php
-            // if ($this->Identity->isLoggedIn()) {
-            //     $template = $this->getTemplate();
-            //     $plugin = $this->getPlugin();
-            //     $backLink = '';
-            //     if ($template !== 'home') {
-            //         $backLink .= $this->Html->link('Home', url: '/');
-            //     }
+    
+            if ($this->Identity->isLoggedIn()) {
+                $template = $this->getTemplate();
+                $plugin = $this->getPlugin();
+                $backLink = '';
+                if ($template !== 'home') {
+                    $backLink .= $this->Html->link('Home', url: '/');
+                }
 
-            //     if ($plugin === 'QueryExpander') {
-            //         $backLink .= '&nbsp;▶&nbsp;' . $this->Html->link('App Hub', ['plugin' => false, 'controller' => 'Reports', 'action' => 'crtApps', '?' => ['report_id' => $report->id]]);
-            //         if ($template === 'settings' || $template === 'result') {
-            //             $backLink .= '&nbsp;▶&nbsp;' . $this->Html->link('Auswahl Query', [
-            //                 'action' => 'queries']);
-            //                 if ($template === 'result') {
-            //                     $backLink .= '&nbsp;▶&nbsp;' . $this->Html->link('Data Item Settings', [
-            //                         'action' => 'settings']);
-            //                 }
-            //         } 
-            //     } 
-            //     if ($template !== 'home') {
-            //         $backLink .= '&nbsp;▶&nbsp;';
-            //     }
-            //     $backLink .= $this->get('title');
+                if ($plugin === 'QueryExpander') {
+                    $backLink .= '&nbsp;▶&nbsp;' . $this->Html->link('App Hub', ['plugin' => false, 'controller' => 'Reports', 'action' => 'crtApps', '?' => ['report_id' => $report->id]]);
+                    if ($template === 'settings' || $template === 'result') {
+                        $backLink .= '&nbsp;▶&nbsp;' . $this->Html->link('Auswahl Query', [
+                            'action' => 'queries']);
+                            if ($template === 'result') {
+                                $backLink .= '&nbsp;▶&nbsp;' . $this->Html->link('Data Item Settings', [
+                                    'action' => 'settings']);
+                            }
+                    } 
+                } 
+                if ($template !== 'home') {
+                    $backLink .= '&nbsp;▶&nbsp;';
+                }
+                $backLink .= $this->get('title');
 
-            //     echo $backLink; 
-            // }
+                echo $backLink; 
+            }
             
             
             ?>

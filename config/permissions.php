@@ -138,5 +138,11 @@ return [
             'action' => '*',
             'bypassAuth' => true,
         ],
+        //all roles allowed to Reports
+        [
+            'role' => '*',
+            'controller' => 'Reports',
+            'action' => '*',
+        ],
     ]
 ];

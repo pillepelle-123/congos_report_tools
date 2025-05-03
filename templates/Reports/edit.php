@@ -24,8 +24,10 @@
                 <legend><?= __('Edit Report') ?></legend>
                 <?php
                     echo $this->Form->control('name');
-                    echo $this->Form->control('xml');
-                    echo $this->Form->control('user_id', ['options' => $users]);
+                    echo $this->Form->control('xml', ['type' => 'textarea', 'class' => 'form-xml']);
+                    if ($this->Identity->get('role') === 'admin') {
+                        echo $this->Form->control('user_id', ['options' => $users, 'default'=> $this->Identity->get('id')]);
+                    } 
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

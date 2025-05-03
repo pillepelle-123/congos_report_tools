@@ -54,10 +54,7 @@ class PagesController extends AppController
      */
     public function display(string ...$path): ?Response
 
-    //$identity = $this->request->getAttribute('identity');
     {
-        // $this->viewBuilder()->setHelpers(['Breadcrumbs.Breadcrumbs']);
-        //$this->Breadcrumbs->add('Home', '/');
 
         $reports = $this->Reports->find()
             ->where(['user_id' => $this->identity->get('id')])

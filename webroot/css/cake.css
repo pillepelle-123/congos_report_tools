@@ -115,14 +115,16 @@ h3 {
 
 /* Tabellen */
 td, th {
-    border: none;
-    /* border-bottom: 0.1rem solid var(--color-cakephp-blue); */
     padding: 1.2rem 0.15rem;
     line-break: anywhere;
 }
 
 th {
     border-bottom: 0.4rem solid var(--color-crt-blau-stufe-4);
+}
+
+td, .view th {
+    border: none;
 }
 
 tr:nth-child(even) {
@@ -416,13 +418,37 @@ th a,
     flex-wrap: wrap;
     gap: 20px;
 }
+
 .app-card {
     border: 1px solid #ddd;
-    padding: 20px;
+    /* padding: 20px; */
     border-radius: 5px;
     width: 300px;
+    height: 160px;
     box-shadow: 3px 4px 3px var(--color-crt-grau-stufe-2);
     /* box-shadow: 0 3px 6px 1px var(--color-crt-grau-stufe-2); */
+
+}
+
+.app-card header {
+    background-color:  var(--color-crt-blau-stufe-4);
+    color: var(--color-white);
+    padding: 20px 20px 0px 20px;
+}
+
+.app-card h3 {
+    color: var(--color-white);
+    margin: 0;
+}
+
+.app-card div {
+    padding: 0px 20px 20px 20px;
+}
+
+
+.app-card:hover {
+    box-shadow: 0 3px 6px 1px var(--color-crt-grau-stufe-4);
+    transition: box-shadow .3s linear;
 
 }
 
@@ -473,6 +499,17 @@ th {
 }
 
 /* Forms */
+
+.form-xml {
+    resize: vertical;
+    height: 30rem;
+}
+
+.view-report-xml {
+    overflow-y: scroll;
+    height:400px;
+}
+
 .input.radio,
 .input.checkbox,
 .input.multicheckbox {

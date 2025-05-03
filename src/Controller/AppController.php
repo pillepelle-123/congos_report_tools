@@ -48,4 +48,23 @@ class AppController extends Controller
         $this->identity = $this->request->getAttribute('identity');
     }
 
+    public function beforeRender(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeRender($event);
+        
+        // Auto-generate title for Templates if not already set
+        if (!$this->viewBuilder()->getVar('title')) {
+
+            $controller = $this->request->getParam('controller');
+            $action = $this->request->getParam('action');
+            if ($action !== 'index') {
+                $controller = substr($controller, 0, -1);
+            } else {
+                $action = 'List of';
+            }
+            
+            $this->set('title', ucfirst($action) . ' ' . ucfirst($controller));
+        }
+    }
+
 }

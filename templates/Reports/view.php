@@ -39,9 +39,9 @@
                     <td><?= h($report->modified) ?></td>
                 </tr>
             </table>
-            <div class="text">
+            <div class="text view-report-xml">
                 <strong><?= __('Xml') ?></strong>
-                <blockquote>
+                <blockquote class="blockquote_xml">
                     <?= $this->Text->autoParagraph(h($report->xml)); ?>
                 </blockquote>
             </div>

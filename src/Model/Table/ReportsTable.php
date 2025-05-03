@@ -73,7 +73,7 @@ class ReportsTable extends Table
             ->allowEmptyString('xml');
 
         $validator
-            ->integer('user_id')
+            //->integer('user_id')
             ->notEmptyString('user_id');
 
         return $validator;
