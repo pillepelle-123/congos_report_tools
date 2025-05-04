@@ -10,15 +10,6 @@ namespace App\Controller;
  */
 class UsersController extends AppController
 {
-    protected $Reports;
-
-    public function initialize(): void
-    {
-        parent::initialize();
-        $this->loadComponent('Flash');
-        $this->Reports = $this->fetchTable('Reports');
-        //debug($this->reports);
-    }
     /**
      * Index method
      *
@@ -27,13 +18,10 @@ class UsersController extends AppController
     public function index()
     {
         $query = $this->Users->find()
-             ->contain(['Reports']);
+            ->contain(['Reports']);
         $users = $this->paginate($query);
-        $reports = $this->Users->Reports->find()->all();
-        //debug($this->Users->Reports->find()->all());
 
         $this->set(compact('users'));
-        $this->set('reports', $reports);
     }
 
     /**
@@ -45,7 +33,7 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        $user = $this->Users->get($id, contain: ['Reports']);
+        $user = $this->Users->get($id, contain: ['FailedPasswordAttempts', 'Reports', 'SocialAccounts']);
         $this->set(compact('user'));
     }
 

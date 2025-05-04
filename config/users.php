@@ -2,8 +2,6 @@
 
 return[
     'OneTimePasswordAuthenticator.login' => false,
-    'Users.table' => 'AppUsers',
-
 
     // 'Users' => [
     //     'table' => 'users',

@@ -1,28 +1,11 @@
-CREATE TABLE `reports` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `xml` longtext,
-  `user_id` int NOT NULL,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `reports2_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
--- #####################################################
--- ################# ALT ALT ###########################
--- #####################################################
-
--- CREATE TABLE reports (
-    -- id INT AUTO_INCREMENT PRIMARY KEY,
-    -- name VARCHAR(50) NOT NULL,
-    -- xml longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-	 -- user_id INT NOT NULL,
-    -- created DATETIME,
-    -- modified DATETIME
--- );
+CREATE TABLE reports (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    xml longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	 user_id INT NOT NULL,
+    created DATETIME,
+    modified DATETIME
+);
 
 -- bin/cake bake migration CreateReports name:string xml:longtext user_id:integer created modified
 

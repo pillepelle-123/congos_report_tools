@@ -11,11 +11,11 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $name
  * @property string|null $xml
- * @property string $user_id
+ * @property int $user_id
  * @property \Cake\I18n\DateTime $created
  * @property \Cake\I18n\DateTime $modified
  *
- * @property \App\Model\Entity\User $user
+ * @property \CakeDC\Users\Model\Entity\User $user
  */
 class Report extends Entity
 {

@@ -22,9 +22,9 @@ class ReportsFixture extends TestFixture
                 'id' => 1,
                 'name' => 'Lorem ipsum dolor sit amet',
                 'xml' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-                'user_id' => 'b9116c7a-dfc1-498c-8dea-c2d9a5db1f12',
-                'created' => '2025-05-03 21:01:46',
-                'modified' => '2025-05-03 21:01:46',
+                'user_id' => 1,
+                'created' => '2025-05-01 18:43:34',
+                'modified' => '2025-05-01 18:43:34',
             ],
         ];
         parent::init();

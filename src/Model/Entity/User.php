@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-// use Cake\ORM\Entity;
-use CakeDC\Users\Model\Entity\User;
+use Cake\ORM\Entity;
 
 /**
  * User Entity
@@ -27,20 +26,16 @@ use CakeDC\Users\Model\Entity\User;
  * @property string|null $role
  * @property \Cake\I18n\DateTime $created
  * @property \Cake\I18n\DateTime $modified
- * @property string|null $additional_data
+ * @property array|null $additional_data
  * @property \Cake\I18n\DateTime|null $last_login
  * @property \Cake\I18n\DateTime|null $lockout_time
  * @property string|null $login_token
  * @property \Cake\I18n\DateTime|null $login_token_date
  * @property bool $token_send_requested
  *
- * @property \App\Model\Entity\FailedPasswordAttempt[] $failed_password_attempts
- * @property \App\Model\Entity\Report[] $reports
- * @property \App\Model\Entity\SocialAccount[] $social_accounts
+ * @property \CakeDC\Users\Model\Entity\SocialAccount[] $social_accounts
  */
-use Cake\Datasource\EntityInterface;
-
-class AppUser extends User
+class User extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -75,9 +70,6 @@ class AppUser extends User
         'login_token' => true,
         'login_token_date' => true,
         'token_send_requested' => true,
-        'failed_password_attempts' => true,
-        'reports' => true,
-        'reports2' => true,
         'social_accounts' => true,
     ];
 
@@ -90,15 +82,4 @@ class AppUser extends User
         'password',
         'token',
     ];
-
-    // protected function _getActive()
-    // {
-    //     return $this->_properties['is_active'];
-    // }
-
-    // protected function _setActive($value)
-    // {
-    //     $this->set('is_active', $value);
-    //     return $value;
-    // }
 }

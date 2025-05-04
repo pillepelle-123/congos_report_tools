@@ -27,7 +27,6 @@ class UsersTableTest extends TestCase
         'app.Users',
         'app.FailedPasswordAttempts',
         'app.Reports',
-        'app.Reports2',
         'app.SocialAccounts',
     ];
 
