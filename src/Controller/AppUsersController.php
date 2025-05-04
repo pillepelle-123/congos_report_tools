@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace App\Controller;
 
 /**
- * Users Controller
- *
- * @property \App\Model\Table\UsersTable $Users
+ * AppUsers Controller
+ * @property \App\Model\Table\AppUsersTable $AppUsers
  */
-class UsersController extends AppController
+class AppUsersController extends AppController
 {
     protected $Reports;
+    public $uses = array('AppUsers', 'Reports');
 
     public function initialize(): void
     {
@@ -25,8 +25,9 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function index()
+    
     {
-        $query = $this->Users->find()
+        $query = $this->AppUsers->find()
              ->contain(['Reports']);
         $users = $this->paginate($query);
         $reports = $this->Users->Reports->find()->all();
@@ -45,7 +46,7 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        $user = $this->Users->get($id, contain: ['Reports']);
+        $user = $this->Users->get($id, contain: ['FailedPasswordAttempts', 'Reports', 'SocialAccounts']);
         $this->set(compact('user'));
     }
 
@@ -102,6 +103,7 @@ class UsersController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
+        $this->Users->Reports->deleteAll(['user_id' => $id]);
         if ($this->Users->delete($user)) {
             $this->Flash->success(__('The user has been deleted.'));
         } else {

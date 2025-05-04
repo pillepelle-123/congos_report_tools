@@ -11,7 +11,7 @@ use Cake\Validation\Validator;
 /**
  * Reports Model
  *
- * @property \CakeDC\Users\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
+ * @property \App\Model\Table\AppUsersTable&\Cake\ORM\Association\BelongsTo $AppUsers
  *
  * @method \App\Model\Entity\Report newEmptyEntity()
  * @method \App\Model\Entity\Report newEntity(array $data, array $options = [])
@@ -47,7 +47,7 @@ class ReportsTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Users', [
+        $this->belongsTo('AppUsers', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',
         ]);
@@ -73,7 +73,7 @@ class ReportsTable extends Table
             ->allowEmptyString('xml');
 
         $validator
-            //->integer('user_id')
+            ->uuid('user_id')
             ->notEmptyString('user_id');
 
         return $validator;

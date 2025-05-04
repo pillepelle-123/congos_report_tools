@@ -18,12 +18,25 @@ class ReportsController extends AppController
     public function index()
     {
         $query = $this->Reports->find()
-            ->contain(['Users']);
-        if ($this->identity->get('role') === 'admin') { 
-            $query->where(['user_id IS NOT' => null]);
-        } else {
+            ->contain(['AppUsers']);
+        // if ($this->identity->get('role') === 'admin') { 
+        //     $query->where(['user_id IS NOT' => null]);
+        // } else {
             $query->where(['user_id' => $this->identity->get('id')]);
-        }
+        // }
+        //debug($query);
+
+        // // zum Debuggen
+        // $users = $this->Reports->AppUsers->find('all');
+        // $names = [];
+        // $i = 0;
+        // foreach ($users as $user) {
+        //     $names[$i] = $user->username;
+        //     $i++;
+        // };
+        // debug($names);
+
+        $users = $this->Reports->AppUsers->find('all');
 
         $reports = $this->paginate($query);
 
@@ -39,7 +52,7 @@ class ReportsController extends AppController
      */
     public function view($id = null)
     {
-        $report = $this->Reports->get($id, contain: ['Users']);
+        $report = $this->Reports->get($id, contain: ['AppUsers']);
         $this->set(compact('report'));
     }
 
@@ -61,7 +74,7 @@ class ReportsController extends AppController
             }
             $this->Flash->error(__('The report could not be saved. Please, try again.'));
         }
-        $users = $this->Reports->Users->find('list', limit: 200)->all();
+        $users = $this->Reports->AppUsers->find('list', limit: 200)->all();
         $this->set(compact('report', 'users'));
     }
 
@@ -84,7 +97,7 @@ class ReportsController extends AppController
             }
             $this->Flash->error(__('The report could not be saved. Please, try again.'));
         }
-        $users = $this->Reports->Users->find('list', limit: 200)->all();
+        $users = $this->Reports->AppUsers->find('list', limit: 200)->all();
         $this->set(compact('report', 'users'));
     }
 

@@ -2,8 +2,13 @@
 /**
  * @var \App\View\AppView $this
  * @var iterable<\App\Model\Entity\User> $users
+    * @var \App\Model\Entity\Report[] $reports
  */
 ?>
+<div stlye="color:red;">    <?php foreach ($reports as $report) {
+    echo $report->name . ', ';
+    } 
+        ?></div>
 <div class="users index content">
     <?= $this->Html->link(__('New User'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <h3><?= __('Users') ?></h3>

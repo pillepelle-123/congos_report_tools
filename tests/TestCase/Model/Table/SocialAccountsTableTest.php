@@ -3,20 +3,20 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\UsersTable;
+use App\Model\Table\SocialAccountsTable;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\UsersTable Test Case
+ * App\Model\Table\SocialAccountsTable Test Case
  */
-class UsersTableTest extends TestCase
+class SocialAccountsTableTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \App\Model\Table\UsersTable
+     * @var \App\Model\Table\SocialAccountsTable
      */
-    protected $Users;
+    protected $SocialAccounts;
 
     /**
      * Fixtures
@@ -24,11 +24,8 @@ class UsersTableTest extends TestCase
      * @var list<string>
      */
     protected array $fixtures = [
-        'app.Users',
-        'app.FailedPasswordAttempts',
-        'app.Reports',
-        'app.Reports2',
         'app.SocialAccounts',
+        'app.Users',
     ];
 
     /**
@@ -39,8 +36,8 @@ class UsersTableTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $config = $this->getTableLocator()->exists('Users') ? [] : ['className' => UsersTable::class];
-        $this->Users = $this->getTableLocator()->get('Users', $config);
+        $config = $this->getTableLocator()->exists('SocialAccounts') ? [] : ['className' => SocialAccountsTable::class];
+        $this->SocialAccounts = $this->getTableLocator()->get('SocialAccounts', $config);
     }
 
     /**
@@ -50,7 +47,7 @@ class UsersTableTest extends TestCase
      */
     protected function tearDown(): void
     {
-        unset($this->Users);
+        unset($this->SocialAccounts);
 
         parent::tearDown();
     }
@@ -59,7 +56,7 @@ class UsersTableTest extends TestCase
      * Test validationDefault method
      *
      * @return void
-     * @uses \App\Model\Table\UsersTable::validationDefault()
+     * @uses \App\Model\Table\SocialAccountsTable::validationDefault()
      */
     public function testValidationDefault(): void
     {
@@ -70,7 +67,7 @@ class UsersTableTest extends TestCase
      * Test buildRules method
      *
      * @return void
-     * @uses \App\Model\Table\UsersTable::buildRules()
+     * @uses \App\Model\Table\SocialAccountsTable::buildRules()
      */
     public function testBuildRules(): void
     {

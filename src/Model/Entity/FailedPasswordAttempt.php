@@ -6,18 +6,15 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Report Entity
+ * FailedPasswordAttempt Entity
  *
- * @property int $id
- * @property string $name
- * @property string|null $xml
+ * @property string $id
  * @property string $user_id
  * @property \Cake\I18n\DateTime $created
- * @property \Cake\I18n\DateTime $modified
  *
  * @property \App\Model\Entity\User $user
  */
-class Report extends Entity
+class FailedPasswordAttempt extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -29,11 +26,8 @@ class Report extends Entity
      * @var array<string, bool>
      */
     protected array $_accessible = [
-        'name' => true,
-        'xml' => true,
         'user_id' => true,
         'created' => true,
-        'modified' => true,
         'user' => true,
     ];
 }
