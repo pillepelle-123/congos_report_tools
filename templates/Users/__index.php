@@ -7,6 +7,20 @@
 <div class="users index content">
     <?= $this->Html->link(__('New User'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <h3><?= __('Users') ?></h3>
+    <div>
+    <?php
+        foreach ($users as $user) {
+            foreach ($user->reports as $report) {
+                echo $report->name;
+            }
+            
+        }
+        // $user->reports->each(function ($report) {
+        //     echo $this->Html->link($report->title, ['controller' => 'Reports', 'action' => 'view', $report->id]);
+        // });
+    ?>
+
+    </div>
     <div class="table-responsive">
         <table>
             <thead>

@@ -144,5 +144,11 @@ return [
             'controller' => 'Reports',
             'action' => '*',
         ],
+        //all roles allowed to Reports
+        [
+            'role' => '*',
+            'controller' => 'Users',
+            'action' => ['view', 'edit']
+        ],
     ]
 ];

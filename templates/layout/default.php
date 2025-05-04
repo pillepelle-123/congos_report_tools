@@ -36,7 +36,11 @@ $cakeDescription = 'Congos Report Tools';
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
-    
+
+    <link href="/fontawesome/css/fontawesome.css" rel="stylesheet" />
+    <link href="/fontawesome/css/solid.css" rel="stylesheet" />
+    <link href="/fontawesome/css/regular.css" rel="stylesheet" />
+    <link href="/fontawesome/css/brands.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -51,7 +55,8 @@ $cakeDescription = 'Congos Report Tools';
 
             <?php if ($this->Identity->isLoggedIn()): ?>
                 <ul id="user_menu">
-                    <li><?php echo $this->Identity->get('username'); ?></li>
+                    <li><i class="fa-solid fa-user"></i>&nbsp;
+                    <?php echo $this->Identity->get('username'); ?></li>
                     <li><?php echo $this->Html->link('Logout', url: ['controller' => 'Users', 'action' => 'logout']); ?></li>
                     <li>
                         <?php  /*$this->Html->link(

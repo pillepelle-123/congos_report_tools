@@ -16,75 +16,75 @@
     </aside>
     <div class="column column-80">
         <div class="users view content">
-            <h3><?= h($user->username) ?></h3>
+            <h3><?= h('User: ' . $user->first_name) ?></h3>
             <table>
                 <tr>
                     <th><?= __('Id') ?></th>
-                    <td><?= h($user->id) ?></td>
+                    <td><?= h($user->id . ' ') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Username') ?></th>
-                    <td><?= h($user->username) ?></td>
+                    <td><?= h($user->username . ' ') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Email') ?></th>
-                    <td><?= h($user->email) ?></td>
+                    <td><?= h($user->email . ' ') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('First Name') ?></th>
-                    <td><?= h($user->first_name) ?></td>
+                    <td><?= h($user->first_name . ' ') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Last Name') ?></th>
-                    <td><?= h($user->last_name) ?></td>
+                    <td><?= h($user->last_name . ' ') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Api Token') ?></th>
-                    <td><?= h($user->api_token) ?></td>
+                    <td><?= h($user->api_token . ' ') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Secret') ?></th>
-                    <td><?= h($user->secret) ?></td>
+                    <td><?= h($user->secret . ' ') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Role') ?></th>
-                    <td><?= h($user->role) ?></td>
+                    <td><?= h($user->role . ' ') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Login Token') ?></th>
-                    <td><?= h($user->login_token) ?></td>
+                    <td><?= h($user->login_token . ' ') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Token Expires') ?></th>
-                    <td><?= h($user->token_expires) ?></td>
+                    <td><?= h($user->token_expires . ' ') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Activation Date') ?></th>
-                    <td><?= h($user->activation_date) ?></td>
+                    <td><?= h($user->activation_date . ' ') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Tos Date') ?></th>
-                    <td><?= h($user->tos_date) ?></td>
+                    <td><?= h($user->tos_date . ' ') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Created') ?></th>
-                    <td><?= h($user->created) ?></td>
+                    <td><?= h($user->created . ' ') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Modified') ?></th>
-                    <td><?= h($user->modified) ?></td>
+                    <td><?= h($user->modified . ' ') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Last Login') ?></th>
-                    <td><?= h($user->last_login) ?></td>
+                    <td><?= h($user->last_login . ' ') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Lockout Time') ?></th>
-                    <td><?= h($user->lockout_time) ?></td>
+                    <td><?= h($user->lockout_time . ' ') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Login Token Date') ?></th>
-                    <td><?= h($user->login_token_date) ?></td>
+                    <td><?= h($user->login_token_date . ' ') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Secret Verified') ?></th>

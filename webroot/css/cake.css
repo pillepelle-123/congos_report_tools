@@ -100,7 +100,7 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--color-crt-grau-stufe-7);
 }
 
-h1, h4, h5, h6 {
+h1, h4, h5 {
     font-size: 3.6rem;
 }
 
@@ -109,6 +109,15 @@ h2 {
 }
 h3 {
     font-size: 2.4rem;
+}
+h4 {
+    font-size: 2.0rem;
+}
+h5 {
+    font-size: 1.8rem;
+}
+h6 {
+    font-size: 1.5rem;
 }
 
 
@@ -419,7 +428,7 @@ th a,
     gap: 20px;
 }
 
-.app-card {
+.app-card-user, .app-card-admin {
     border: 1px solid #ddd;
     /* padding: 20px; */
     border-radius: 5px;
@@ -430,18 +439,44 @@ th a,
 
 }
 
-.app-card header {
+.app-card-user:hover, .app-card-admin:hover {
+    box-shadow: 0 3px 6px 1px var(--color-crt-grau-stufe-4);
+    transition: box-shadow .3s linear;
+}
+
+.app-card-user header {
+    height: 70px;
     background-color:  var(--color-crt-blau-stufe-4);
     color: var(--color-white);
     padding: 20px 20px 0px 20px;
 }
 
-.app-card h3 {
+
+.app-card-admin header {
+    background-color:  var(--color-crt-blau-stufe-7);
     color: var(--color-white);
-    margin: 0;
+    padding: 20px 20px 0px 20px;
 }
 
-.app-card div {
+.app-card-user h3, .app-card-admin h3 {
+    position: relative;
+    top: 10px;
+    left: 0px;
+    color: var(--color-white);
+    margin: 0;
+    line-height: 32px;
+}
+
+.app-card-user img, .app-card-admin img {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    top: -46px;
+    left: 220px;
+}
+
+
+.app-card-user div, .app-card-admin div {
     padding: 0px 20px 20px 20px;
 }
 
