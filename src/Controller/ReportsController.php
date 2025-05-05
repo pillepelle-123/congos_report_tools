@@ -17,19 +17,38 @@ class ReportsController extends AppController
      */
     public function index()
     {
-        $query = $this->Reports->find()
-            ->contain(['Users']);
-        if ($this->identity->get('role') === 'admin') { 
-            $query->where(['user_id IS NOT' => null]);
-        } else {
-            $query->where(['user_id' => $this->identity->get('id')]);
-        }
+        // $query = $this->Reports->find()
+        //     ->contain(['Users']);
+        // if ($this->identity->get('role') === 'admin') { 
+        //     $query->where(['user_id IS NOT' => null]);
+        // } else {
+        //     $query->where(['user_id' => $this->identity->get('id')]);
+        // }
 
-        $reports = $this->paginate($query);
+        $reports = $this->paginate($this->all_reports);
 
         $this->set(compact('reports'));
+        $this->set('title', 'Reports');
     }
 
+    
+    public function listAdmin() {
+        $reports = $this->paginate($this->all_reports);
+
+        $this->set(compact('reports'));
+        $this->set('title', 'Admin: Reports');
+    }
+
+    public function listUser() {
+        // $reports = $this->my_reports;
+        // debug($reports);
+        // die();
+        $reports = $this->paginate($this->my_reports);
+
+        $this->set(compact('reports'));
+        $this->set('title', 'My Reports');
+    }
+    
     /**
      * View method
      *
@@ -61,8 +80,8 @@ class ReportsController extends AppController
             }
             $this->Flash->error(__('The report could not be saved. Please, try again.'));
         }
-        $users = $this->Reports->Users->find('list', limit: 200)->all();
-        $this->set(compact('report', 'users'));
+        $users = $this->all_users;
+        $this->set(compact('report' , 'users' ));
     }
 
     /**
@@ -74,7 +93,7 @@ class ReportsController extends AppController
      */
     public function edit($id = null)
     {
-        $report = $this->Reports->get($id, contain: []);
+        $report = $this->reports_table->get($id, contain: []);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $report = $this->Reports->patchEntity($report, $this->request->getData());
             if ($this->Reports->save($report)) {
@@ -105,6 +124,6 @@ class ReportsController extends AppController
             $this->Flash->error(__('The report could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => 'listUser']);
     }
 }

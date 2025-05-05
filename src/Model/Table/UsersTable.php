@@ -75,6 +75,13 @@ class UsersTable extends BaseUsersTable
         $this->addBehavior('CakeDC/Users.LinkSocial');
         $this->addBehavior('CakeDC/Users.AuthFinder');
         $this->addBehavior('CakeDC/Users.OneTimeLoginLink');
+
+        $this->hasMany('Reports', [
+            'className' => 'Reports',
+            'foreignKey' => 'user_id',
+            'propertyName' => 'reports' // Wichtig für korrekte Property
+        ]);
+
         //$this->hasMany('SocialAccounts')->setForeignKey('user_id')->setClassName('CakeDC/Users.SocialAccounts');
         // neu hinzgefügt PSt
         // $this->hasMany('Reports')->setForeignKey('user_id');

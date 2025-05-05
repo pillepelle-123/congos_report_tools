@@ -32,13 +32,21 @@ use Cake\View\Exception\MissingTemplateException;
 class PagesController extends AppController
 {
     protected $Reports;
+    protected $user;
 
     public function initialize(): void
     {
         parent::initialize();
-        $this->Reports = $this->fetchTable('Reports');
+        //$this->Reports = $this->fetchTable('Users');
 
+        $this->user = $this->fetchTable('Users')->find()
+            ->where(['id' => $this->identity->get('id')])
+            ->contain(['Reports'])
+            ->first();
 
+            // $reports = $this->Reports->find()
+            // ->where(['user_id' => $this->identity->get('id')])
+            // ->orderBy(['modified' => 'DESC']);
     }
     /**
      * Displays a view
@@ -56,10 +64,13 @@ class PagesController extends AppController
 
     {
 
-        $reports = $this->Reports->find()
-            ->where(['user_id' => $this->identity->get('id')])
-            ->order(['modified' => 'DESC']);
-            //->all();
+
+        $reports = $this->user->get('reports');
+            //->orderBy(['modified' => 'DESC']);
+        // $reports = $this->Reports->find()
+        //     ->where(['user_id' => $this->identity->get('id')])
+        //     ->orderBy(['modified' => 'DESC']);
+        //     //->all();
         ;
         // Inhalte an Templates übergeben
         //$this->set(compact('user', 'reports')); /alte Variante, klappt aber nicht direkt mit $this->user
@@ -80,7 +91,7 @@ class PagesController extends AppController
             $subpage = $path[1];
         }
         $this->set(compact('page', 'subpage', 'reports'));
-        $this->set('title', ucfirst($page));
+        $this->set(['title' => ucfirst($page), 'user' => $this->user]);
 
         try {
             return $this->render(implode('/', $path));

@@ -27,5 +27,5 @@
 
     </fieldset>
     <?= $this->Form->button(__d('cake_d_c/users', 'Submit'), ['id' => 'btn-submit']); ?>
-    <?= $this->Form->end() ?>
-</div>
+    <?= $this->Form->end() ?>   
+</t>

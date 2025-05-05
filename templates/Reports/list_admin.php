@@ -30,8 +30,9 @@
                     <td class="actions">
                         <?= $this->Html->image('icons/material_view_292929.svg', array('title' => 'View', 'alt' => 'View', 'url' => ['action' => 'view', $report->id])); ?>
                         <?= $this->Html->image('icons/material_edit_292929.svg', array('title' => 'Edit', 'alt' => 'Edit', 'url' => ['action' => 'edit', $report->id])); ?>
-                        <?= $this->Html->image('icons/material_delete_292929.svg', array('title' => 'Delete', 'alt' => 'Delete', 'url' => ['action' => 'delete', $report->id], 'options' => ['method' => 'delete',
-                                'confirm' => __('Are you sure you want to delete # {0}?', $report->id),])); ?>
+                        <?= $this->Form->postLink(
+                            $this->Html->image('icons/material_delete_292929.svg', ['alt' => 'Delete']), ['action' => 'delete', $report->id], ['confirm' => 'Möchtest du diesen Eintrag wirklich löschen?', 'escape' => false]
+                        ) ?>
                         <?php /*
                         <?= $this->Html->link(__('View'), ['action' => 'view', $report->id]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $report->id]) ?>

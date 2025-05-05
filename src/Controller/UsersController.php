@@ -10,6 +10,12 @@ use CakeDC\Users\Controller\Traits\LoginTrait;
 use CakeDC\Users\Controller\Traits\RegisterTrait;
 use CakeDC\Users\Controller\Traits\SimpleCrudTrait;
 use Cake\Utility\Inflector;
+use CakeDC\Users\Plugin;
+use Cake\Core\Configure;
+use Cake\Validation\Validator;
+use CakeDC\Users\Exception\UserNotFoundException;
+use CakeDC\Users\Exception\WrongPasswordException;
+use Exception;
 
 /**
  * Users Controller
@@ -22,8 +28,6 @@ class UsersController extends BaseUsersController
     use LoginTrait;
     use RegisterTrait;
     use SimpleCrudTrait;
-
-    protected $Users;
 
     public function initialize(): void
     {
@@ -43,7 +47,7 @@ class UsersController extends BaseUsersController
 
         //$this->Users = $this->fetchTable('Users');
 
-        $this->Users = $this->fetchTable('MyUsers');
+        //$this->Users = $this->fetchTable(alias: 'Users');
         
 
     }
@@ -54,11 +58,19 @@ class UsersController extends BaseUsersController
      */
     public function index()
     {
-        $query = $this->Users->find()
-            ->contain(['Reports']);
-        $users = $this->paginate($query);
+        // $query = $this->Users->find()
+        //     ->contain(['Reports']);
+        $users = $this->paginate($this->all_users);
 
         $this->set(compact('users'));
+        $this->set('title', 'Users');
+    }
+
+    public function listAdmin() {
+        $users = $this->paginate($this->all_users);
+
+        $this->set(compact('users'));
+        $this->set('title', 'Admin: Users');
     }
 
     /**
@@ -70,10 +82,9 @@ class UsersController extends BaseUsersController
      */
     public function view($id = null)
     {
-        $shout = 'Hello World';
-        $user = $this->Users->get($id, ['contain' => ['Reports']]);
+        $user =  $this->users_table->get($id, ['contain' => ['Reports']]); // $this->Users->get($id, ['contain' => ['Reports']]);
         parent::view($id);
-        $this->set(compact('user', 'shout'));
+        $this->set(compact('user'));
 
     }
 
@@ -99,18 +110,18 @@ class UsersController extends BaseUsersController
 
     public function add()
     {
-        $table = $this->fetchTable();
-        $tableAlias = $table->getAlias();
-        $user = $table->newEmptyEntity();
+        //$users_table = $this->fetchTable();
+        $table_alias = $this->users_table->getAlias();
+        $user = $this->users_table->newEmptyEntity();
         //$this->set($tableAlias, $user);
         $this->set('user', $user);
         $this->viewBuilder()->setOption('serialize', [$user, 'user']);
         if (!$this->getRequest()->is('post')) {
             return;
         }
-        $entity = $table->patchEntity($user, $this->getRequest()->getData());
-        $singular = Inflector::singularize(Inflector::humanize($tableAlias));
-        if ($table->save($entity)) {
+        $entity = $this->users_table->patchEntity($user, $this->getRequest()->getData());
+        $singular = Inflector::singularize(Inflector::humanize($table_alias));
+        if ($this->users_table->save($entity)) {
             $this->Flash->success(__d('cake_d_c/users', 'The {0} has been saved', $singular));
 
             return $this->redirect(['action' => 'index']);
@@ -128,18 +139,18 @@ class UsersController extends BaseUsersController
     public function edit($id = null)
     {
         $table = $this->fetchTable();
-        $tableAlias = $table->getAlias();
+        $table_alias = $table->getAlias();
         $user = $table->get($id, args: [
             'contain' => [],
         ]);
         //$this->set($tableAlias, $entity);
         $this->set('user', $user);
-        $this->viewBuilder()->setOption('serialize', [$tableAlias, 'tableAlias']);
+        $this->viewBuilder()->setOption('serialize', [$table_alias, 'tableAlias']);
         if (!$this->getRequest()->is(['patch', 'post', 'put'])) {
             return;
         }
         $entity = $table->patchEntity($user, $this->getRequest()->getData());
-        $singular = Inflector::singularize(Inflector::humanize($tableAlias));
+        $singular = Inflector::singularize(Inflector::humanize($table_alias));
         if ($table->save($entity)) {
             $this->Flash->success(__d('cake_d_c/users', 'The {0} has been saved', $singular));
 
@@ -189,4 +200,125 @@ class UsersController extends BaseUsersController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function settings($id = null)
+    {
+        $table = $this->fetchTable();
+        $user = $table->get($id, args: [
+            'contain' => [],
+        ]);
+        //$this->set($tableAlias, $entity);
+        $this->set('user', $user);
+        $this->set('title', 'My User Settings');
+        //$this->viewBuilder()->setOption('serialize', [$tableAlias, 'tableAlias']);
+        if (!$this->getRequest()->is(['patch', 'post', 'put'])) {
+            return;
+        }
+        $entity = $table->patchEntity($user, $this->getRequest()->getData());
+        if ($table->save($entity)) {
+            $this->Flash->success(__d('cake_d_c/users', 'Changes have been saved'));
+
+            return; // $this->redirect(['action' => 'index']);
+        }
+        $this->Flash->error(__d('cake_d_c/users', 'Changes have been saved'));
+    }
+
+
+    public function changePassword($id = null)
+    {
+        $user = $this->getUsersTable()->newEntity([], ['validate' => false]);
+        $user->setNew(false);
+
+        $identity = $this->getRequest()->getAttribute('identity');
+        $identity = $identity ?? [];
+        $userId = $identity['id'] ?? null;
+
+        if ($userId) {
+            if ($id && $identity['is_superuser'] && Configure::read('Users.Superuser.allowedToChangePasswords')) {
+                // superuser editing any account's password
+                $user->set('id', $id);
+                $validatePassword = false;
+                $redirect = ['action' => 'settings', $userId];
+            } elseif (!$id || $id === $userId) {
+                // normal user editing own password
+                $user->set('id', $userId);
+                $validatePassword = true;
+                $redirect = ['action' => 'settings', $userId]; //Configure::read('Users.Profile.route');
+            } else {
+                $this->Flash->error(
+                    __d('cake_d_c/users', 'Changing another user\'s password is not allowed'),
+                );
+                $this->redirect(['action' => 'settings', $userId]);
+
+                return;
+            }
+        } else {
+            // password reset
+            $user->set(
+                'id',
+                $this->getRequest()->getSession()->read(
+                    Configure::read('Users.Key.Session.resetPasswordUserId'),
+                ),
+            );
+            $validatePassword = false;
+            $redirect = $this->Authentication->getConfig('loginAction');
+            if (!$user->get('id')) {
+                $this->Flash->error(__d('cake_d_c/users', 'User was not found'));
+                $this->redirect($redirect);
+
+                return;
+            }
+        }
+        $this->set('validatePassword', $validatePassword);
+        if ($this->getRequest()->is(['post', 'put'])) {
+            try {
+                $validator = $this->getUsersTable()->validationPasswordConfirm(new Validator());
+                if ($validatePassword) {
+                    $validator = $this->getUsersTable()->validationCurrentPassword($validator);
+                }
+                $this->getUsersTable()->setValidator('current', $validator);
+                $user = $this->getUsersTable()->patchEntity(
+                    $user,
+                    $this->getRequest()->getData(),
+                    [
+                        'validate' => 'current',
+                        'accessibleFields' => [
+                            'current_password' => true,
+                            'password' => true,
+                            'password_confirm' => true,
+                        ],
+                    ],
+                );
+
+                if ($user->getErrors()) {
+                    $this->Flash->error(__d('cake_d_c/users', 'Password could not be changed'));
+                } else {
+                    $result = $this->getUsersTable()->changePassword($user);
+                    if ($result) {
+                        $event = $this->dispatchEvent(Plugin::EVENT_AFTER_CHANGE_PASSWORD, ['user' => $result]);
+                        $eventResult = $event->getResult();
+                        if (!empty($eventResult) && is_array($eventResult)) {
+                            return $this->redirect($event->getResult());
+                        }
+                        $this->Flash->success(__d('cake_d_c/users', 'Password has been changed successfully'));
+
+                        return $this->redirect($redirect);
+                    } else {
+                        $this->Flash->error(__d('cake_d_c/users', 'Password could not be changed'));
+                    }
+                }
+            } catch (UserNotFoundException $exception) {
+                $this->Flash->error(__d('cake_d_c/users', 'User was not found'));
+            } catch (WrongPasswordException $wpe) {
+                $this->Flash->error($wpe->getMessage());
+            } catch (Exception $exception) {
+                $this->Flash->error(__d('cake_d_c/users', 'Password could not be changed'));
+                $this->log($exception->getMessage());
+            }
+        }
+        $this->set('title', 'Change Password');
+        $this->set(['user' => $user]);
+        $this->viewBuilder()->setOption('serialize', ['user']);
+    }
+
 }

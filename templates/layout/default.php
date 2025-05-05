@@ -45,76 +45,35 @@ $cakeDescription = 'Congos Report Tools';
 </head>
 <body>
     <div class="top-nav-container">
-    <nav class="top-nav">
-        <div class="top-nav-title">
-            <?= $this->Html->image('crt_logo_50x60.png', array('title' => 'Congos Report Tools', 'url' => '/')) ?>
-            <!-- <a href="<? /*= $this->Url->build('/') */?>"><span>C</span>ongos <span>R</span>eport <span>T</span>ools</a> -->
-        </div>
-        <div class="top-nav-links">
-  
+        <nav class="top-nav">
+            <div class="top-nav-title">
+                <?= $this->Html->image('crt_logo_50x60.png', array('title' => 'Congos Report Tools', 'url' => '/')) ?>
+                <!-- <a href="<? /*= $this->Url->build('/') */?>"><span>C</span>ongos <span>R</span>eport <span>T</span>ools</a> -->
+            </div>
+            <div class="top-nav-links">
 
-            <?php if ($this->Identity->isLoggedIn()): ?>
-                <ul id="user_menu">
-                    <li><i class="fa-solid fa-user"></i>&nbsp;
-                    <?php echo $this->Identity->get('username'); ?></li>
-                    <li><?php echo $this->Html->link('Logout', url: ['controller' => 'Users', 'action' => 'logout']); ?></li>
-                    <li>
-                        <?php  /*$this->Html->link(
-                    $user->username, //$this->Avatar->display($user),
-                    ['controller' => 'Users', 'action' => 'edit', $user->id],
-                    ['escape' => false]) */ ?>
-                    </li>
-                </ul>
-                
-            <?php endif; ?>    
+                <?php if ($this->Identity->isLoggedIn()): ?>
+                    <ul id="user_menu">
+                        <li><i class="fa-solid fa-user"></i>&nbsp;
+                        <?php echo $this->Identity->get('username'); ?></li>
+                        <li><?php echo $this->Html->link('Logout', url: ['controller' => 'Users', 'action' => 'logout']); ?></li>
+                        <li>
+                            <?php  /*$this->Html->link(
+                        $user->username, //$this->Avatar->display($user),
+                        ['controller' => 'Users', 'action' => 'edit', $user->id],
+                        ['escape' => false]) */ ?>
+                        </li>
+                    </ul>
+                    
+                <?php endif; ?>    
 
-        </div>
-        
-    </nav>
-    <div class="breadcrumb">
-        <div class="breadcrumb-navigation">
-            <?php
+            </div>
             
-    
-            if ($this->Identity->isLoggedIn()) {
-                $template = $this->getTemplate();
-                $plugin = $this->getPlugin();
-                $backLink = '';
-                if ($template !== 'home') {
-                    $backLink .= $this->Html->link('Home', url: '/');
-                }
+        </nav>
+            <!-- Breadcrumb Navi eingebunden, s. element\breadcrumb.php -->
+            <?= $this->element('breadcrumb'/*, ['user' => $user]*/) ?>
+            <!-- Breadcrumb Navi -------------------------------------- -->
 
-                if ($plugin === 'QueryExpander') {
-                    $backLink .= '&nbsp;▶&nbsp;' . $this->Html->link('App Hub', ['plugin' => false, 'controller' => 'Reports', 'action' => 'crtApps', '?' => ['report_id' => $report->id]]);
-                    if ($template === 'settings' || $template === 'result') {
-                        $backLink .= '&nbsp;▶&nbsp;' . $this->Html->link('Auswahl Query', [
-                            'action' => 'queries']);
-                            if ($template === 'result') {
-                                $backLink .= '&nbsp;▶&nbsp;' . $this->Html->link('Data Item Settings', [
-                                    'action' => 'settings']);
-                            }
-                    } 
-                } 
-                if ($template !== 'home') {
-                    $backLink .= '&nbsp;▶&nbsp;';
-                }
-                $backLink .= $this->get('title');
-
-                echo $backLink; 
-            }
-            
-            
-            ?>
-        </div>
-        <div class="breadcrumb-report">
-            <?php if (!empty($report)): ?>
-                <?php echo h($report->report_name) . '&nbsp;';
-                echo $this->Html->image('icons/material_view.svg', array('title' => 'Report', 'height' => '16', 'width' => '16'));
-                 ?>
-            <?php endif; ?>
-        </div>
-    </div>
-    </div>
     <main class="main">
         <div class="container">
             <?= $this->Flash->render() ?>

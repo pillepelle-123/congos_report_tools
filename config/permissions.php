@@ -142,13 +142,19 @@ return [
         [
             'role' => '*',
             'controller' => 'Reports',
-            'action' => '*',
+            'action' => ['view', 'add', 'edit', 'delete', 'listUser'],
+        ],
+        [
+            'role' => 'admin',
+            'controller' => 'Reports',
+            'action' => ['index'],
         ],
         //all roles allowed to Reports
         [
             'role' => '*',
             'controller' => 'Users',
-            'action' => ['view', 'edit']
+            'action' => ['view', 'edit', 'settings', 'listUser'],
         ],
+
     ]
 ];

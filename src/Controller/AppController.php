@@ -29,6 +29,12 @@ use Cake\Controller\Controller;
 class AppController extends Controller
 {
     protected $identity;
+    protected $my_user; // beinhaltet auch die Reports des Users
+    protected $all_users;
+    protected $users_table;
+    protected $all_reports;
+    protected $reports_table;
+    protected $my_reports;
     /**
      * Initialization hook method.
      *
@@ -45,7 +51,28 @@ class AppController extends Controller
         $this->loadComponent('Flash');
         $this->viewBuilder()->setHelpers(helpers: ['Authentication.Identity']); // wichtig für Views!
 
-        $this->identity = $this->request->getAttribute('identity');
+        $this->identity = $this->request->getAttribute('identity') ?? [];
+   
+        if($this->identity) {
+            // Datenbank-Abfragen
+            $this->users_table = $this->fetchTable('Users');
+            // Alle User
+            $this->all_users = $this->users_table->find()
+                ->contain(['Reports']);
+            // Mein User
+            $this->my_user = $this->users_table->get($this->identity['id'], [
+                'contain' => ['Reports'],
+            ]);  
+            // Alle Reports
+            $this->reports_table = $this->fetchTable('Reports');
+            $this->all_reports = $this->reports_table->find()
+                ->contain(['Users']);
+            // Meine Reports
+            $this->my_reports = $this->reports_table->find()
+                ->where(['user_id' => $this->identity['id']])
+                ->orderBy(['Reports.modified' => 'DESC'])
+                ->contain(['Users']);
+        }
     }
 
     public function beforeRender(\Cake\Event\EventInterface $event)
