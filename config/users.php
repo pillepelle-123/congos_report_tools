@@ -2,9 +2,11 @@
 
 return[
     'OneTimePasswordAuthenticator.login' => false,
-    'Users.table' => 'App.Users',
-    
-    // 'Users' => [
+
+     'Users' => [
+        'table' => 'Users',
+        'controller' => 'Users',
+     ],
     //     'table' => 'users',
     //     'modelClass' => 'Users',
     //     'userModel' => 'Users',

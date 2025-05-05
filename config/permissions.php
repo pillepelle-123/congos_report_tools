@@ -54,7 +54,7 @@ return [
         //all bypass
         [
             'prefix' => false,
-            'plugin' => 'CakeDC/Users',
+            //'plugin' => 'CakeDC/Users',
             'controller' => 'Users',
             'action' => [
                 // LoginTrait,
@@ -107,13 +107,13 @@ return [
         //specific actions allowed for the all roles in Users plugin
         [
             'role' => '*',
-            'plugin' => 'CakeDC/Users',
+            //'plugin' => 'CakeDC/Users',
             'controller' => 'Users',
             'action' => ['profile', 'logout', 'linkSocial', 'callbackLinkSocial'],
         ],
         [
             'role' => '*',
-            'plugin' => 'CakeDC/Users',
+            //'plugin' => 'CakeDC/Users',
             'controller' => 'Users',
             'action' => 'resetOneTimePasswordAuthenticator',
             'allowed' => function (array $user, $role, \Cake\Http\ServerRequest $request) {

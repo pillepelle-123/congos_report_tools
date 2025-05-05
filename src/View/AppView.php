@@ -43,6 +43,8 @@ class AppView extends View
         //         'separator' => ' ▶ '            ]
         // ]);
         $this->loadHelper('AppCards');
+        $this->loadHelper('CakeDC/Users.AuthLink');
+        $this->loadHelper('CakeDC/Users.User');
 
     }
 }

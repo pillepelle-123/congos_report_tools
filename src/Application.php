@@ -55,8 +55,13 @@ class Application extends BaseApplication
             );
         }
 
-        $this->addPlugin(\CakeDC\Users\Plugin::class);
-        // Uncomment the line below to load your custom users.php config file
+        //$this->addPlugin(\CakeDC\Users\Plugin::class);
+        //$this->addPlugin('App', ['autoload' => true]); // PSt: Not working
+        //$this->addPlugin(\CakeDC\Users\Plugin::class, ['routes' => true, 'bootstrap' => true]);
+
+        $this->addPlugin('CakeDC/Users');//, ['routes' => true, 'bootstrap' => true]);
+        
+        // Load my own custom users.php config file
         Configure::write('Users.config', ['users']);
 
     }

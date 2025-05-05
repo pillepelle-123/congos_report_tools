@@ -53,7 +53,7 @@ class AppCardsHelper extends Helper
                 'description' => 'Anzeigen, anlegen, editieren und löschen von Usern',
                 'controller' => 'Users',
                 'action' => 'index',
-                'plugin' => 'CakeDC/Users',
+                //'plugin' => 'CakeDC/Users',
                 'role' => 'admin',
                 'icon'=> '/img/icons/admin_users_ffffff.svg',
         

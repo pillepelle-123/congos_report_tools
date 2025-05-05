@@ -16,7 +16,7 @@
     </aside>
     <div class="column column-80">
         <div class="users view content">
-            <h3><?= h('User: ' . $user->first_name) ?></h3>
+            <h3><?= h('User: ' . $user->username) ?></h3>
             <table>
                 <tr>
                     <th><?= __('Id') ?></th>
@@ -110,40 +110,6 @@
                 </blockquote>
             </div>
             <div class="related">
-                <h4><?= __('Related Failed Password Attempts') ?></h4>
-                <?php if (!empty($user->failed_password_attempts)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-                            <th><?= __('Id') ?></th>
-                            <th><?= __('User Id') ?></th>
-                            <th><?= __('Created') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
-                        </tr>
-                        <?php foreach ($user->failed_password_attempts as $failedPasswordAttempt) : ?>
-                        <tr>
-                            <td><?= h($failedPasswordAttempt->id) ?></td>
-                            <td><?= h($failedPasswordAttempt->user_id) ?></td>
-                            <td><?= h($failedPasswordAttempt->created) ?></td>
-                            <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'FailedPasswordAttempts', 'action' => 'view', $failedPasswordAttempt->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'FailedPasswordAttempts', 'action' => 'edit', $failedPasswordAttempt->id]) ?>
-                                <?= $this->Form->postLink(
-                                    __('Delete'),
-                                    ['controller' => 'FailedPasswordAttempts', 'action' => 'delete', $failedPasswordAttempt->id],
-                                    [
-                                        'method' => 'delete',
-                                        'confirm' => __('Are you sure you want to delete # {0}?', $failedPasswordAttempt->id),
-                                    ]
-                                ) ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
-                <?php endif; ?>
-            </div>
-            <div class="related">
                 <h4><?= __('Related Reports') ?></h4>
                 <?php if (!empty($user->reports)) : ?>
                 <div class="table-responsive">
@@ -151,8 +117,6 @@
                         <tr>
                             <th><?= __('Id') ?></th>
                             <th><?= __('Name') ?></th>
-                            <th><?= __('Xml') ?></th>
-                            <th><?= __('User Id') ?></th>
                             <th><?= __('Created') ?></th>
                             <th><?= __('Modified') ?></th>
                             <th class="actions"><?= __('Actions') ?></th>
@@ -161,8 +125,6 @@
                         <tr>
                             <td><?= h($report->id) ?></td>
                             <td><?= h($report->name) ?></td>
-                            <td><?= h($report->xml) ?></td>
-                            <td><?= h($report->user_id) ?></td>
                             <td><?= h($report->created) ?></td>
                             <td><?= h($report->modified) ?></td>
                             <td class="actions">
@@ -174,64 +136,6 @@
                                     [
                                         'method' => 'delete',
                                         'confirm' => __('Are you sure you want to delete # {0}?', $report->id),
-                                    ]
-                                ) ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
-                <?php endif; ?>
-            </div>
-            <div class="related">
-                <h4><?= __('Related Social Accounts') ?></h4>
-                <?php if (!empty($user->social_accounts)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-                            <th><?= __('Id') ?></th>
-                            <th><?= __('User Id') ?></th>
-                            <th><?= __('Provider') ?></th>
-                            <th><?= __('Username') ?></th>
-                            <th><?= __('Reference') ?></th>
-                            <th><?= __('Avatar') ?></th>
-                            <th><?= __('Description') ?></th>
-                            <th><?= __('Link') ?></th>
-                            <th><?= __('Token') ?></th>
-                            <th><?= __('Token Secret') ?></th>
-                            <th><?= __('Token Expires') ?></th>
-                            <th><?= __('Active') ?></th>
-                            <th><?= __('Data') ?></th>
-                            <th><?= __('Created') ?></th>
-                            <th><?= __('Modified') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
-                        </tr>
-                        <?php foreach ($user->social_accounts as $socialAccount) : ?>
-                        <tr>
-                            <td><?= h($socialAccount->id) ?></td>
-                            <td><?= h($socialAccount->user_id) ?></td>
-                            <td><?= h($socialAccount->provider) ?></td>
-                            <td><?= h($socialAccount->username) ?></td>
-                            <td><?= h($socialAccount->reference) ?></td>
-                            <td><?= h($socialAccount->avatar) ?></td>
-                            <td><?= h($socialAccount->description) ?></td>
-                            <td><?= h($socialAccount->link) ?></td>
-                            <td><?= h($socialAccount->token) ?></td>
-                            <td><?= h($socialAccount->token_secret) ?></td>
-                            <td><?= h($socialAccount->token_expires) ?></td>
-                            <td><?= h($socialAccount->active) ?></td>
-                            <td><?= h($socialAccount->data) ?></td>
-                            <td><?= h($socialAccount->created) ?></td>
-                            <td><?= h($socialAccount->modified) ?></td>
-                            <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'SocialAccounts', 'action' => 'view', $socialAccount->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'SocialAccounts', 'action' => 'edit', $socialAccount->id]) ?>
-                                <?= $this->Form->postLink(
-                                    __('Delete'),
-                                    ['controller' => 'SocialAccounts', 'action' => 'delete', $socialAccount->id],
-                                    [
-                                        'method' => 'delete',
-                                        'confirm' => __('Are you sure you want to delete # {0}?', $socialAccount->id),
                                     ]
                                 ) ?>
                             </td>
