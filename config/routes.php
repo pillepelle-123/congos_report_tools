@@ -61,7 +61,9 @@ return function (RouteBuilder $routes): void {
          */
         $builder->connect('/pages/*', 'Pages::display');
 
-
+        // $builder->plugin('App/Users', ['path' => '/users'], function ($routes) {
+        //     $routes->fallbacks('DashedRoute');#
+        // });
         //$builder->connect('/users/index', ['controller' => 'Users', 'action' => 'index']);
 
 

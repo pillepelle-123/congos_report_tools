@@ -2,14 +2,28 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+use CakeDC\Users\Controller\UsersController as BaseUsersController;
 
 /**
  * Users Controller
  *
  * @property \App\Model\Table\UsersTable $Users
  */
-class UsersController extends AppController
+// class UsersController extends AppController
+class UsersController extends BaseUsersController
 {
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->loadComponent('CakeDC/Users.Setup');
+        if ($this->components()->has('Security')) {
+            $this->Security->setConfig(
+                'unlockedActions',
+                ['login', 'u2fRegister', 'u2fRegisterFinish', 'u2fAuthenticate', 'u2fAuthenticateFinish']
+            );
+        }
+    }
     /**
      * Index method
      *
@@ -33,8 +47,10 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        $user = $this->Users->get($id, contain: ['FailedPasswordAttempts', 'Reports', 'SocialAccounts']);
+        $user = $this->Users->get($id, ['contain' => ['FailedPasswordAttempts', 'Reports', 'SocialAccounts']]);
+        parent::view($id);
         $this->set(compact('user'));
+
     }
 
     /**
@@ -66,7 +82,7 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
-        $user = $this->Users->get($id, contain: []);
+        $user = $this->Users->get($id, ['contain' => []]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {

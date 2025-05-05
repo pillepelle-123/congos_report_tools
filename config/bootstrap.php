@@ -175,17 +175,21 @@ if ($fullBaseUrl) {
 }
 unset($fullBaseUrl);
 
+
+
 /*
  * Apply the loaded configuration settings to their respective systems.
  * This will also remove the loaded config data from memory.
  */
 Cache::setConfig(Configure::consume('Cache'));
-ConnectionManager::setConfig(Configure::consume('Datasources'));
-ConnectionManager::alias($_SERVER['SERVER_NAME'], 'default');
+ConnectionManager::setConfig(Configure::consume(var: 'Datasources'));
 TransportFactory::setConfig(Configure::consume('EmailTransport'));
 Mailer::setConfig(Configure::consume('Email'));
 Log::setConfig(Configure::consume('Log'));
 Security::setSalt(Configure::consume('Security.salt'));
+// Added PSt - automatische Auswahl der DB-Connection je nach Server
+$aliasSource = $_SERVER['SERVER_NAME'] ?? 'default';
+ConnectionManager::alias($aliasSource, 'default');
 
 /*
  * Setup detectors for mobile and tablet.
