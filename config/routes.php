@@ -64,6 +64,21 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/users', ['plugin' => null, 'controller' => 'Users', 'action' => 'listAdmin']);
         $builder->connect('/reports', ['plugin' => null, 'controller' => 'Reports', 'action' => 'listUser']);
 
+
+        // $builder->plugin('Tools/QueryExpander',  function ($routes) {
+        //     $routes->connect('/', ['controller' => 'QueryExpander', 'action' => 'queries']);
+        //     $routes->fallbacks(DashedRoute::class);
+        // });
+
+                // $builder->connect('/query-expander', ['plugin' => 'Tools/QueryExpander', 'controller' => 'QueryExpander', 'action' => 'queries']);
+        // $builder->connect('/query-expander', ['plugin' => 'Tools/QueryExpander', 'controller' => 'QueryExpander', 'action' => 'queries', '_ext' => NULL, ]);
+        $builder->connect('/tools/query-expander', ['plugin' => 'Tools/QueryExpander', 'controller' => 'QueryExpander', 'action' => 'queries', '_ext' => NULL, ]);
+
+
+
+
+        // $builder->connect('/queryExpander', ['plugin' => 'Tools/QueryExpander', 'controller' => 'QueryExpander', 'action' => 'queries', '_ext' => NULL]);
+
         // $builder->plugin('App/Users', ['path' => '/users'], function ($routes) {
         //     $routes->fallbacks('DashedRoute');#
         // });
@@ -86,9 +101,12 @@ return function (RouteBuilder $routes): void {
         $builder->fallbacks();
     });
 
+    
+
     $routes->scope('/apps', function (RouteBuilder $builder): void {
         $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'apps']);
-        $builder->connect('/query-expander/*', ['controller' => 'Users', 'action' => 'view']);
+
+
 
         // $builder->connect('/users', ['plugin' => null, 'controller' => 'Users', 'action' => 'listAdmin']);
         // $builder->connect('/reports', ['plugin' => null, 'controller' => 'Reports', 'action' => 'listUser']);

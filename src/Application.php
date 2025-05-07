@@ -54,12 +54,6 @@ class Application extends BaseApplication
                 (new TableLocator())->allowFallbackClass(false)
             );
         }
-
-        //$this->addPlugin(\CakeDC\Users\Plugin::class);
-        //$this->addPlugin('App', ['autoload' => true]); // PSt: Not working
-        //$this->addPlugin(\CakeDC\Users\Plugin::class, ['routes' => true, 'bootstrap' => true]);
-
-        // $this->addPlugin('CakeDC/Users');//, ['routes' => true, 'bootstrap' => true]);
         
         // Load my own custom users.php config file
         Configure::write('Users.config', ['users']);

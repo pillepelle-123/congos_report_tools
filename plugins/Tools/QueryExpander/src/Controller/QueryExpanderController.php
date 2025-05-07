@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace QueryExpander\Controller;
 
-use App\Controller\AppController as BaseController;
+
+//use App\Controller\AppController as BaseController;
+use QueryExpander\Controller\AppController as BaseController;
+#
 use QueryExpander\Lib\QueryExpanderUtility;
 
 class QueryExpanderController extends BaseController

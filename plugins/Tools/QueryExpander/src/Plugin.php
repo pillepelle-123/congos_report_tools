@@ -43,7 +43,7 @@ class QueryExpanderPlugin extends BasePlugin
         // remove this method hook if you don't need it
         $routes->plugin(
             'QueryExpander',
-            ['path' => '/query-expander'],
+            ['path' => '/'],
             function (RouteBuilder $builder) {
                 // Add custom routes here
 

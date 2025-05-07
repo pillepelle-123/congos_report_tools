@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Core\Plugin;
+
 /**
  * Tools Controller
  *
@@ -60,10 +62,16 @@ class ToolsController extends AppController
         // die();
 
         $tool = $this->request->getSession()->read('crt.tool');
+        // debug($tool->get('plugin'));
+        // debug($tool->get('controller'));
+
+        $a = Plugin::isLoaded('Tools/QueryExpander');
+        $b = Plugin::loaded();
+
 
         if ($report) {
             $this->request->getSession()->write(['crt.report'=> $report]);
-            return $this->redirect(['controller' => $tool->get('controller'), 'action' => 'queries']);
+            return $this->redirect(['plugin' => 'QueryExpander'/* $tool->get('plugin') */, 'controller' => 'QueryExpander' /*$tool->get('controller')*/, 'action' => 'queries', '_ext' => NULL]);
         } else {
             $this->Flash->error(__('No report selected.'));
             return $this->redirect(['action' => 'selectReport']);

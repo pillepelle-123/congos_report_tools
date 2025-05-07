@@ -6,7 +6,7 @@ use Cake\Routing\Router; // NEU
 Router::defaultRouteClass(DashedRoute::class);
 
 return function (RouteBuilder $routes): void {
-    $routes->scope('/', function (RouteBuilder $builder): void {
+    $routes->scope('/tool', function (RouteBuilder $builder): void {
         $builder->connect('/queries', ['controller' => 'QueryExpander', 'action' => 'queries']);  
         $builder->connect('/settings', ['controller' => 'QueryExpander', 'action' => 'settings']);
         $builder->connect('/result', ['controller' => 'QueryExpander', 'action' => 'result']);
