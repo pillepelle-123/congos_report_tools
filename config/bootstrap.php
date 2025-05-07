@@ -65,13 +65,13 @@ require CAKE . 'functions.php';
  * security risks. See https://github.com/josegonzalez/php-dotenv#general-security-information
  * for more information for recommended practices.
 */
-// if (!env('APP_NAME') && file_exists(CONFIG . '.env')) {
-//     $dotenv = new \josegonzalez\Dotenv\Loader([CONFIG . '.env']);
-//     $dotenv->parse()
-//         ->putenv()
-//         ->toEnv()
-//         ->toServer();
-// }
+if (!env('APP_NAME') && file_exists(CONFIG . '.env')) {
+    $dotenv = new \josegonzalez\Dotenv\Loader([CONFIG . '.env']);
+    $dotenv->parse()
+        ->putenv()
+        ->toEnv()
+        ->toServer();
+}
 
 /*
  * Initializes default Config store and loads the main configuration file (app.php)
@@ -188,9 +188,15 @@ TransportFactory::setConfig(Configure::consume('EmailTransport'));
 Mailer::setConfig(Configure::consume('Email'));
 Log::setConfig(Configure::consume('Log'));
 Security::setSalt(Configure::consume('Security.salt'));
+
 // Added PSt - automatische Auswahl der DB-Connection je nach Server
 $aliasSource = $_SERVER['SERVER_NAME'] ?? 'default';
 ConnectionManager::alias($aliasSource, 'default');
+
+// Added PSt - Debug Mode in app_local.php auf Remote Server automatisch auf false setzen
+// if ($_SERVER['SERVER_NAME'] !== 'localhost') {
+//     Configure::write('debug',false);
+// }
 
 /*
  * Setup detectors for mobile and tablet.

@@ -9,7 +9,7 @@
                         $backLinkText = '';
                         $info = $this->UserInfo->getInfo($this, $this->request);
 
-                        debug($info);
+                        //debug($info);
                         //die();
 
                         if ($info['template'] !== 'home') {
@@ -23,16 +23,23 @@
                                 $lastPageLink = ['controller' => 'Users', 'action' => 'settings', $this->Identity->get('id')];
                                 $backLinkText .= $delimiter . $this->Html->link($lastPageTitle, url: $lastPageLink);
                             }
-                            if ($info['action'] === 'edit' || $info['action'] === 'view') {
+                            if ($info['action'] === 'edit' || $info['action'] === 'view' || $info['action'] === 'add') {
                                 $lastPageTitle = 'Admin: Users';
-                                $lastPageLink = ['controller' => 'Users', 'action' => 'index', $this->Identity->get('id')];
+                                $lastPageLink = ['controller' => 'Users', 'action' => 'listAdmin'];
                                 $backLinkText .= $delimiter . $this->Html->link($lastPageTitle, url: $lastPageLink);
                             }
                         }
                         if ($info['controller'] === 'Reports') {
-                            if ($info['action'] === 'edit' || $info['action'] === 'view') {
-                                $lastPageTitle = 'My Reports';
-                                $lastPageLink = ['controller' => 'Reports', 'action' => 'index'];
+                            if ($info['action'] === 'edit' || $info['action'] === 'view' || $info['action'] === 'add') {
+                                if($this->request->getSession()->read('clickpath')[1]['url'] === '/reports/list-admin') {
+                                    $lastPageTitle = 'Admin: Reports';
+                                    $lastPageLink = ['controller' => 'Reports', 'action' => 'listAdmin'];
+                                } else {
+                                    $lastPageTitle = 'My Reports';
+                                    $lastPageLink = ['controller' => 'Reports', 'action' => 'listUser'];
+                                }
+                                // $lastPageTitle = 'My Reports';
+                                // $lastPageLink = ['controller' => 'Reports', 'action' => 'listUser'];
                                 $backLinkText .= $delimiter . $this->Html->link($lastPageTitle, url: $lastPageLink);
                             }
                         }

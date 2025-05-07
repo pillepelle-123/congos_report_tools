@@ -12,7 +12,7 @@
 use Cake\Core\Configure;
 
 ?>
-<div class="users form large-10 medium-9 columns">
+<div class="users register content">
     <?= $this->Form->create($user); ?>
     <fieldset>
         <legend><?= __d('cake_d_c/users', 'Add User') ?></legend>

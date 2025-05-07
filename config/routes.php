@@ -61,7 +61,8 @@ return function (RouteBuilder $routes): void {
          */
         $builder->connect('/pages/*', 'Pages::display');
 
-        $builder->connect('/users', ['plugin' => null, 'controller' => 'Users', 'action' => 'index']);
+        $builder->connect('/users', ['plugin' => null, 'controller' => 'Users', 'action' => 'listAdmin']);
+        $builder->connect('/reports', ['plugin' => null, 'controller' => 'Reports', 'action' => 'listUser']);
 
         // $builder->plugin('App/Users', ['path' => '/users'], function ($routes) {
         //     $routes->fallbacks('DashedRoute');#
@@ -84,6 +85,43 @@ return function (RouteBuilder $routes): void {
          */
         $builder->fallbacks();
     });
+
+    $routes->scope('/apps', function (RouteBuilder $builder): void {
+        $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'apps']);
+        $builder->connect('/query-expander/*', ['controller' => 'Users', 'action' => 'view']);
+
+        // $builder->connect('/users', ['plugin' => null, 'controller' => 'Users', 'action' => 'listAdmin']);
+        // $builder->connect('/reports', ['plugin' => null, 'controller' => 'Reports', 'action' => 'listUser']);
+
+        $builder->fallbacks();
+    });
+
+    $routes->scope('/users', function (RouteBuilder $builder): void {
+        $builder->connect('/', ['controller' => 'Users', 'action' => 'listUser']);
+        $builder->connect('/view/*', ['controller' => 'Users', 'action' => 'view']);
+        $builder->connect('/add', ['controller' => 'Users', 'action' => 'add']);
+        $builder->connect('/edit/*', ['controller' => 'Users', 'action' => 'edit']);
+        $builder->connect('/delete/*', defaults: ['controller' => 'Users', 'action' => 'delete']);
+        $builder->connect('/settings/*', defaults: ['controller' => 'Users', 'action' => 'settings']);
+        $builder->connect('/change-password/*', defaults: ['controller' => 'Users', 'action' => 'changePassword']);
+
+        // $builder->connect('/users', ['plugin' => null, 'controller' => 'Users', 'action' => 'listAdmin']);
+        // $builder->connect('/reports', ['plugin' => null, 'controller' => 'Reports', 'action' => 'listUser']);
+
+        $builder->fallbacks();
+    });
+
+    $routes->scope('/reports', function (RouteBuilder $builder): void {
+        $builder->connect('/', ['controller' => 'Reports', 'action' => 'listUser']);
+        $builder->connect('/list-admin', ['controller' => 'Reports', 'action' => 'listAdmin']);
+        $builder->connect('/view/*', ['controller' => 'Reports', 'action' => 'view']);
+        $builder->connect('/add', ['controller' => 'Reports', 'action' => 'add']);
+        $builder->connect('/edit/*', ['controller' => 'Reports', 'action' => 'edit']);
+        $builder->connect('/delete/*', ['controller' => 'Reports', 'action' => 'delete']);
+
+        $builder->fallbacks();
+    });
+
 
     /*
      * If you need a different set of middleware or none at all,

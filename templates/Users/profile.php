@@ -13,7 +13,8 @@
     <h3><?= $this->Html->image(
             empty($user->avatar) ? $avatarPlaceholder : $user->avatar,
             ['width' => '180', 'height' => '180']
-        ); ?></h3>
+        ); ?>
+    </h3>
     <h3>
         <?=
         $this->Html->tag(

@@ -73,6 +73,11 @@ class AppController extends Controller
                 ->orderBy(['Reports.modified' => 'DESC'])
                 ->contain(['Users']);
         }
+
+        $this->paginate = [
+            'limit' => 10, // Max. 25 Einträge pro Seite
+            'maxLimit' => 100 // Absolute Obergrenze (falls per URL manipuliert)
+        ];
     }
 
     public function beforeRender(\Cake\Event\EventInterface $event)
@@ -93,5 +98,17 @@ class AppController extends Controller
             $this->set('title', ucfirst($action) . ' ' . ucfirst($controller));
         }
     }
+
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+{
+    $clickpath = $this->request->getSession()->read('clickpath', []);
+    
+    array_unshift($clickpath, [
+        'url' => $this->request->getUri()->getPath(),
+        'time' => time()
+    ]);
+    
+    $this->request->getSession()->write('clickpath', array_slice($clickpath, 0, 10));
+}
 
 }

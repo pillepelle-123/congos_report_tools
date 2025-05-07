@@ -4,9 +4,9 @@
  * @var iterable<\App\Model\Entity\User> $users
  */
 ?>
-<div class="users index content">
+<div class="users list_admin content">
     <?= $this->Html->link(__('New User'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Users') ?></h3>
+    <h3><?= __($this->get('title')) ?></h3>
     <div>
     </div>
     <div class="table-responsive">
@@ -70,8 +70,12 @@
                     <td class="actions">
                         <?= $this->Html->image('icons/material_view_292929.svg', array('title' => 'View', 'alt' => 'View', 'url' => ['action' => 'view', $user->id])); ?>
                         <?= $this->Html->image('icons/material_edit_292929.svg', array('title' => 'Edit', 'alt' => 'Edit', 'url' => ['action' => 'edit', $user->id])); ?>
-                        <?= $this->Html->image('icons/material_delete_292929.svg', array('title' => 'Delete', 'alt' => 'Delete', 'url' => ['action' => 'delete', $user->id], 'options' => ['method' => 'delete',
-                                'confirm' => __('Are you sure you want to delete # {0}?', $user->id),])); ?>
+
+                        <?= $this->Form->postLink(
+                            $this->Html->image('icons/material_delete_292929.svg', ['alt' => 'Delete']), ['action' => 'delete', $user->id], ['confirm' => 'Möchtest du den User wirklich löschen?', 'escape' => false]
+                        ) ?>
+
+
                                 <?php /*
                         <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
@@ -98,6 +102,6 @@
             <?= $this->Paginator->next(__('next') . ' >') ?>
             <?= $this->Paginator->last(__('last') . ' >>') ?>
         </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
+        <p class="paginator-counter"><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
     </div>
 </div>

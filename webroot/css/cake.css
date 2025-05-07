@@ -31,9 +31,10 @@
     --color-crt-grau-stufe-6: #404040;
     --color-crt-grau-stufe-7: #292929;
     --color-crt-grau-stufe-8: #222222;
-    --color-crt-grau-stufe-9: #1a1a1a;
+    --color-crt-grau-stufe-9: #1b1b1b;
     --color-crt-grau-stufe-10: #000000;
 
+    /* CRT Colors grau */
     --color-crt-rot-stufe-1: #fce4e4;
     --color-crt-rot-stufe-2: #f8d7da;
     --color-crt-rot-stufe-3: #f5c6cb;
@@ -134,7 +135,8 @@ th {
     border-bottom: 0.4rem solid var(--color-crt-blau-stufe-4);
 }
 
-td, .view th {
+td,
+.vertical-table th {
     border: none;
 }
 
@@ -276,7 +278,9 @@ pre {
 }
 
 .top-nav-title img {
-    margin: 11px 0px 0px 10px;
+    width: 50px;
+    height: 50px;
+    /* margin: 11px 0px 0px 10px; */
 }
 
 
@@ -312,11 +316,11 @@ pre {
     justify-content: baseline;
     font-size: 1.2rem;
     width: 100%;
-    display: flex;
-    /*height: 3.4rem;*/
+    height: 3.4rem;
     padding-top: 10px;
     padding-left: 1%;
     padding-right: 1%;
+    margin-bottom: 30px;
     /*border-bottom: 1px solid var(--color-crt-blau-stufe-4);*/
 }
 
@@ -334,8 +338,8 @@ pre {
 }
 
 .actions img {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     
 }
 
@@ -349,10 +353,24 @@ pre {
 /* Utility */
 .table-responsive {
     display: block;
-    width: 100%;
+    /* width: 100%;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch; */
+    overflow-x: scroll;
+    overflow-y: hidden;
+    /* -webkit-overflow-scrolling: touch; */
 }
+
+.table-responsive table {
+    min-width: 100%;
+    width: max-content;
+}
+
+.table-responsive th, .table-responsive td {
+    padding: 0px 10px;
+}
+
+
 /* Main */
 /* .main {
     padding-top: 40px;
@@ -364,7 +382,7 @@ pre {
 }
 
 .content {
-    padding: 2rem;
+    padding: 1%;
     background: var(--color-white);
     border-radius: 0.4rem;
     /* Thanks Stripe */
@@ -377,7 +395,14 @@ pre {
 
 /* ### Seitenspezifisch ### */
 
-/* Index */
+/* Template "apps" */
+
+.apps-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
 #user_menu {
     list-style-type: none;
     margin: 0;
@@ -459,6 +484,7 @@ pre {
 
 
 .app-card-admin header {
+    height: 70px;
     background-color:  var(--color-crt-blau-stufe-7);
     color: var(--color-white);
     padding: 20px 20px 0px 20px;
@@ -483,7 +509,7 @@ pre {
 
 
 .app-card-user div, .app-card-admin div {
-    padding: 0px 20px 20px 20px;
+    padding: 10px 20px 20px 20px;
 }
 
 
@@ -614,6 +640,10 @@ input[type='color'] {
     color: var(--color-lightgray);
     text-decoration: none;
 }
+.paginator-counter {
+    font-size: 1.25rem;
+}
+
 .first a,
 .prev a,
 .next a,

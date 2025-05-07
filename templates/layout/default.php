@@ -47,8 +47,8 @@ $cakeDescription = 'Congos Report Tools';
     <div class="top-nav-container">
         <nav class="top-nav">
             <div class="top-nav-title">
-                <?= $this->Html->image('crt_logo_50x60.png', array('title' => 'Congos Report Tools', 'url' => '/')) ?>
-                <!-- <a href="<? /*= $this->Url->build('/') */?>"><span>C</span>ongos <span>R</span>eport <span>T</span>ools</a> -->
+                <?= $this->Html->image('icons/crt_ffffff.svg', array('title' => 'Congos Report Tools', 'url' => '/')) ?>
+               <!--<a href="<? /*= $this->Url->build('/') */?>"><span>C</span>ongos <span>R</span>eport <span>T</span>ools</a> -->
             </div>
             <div class="top-nav-links">
 
@@ -65,8 +65,8 @@ $cakeDescription = 'Congos Report Tools';
                         </li>
                     </ul>
                     
-                <?php endif; ?>    
-
+                <?php endif; ?>  
+                
             </div>
             
         </nav>

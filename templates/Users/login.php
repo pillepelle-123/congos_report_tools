@@ -12,7 +12,7 @@
 use Cake\Core\Configure;
 
 ?>
-<div class="users form">
+<div class="users login content">
     <?= $this->Flash->render('auth') ?>
     <?= $this->Form->create() ?>
     <fieldset>

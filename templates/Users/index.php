@@ -6,7 +6,7 @@
 ?>
 <div class="users index content">
     <?= $this->Html->link(__('New User'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Users') ?></h3>
+    <h3><?= __($this->get('title')) ?></h3>
     <div>
     </div>
     <div class="table-responsive">

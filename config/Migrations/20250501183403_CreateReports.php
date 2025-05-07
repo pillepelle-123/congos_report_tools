@@ -16,6 +16,7 @@ class CreateReports extends BaseMigration
     {
         $table = $this->table('reports');
         $table->addColumn('name', 'string', [
+            'autoIncrement' => true,
             'default' => null,
             'limit' => 255,
             'null' => false,

@@ -19,7 +19,7 @@
     </aside> */
     ?>
     <div class="column <?php //column-80 ?>">
-        <div class="users form content">
+        <div class="users settings content">
         <h3><?= $this->get('title') ?></h3>
             <?= $this->Form->create($user) ?>
             <fieldset>

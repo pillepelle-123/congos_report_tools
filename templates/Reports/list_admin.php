@@ -4,7 +4,7 @@
  * @var iterable<\App\Model\Entity\Report> $reports
  */
 ?>
-<div class="reports index content">
+<div class="reports list_admin content">
     <?= $this->Html->link(__('New Report'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <h3><?= __($this->get('title')) ?></h3>
     <div class="table-responsive">
@@ -58,6 +58,6 @@
             <?= $this->Paginator->next(__('next') . ' >') ?>
             <?= $this->Paginator->last(__('last') . ' >>') ?>
         </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
+        <p class="paginator-counter"><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
     </div>
 </div>

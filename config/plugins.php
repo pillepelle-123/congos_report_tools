@@ -33,4 +33,7 @@ return [
     'Migrations' => ['onlyCli' => true],
 
     // Additional plugins here
+    // CRT Apps
+    'QueryExpander' => [],
+    
 ];

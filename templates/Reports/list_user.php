@@ -4,16 +4,18 @@
  * @var iterable<\App\Model\Entity\Report> $reports
  */
 ?>
-<div class="reports index content">
+<div class="reports list_user content">
     <?= $this->Html->link(__('New Report'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <h3><?= __($this->get('title')) ?></h3>
     <div class="table-responsive">
         <table>
             <thead>
                 <tr>
+                    <?php /*
                     <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('name') ?></th>
                     <th><?= $this->Paginator->sort('user_id') ?></th>
+                    */ ?>
+                    <th><?= $this->Paginator->sort('name') ?></th>
                     <th><?= $this->Paginator->sort('created') ?></th>
                     <th><?= $this->Paginator->sort('modified') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
@@ -22,9 +24,11 @@
             <tbody>
                 <?php foreach ($reports as $report): ?>
                 <tr>
+                    <?php /*
                     <td><?= $this->Number->format($report->id) ?></td>
-                    <td><?= h($report->name) ?></td>
                     <td><?= $report->hasValue('user') ? $this->Html->link($report->user->username, ['controller' => 'Users', 'action' => 'view', $report->user->id]) : '' ?></td>
+                    */ ?>
+                    <td><?= h($report->name) ?></td>
                     <td><?= h($report->created) ?></td>
                     <td><?= h($report->modified) ?></td>
                     <td class="actions">
@@ -64,6 +68,6 @@
             <?= $this->Paginator->next(__('next') . ' >') ?>
             <?= $this->Paginator->last(__('last') . ' >>') ?>
         </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
+        <p class="paginator-counter"><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
     </div>
 </div>

@@ -23,12 +23,14 @@ class AppCardsHelper extends Helper
             $identity_id = $identity->get('id');
         }
         
-        $this->_defaultConfig['cards'] = [
+        $this->_defaultConfig['home'] = [
             [
+                'color'=> 'var(--color-crt-grau-stufe-7)',
                 'header' => 'Run CRT App', 
                 'description' => 'Der eigentliche Zauber',
-                'controller' => 'Pages',
-                'action' => 'test',
+                'url' => '/apps',
+                // 'controller' => 'Pages',
+                // 'action' => 'display',
                 'role' => 'user',
                 'icon'=> '/img/icons/crt_ffffff.png',
             ],
@@ -67,13 +69,24 @@ class AppCardsHelper extends Helper
                 'icon'=> '/img/icons/admin_reports_ffffff.svg',
             ],
         ];
+        $this->_defaultConfig['apps'] = [
+            [
+                'color'=> 'var(--color-crt-waldgrün)',
+                'header' => 'Query Expander', 
+                'description' => 'Der eigentliche Zauber',
+                'controller' => 'Pages',
+                'action' => 'test',
+                'role' => 'user',
+                'icon'=> '/img/icons/app_query_expander_ffffff.svg',
+            ],
+        ];
     }
 
-    public function getCards($role = null): array
+    public function getCards($domain = null, $role = null): array
     {
         if ($role) {
             if ($role === 'admin') {
-                return array_filter($this->_defaultConfig['cards'], function($card) use ($role) {
+                return array_filter($this->_defaultConfig[$domain], function($card) use ($role) {
                     return $role === 'admin' ? $card['role'] === 'admin' || $card['role'] === 'user' : $card['role'] === $role;
                 });
             }
@@ -81,7 +94,7 @@ class AppCardsHelper extends Helper
             //     return $card['role'] === $role;
             // });
         }
-        return $this->_defaultConfig['cards'];
+        return $this->_defaultConfig[$domain];
     }
 
     public function renderCard(array $app_card): string
@@ -89,10 +102,10 @@ class AppCardsHelper extends Helper
         return $this->getView()->element('app_card', compact('app_card'));
     }
 
-    public function renderAll($role = null): string
+    public function renderAll($domain = null, $role = null): string
     {
         $html = '';
-        foreach ($this->getCards($role) as $app_card) {
+        foreach ($this->getCards($domain, $role) as $app_card) {
             $html .= $this->renderCard($app_card);
         }
         return $html;

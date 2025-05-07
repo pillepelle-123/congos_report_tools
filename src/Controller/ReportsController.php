@@ -6,10 +6,16 @@ namespace App\Controller;
 /**
  * Reports Controller
  *
- * @property \App\Model\Table\ReportsTable $Reports
+ * //@property \App\Model\Table\ReportsTable $Reports
+ * @property \Cake\ORM\Table $ReportsTable
  */
 class ReportsController extends AppController
 {
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->ReportsTable = $this->fetchTable('Reports');
+    }
     /**
      * Index method
      *
@@ -58,7 +64,7 @@ class ReportsController extends AppController
      */
     public function view($id = null)
     {
-        $report = $this->Reports->get($id, contain: ['Users']);
+        $report = $this->reports_table->get($id, contain: ['Users']);
         $this->set(compact('report'));
     }
 
@@ -69,14 +75,19 @@ class ReportsController extends AppController
      */
     public function add()
     {
-        $report = $this->Reports->newEmptyEntity();
+        $report = $this->reports_table->newEmptyEntity();
         if ($this->request->is('post')) {
             $requestData = $this->request->getData();
             $report = $this->Reports->patchEntity($report, $this->request->getData());
             if ($this->Reports->save($report)) {
                 $this->Flash->success(__('The report has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                if ($this->identity->get('role') === 'admin') {
+                    return $this->redirect(['action' => 'listAdmin']);
+                } else {
+                    return $this->redirect(['action' => 'listUser']);
+                }
+                //return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The report could not be saved. Please, try again.'));
         }
@@ -93,19 +104,39 @@ class ReportsController extends AppController
      */
     public function edit($id = null)
     {
-        $report = $this->reports_table->get($id, contain: []);
+        $report = $this->reports_table->get($id, contain: ['Users']);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $report = $this->Reports->patchEntity($report, $this->request->getData());
-            if ($this->Reports->save($report)) {
+            $report = $this->reports_table->patchEntity($report, $this->request->getData());
+            if ($this->reports_table->save($report)) {
                 $this->Flash->success(__('The report has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer());
             }
             $this->Flash->error(__('The report could not be saved. Please, try again.'));
         }
-        $users = $this->Reports->Users->find('list', limit: 200)->all();
+        $users = $this->all_users;
         $this->set(compact('report', 'users'));
     }
+
+    // public function edit($id = null)
+    // {
+    //     $user = $this->users_table->get($id, contain: ['Reports']);
+    //     // $user = $this->users_table->find()->contain(['Reports'])->where(['id' => $id])->first();
+
+    //     // $this->viewBuilder()->setOption('serialize', [$table_alias, 'tableAlias']);
+    //     if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+
+    //         $user = $this->users_table->patchEntity($user, $this->request->getData());
+    //         if ($this->users_table->save($user)) {
+    //             $this->Flash->success(__d('cake_d_c/users', 'The user has been saved'));
+
+    //             //return $this->redirect([$this->referer()]);
+    //         } else {
+    //             $this->Flash->error(__d('cake_d_c/users', 'The user could not be saved'));
+    //         }
+    //     }
+    //     $this->set(compact('user'));
+    // }
 
     /**
      * Delete method
@@ -123,7 +154,15 @@ class ReportsController extends AppController
         } else {
             $this->Flash->error(__('The report could not be deleted. Please, try again.'));
         }
-
-        return $this->redirect(['action' => 'listUser']);
+        
+        if(str_contains($this->referer(), '/reports/view/') || str_contains($this->referer(), '/reports/edit/')) {
+            if ($this->identity->get('role') === 'admin') {
+                return $this->redirect(['action' => 'listAdmin']);
+            } else {
+                return $this->redirect(['action' => 'listUser']);
+            }
+        }
+        return $this->redirect(url: $this->referer());
     }
+
 }

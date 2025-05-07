@@ -1,4 +1,4 @@
-<div class="users form">
+<div class="users change_password content">
     <?= $this->Flash->render('auth') ?>
     <?= $this->Form->create($user) ?>
     <fieldset>
