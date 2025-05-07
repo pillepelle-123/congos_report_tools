@@ -28,9 +28,9 @@ class AppCardsHelper extends Helper
                 'color'=> 'var(--color-crt-grau-stufe-7)',
                 'header' => 'Run CRT App', 
                 'description' => 'Der eigentliche Zauber',
-                'url' => '/apps',
-                // 'controller' => 'Pages',
-                // 'action' => 'display',
+                //'url' => '/tools',
+                'controller' => 'Tools',
+                'action' => '',
                 'role' => 'user',
                 'icon'=> '/img/icons/crt_ffffff.png',
             ],
@@ -69,13 +69,14 @@ class AppCardsHelper extends Helper
                 'icon'=> '/img/icons/admin_reports_ffffff.svg',
             ],
         ];
-        $this->_defaultConfig['apps'] = [
+        $this->_defaultConfig['tools'] = [
             [
                 'color'=> 'var(--color-crt-waldgrün)',
-                'header' => 'Query Expander', 
-                'description' => 'Der eigentliche Zauber',
-                'controller' => 'Pages',
-                'action' => 'test',
+                'header' => 'Query Expander',
+                'description' => 'Erweitere Queries um Kopien von bestehenden Data Items und ändere deren Namen und Expression mittels Search & Replace.',
+                'controller' => 'Tools',
+                'action' => 'selectReport',
+                'tool' => 'queryExpander',
                 'role' => 'user',
                 'icon'=> '/img/icons/app_query_expander_ffffff.svg',
             ],

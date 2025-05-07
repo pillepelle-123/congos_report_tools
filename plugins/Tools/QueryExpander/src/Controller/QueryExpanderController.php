@@ -15,14 +15,14 @@ class QueryExpanderController extends BaseController
 
     public function queries()  // Umbenannt von queryExpander()
     {
-        $user = $this->user;
+        //$user = $this->user;
         $report = $this->request->getSession()->read('QueryExpander.report');
         // $report = $this->Reports->get($report_id, [
         //     'contain' => []
         // ]);
-        $content = $report->report_xml;
+        $content = $report->xml;
         // Report Informationen in Session speichern, um sie in allen andern Funktionen hier zu benutzen
-        $this->request->getSession()->write(['QueryExpander.report'=> $report]);
+        //$this->request->getSession()->write(['QueryExpander.report'=> $report]);
 
         try {
             // Entfernen von xmlns-Attributen, um Namespace-Probleme zu vermeiden
@@ -65,7 +65,7 @@ class QueryExpanderController extends BaseController
                 die("Keine Queries in der XML-Datei gefunden. Ist dies eine gültige Congos Report Definition?");
             }
             
-            $this->set(compact('user', 'report', 'queries'));
+            $this->set(compact('report', 'queries'));
 
         } catch (\Exception $e) {
             $this->Flash->error('Fehler beim Parsen und Auslesen der Queries: ' . $e->getMessage());

@@ -16,7 +16,8 @@ use Cake\Core\Configure;
     <?= $this->Flash->render('auth') ?>
     <?= $this->Form->create() ?>
     <fieldset>
-        <legend><?= __d('cake_d_c/users', 'Please enter your username and password') ?></legend>
+        <h3><b>C</b>ongos <b>R</b>eport <b>T</b>ools</h3>
+        <p> <?= h('Bitte logge dich ein.')?></p>
         <?= $this->Form->control('username', ['label' => __d('cake_d_c/users', 'Username'), 'required' => true]) ?>
         <?= $this->Form->control('password', ['label' => __d('cake_d_c/users', 'Password'), 'required' => true]) ?>
         <?php

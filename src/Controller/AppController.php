@@ -35,6 +35,7 @@ class AppController extends Controller
     protected $all_reports;
     protected $reports_table;
     protected $my_reports;
+    protected $tools_table;
     /**
      * Initialization hook method.
      *
@@ -49,6 +50,7 @@ class AppController extends Controller
         parent::initialize();
 
         $this->loadComponent('Flash');
+        
         $this->viewBuilder()->setHelpers(helpers: ['Authentication.Identity']); // wichtig für Views!
 
         $this->identity = $this->request->getAttribute('identity') ?? [];
@@ -72,6 +74,8 @@ class AppController extends Controller
                 ->where(['user_id' => $this->identity['id']])
                 ->orderBy(['Reports.modified' => 'DESC'])
                 ->contain(['Users']);
+            // Alle Apps
+            $this->tools_table = $this->fetchTable('Tools');
         }
 
         $this->paginate = [

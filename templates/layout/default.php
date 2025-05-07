@@ -76,7 +76,14 @@ $cakeDescription = 'Congos Report Tools';
 
     <main class="main">
         <div class="container">
-            <?= $this->Flash->render() ?>
+            <?php
+            // Flash messages, aber nicht beim redirect wenn User nicht eingeloggt ist
+            $flashMessages = $this->Flash->render();
+            if (strpos($flashMessages, 'not authorized') === false) {
+                echo $flashMessages;
+                
+            }
+            ?>
             <?= $this->fetch('content') ?>
         </div>
     </main>

@@ -51,8 +51,8 @@ use Cake\Utility\Security;
     protected array $_accessible = [
         '*' => true,
         'id' => false,
-        'is_superuser' => false,
-        'role' => false,
+        'is_superuser' => true,
+        'role' => true,
     ];
 
     /**

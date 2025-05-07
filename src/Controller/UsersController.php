@@ -16,6 +16,8 @@ use Cake\Validation\Validator;
 use CakeDC\Users\Exception\UserNotFoundException;
 use CakeDC\Users\Exception\WrongPasswordException;
 use Exception;
+use CakeDC\Auth\Authentication\AuthenticationService;
+use CakeDC\Users\Loader\LoginComponentLoader;
 
 /**
  * Users Controller
@@ -283,6 +285,15 @@ class UsersController extends BaseUsersController
         // $this->set('title', 'Change Password');
         $this->set(['user' => $user, 'title' => 'Change Password']);
         $this->viewBuilder()->setOption('serialize', ['user']);
+    }
+
+    public function login()
+    {
+        $this->getRequest()->getSession()->delete(AuthenticationService::TWO_FACTOR_VERIFY_SESSION_KEY);
+        $Login = LoginComponentLoader::forForm($this);
+
+        $this->set('title', 'Login');
+        return $Login->handleLogin(true, false);
     }
 
 }

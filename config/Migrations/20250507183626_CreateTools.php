@@ -16,7 +16,7 @@ class CreateTools extends BaseMigration
      */
     public function change(): void
     {
-        $table = $this->table('tools');
+        $table = $this->table('tools', ['id' => false, 'primary_key' => ['id']]);
         $table->addColumn('id', 'integer', [
             'autoIncrement' => true,
             'default' => null,
@@ -55,9 +55,5 @@ class CreateTools extends BaseMigration
             'name' => 'BY_DESCRIPTION',
             'unique' => false,
         ]);
-        $table = $this->table('tools', ['id' => false, 'primary_key' => ['id']]);
-        $table
-              ->addColumn('id', 'integer')
-              ->create();
     }
 }

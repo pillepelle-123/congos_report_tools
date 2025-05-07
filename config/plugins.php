@@ -31,9 +31,13 @@ return [
     'DebugKit' => ['onlyDebug' => true],
     'Bake' => ['onlyCli' => true, 'optional' => true],
     'Migrations' => ['onlyCli' => true],
+    'CakeDC/Users'=> [],
 
     // Additional plugins here
     // CRT Apps
-    'QueryExpander' => [],
+    //'QueryExpander' => [],
+    // 'Tools\QueryExpander' => [],
+    // 'Tools\\QueryExpander' => [],
+    'Tools/QueryExpander' => ['autoload' => true, 'bootstrap' => true, 'routes' => true],
     
 ];

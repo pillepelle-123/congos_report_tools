@@ -83,6 +83,13 @@ return [
                 'sendLoginLink',
                 'singleTokenLogin',
             ],
+            [
+                'prefix' => false,
+                //'plugin' => 'CakeDC/Users',
+                'controller' => 'Pages',
+                'action' => 'display',
+                'pass' => 'home',
+            ],
             'bypassAuth' => true,
         ],
         [
