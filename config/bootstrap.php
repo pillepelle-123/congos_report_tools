@@ -177,7 +177,6 @@ if ($fullBaseUrl) {
 unset($fullBaseUrl);
 
 
-
 /*
  * Apply the loaded configuration settings to their respective systems.
  * This will also remove the loaded config data from memory.

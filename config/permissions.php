@@ -162,6 +162,12 @@ return [
             'controller' => 'Users',
             'action' => ['view', 'edit', 'settings', 'listUser'],
         ],
+        // [
+        //     'role' => '*',
+        //     //'plugin'=> 'QueryExpander',
+        //     'controller' => 'QueryExpander',
+        //     'action' => ['queries', 'index'],
+        // ],
 
     ]
 ];

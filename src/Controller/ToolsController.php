@@ -71,7 +71,7 @@ class ToolsController extends AppController
 
         if ($report) {
             $this->request->getSession()->write(['crt.report'=> $report]);
-            return $this->redirect(['plugin' => 'QueryExpander'/* $tool->get('plugin') */, 'controller' => 'QueryExpander' /*$tool->get('controller')*/, 'action' => 'queries', '_ext' => NULL]);
+            return $this->redirect(['plugin' => 'QueryExpander'/* $tool->get('plugin') */, 'controller' => 'QueryExpander' /*$tool->get('controller')*/, 'action' => 'queries']);
         } else {
             $this->Flash->error(__('No report selected.'));
             return $this->redirect(['action' => 'selectReport']);

@@ -58,6 +58,9 @@ class Application extends BaseApplication
         // Load my own custom users.php config file
         Configure::write('Users.config', ['users']);
 
+        
+        $wd = $this->addPlugin('QueryExpander', ['routes' => true]);
+        // debug($wd);
     }
 
     /**
@@ -109,6 +112,7 @@ class Application extends BaseApplication
             });
             // Ensure routing middleware has already been added to the queue
             $middlewareQueue->add($csrf);
+
 
         return $middlewareQueue;
     }

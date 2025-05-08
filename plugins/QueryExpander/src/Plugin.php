@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tools\QueryExpander;
+namespace QueryExpander;
 
 use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
@@ -43,7 +43,7 @@ class QueryExpanderPlugin extends BasePlugin
         // remove this method hook if you don't need it
         $routes->plugin(
             'QueryExpander',
-            ['path' => '/'],
+            ['path' => '/query-expander'],
             function (RouteBuilder $builder) {
                 // Add custom routes here
 

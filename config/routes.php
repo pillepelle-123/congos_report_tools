@@ -49,6 +49,12 @@ return function (RouteBuilder $routes): void {
      */
     $routes->setRouteClass(DashedRoute::class);
 
+    // $routes->plugin('Tools/QueryExpander', function (RouteBuilder $routes) {
+    //     // Routes connected here are prefixed with '/debug-kit' and
+    //     // have the plugin route element set to 'DebugKit'.
+    //     $routes->connect('/{controller}');
+    // });
+
     $routes->scope('/', function (RouteBuilder $builder): void {
         /*
          * Here, we are connecting '/' (base path) to a controller called 'Pages',
@@ -63,27 +69,6 @@ return function (RouteBuilder $routes): void {
 
         $builder->connect('/users', ['plugin' => null, 'controller' => 'Users', 'action' => 'listAdmin']);
         $builder->connect('/reports', ['plugin' => null, 'controller' => 'Reports', 'action' => 'listUser']);
-
-
-        // $builder->plugin('Tools/QueryExpander',  function ($routes) {
-        //     $routes->connect('/', ['controller' => 'QueryExpander', 'action' => 'queries']);
-        //     $routes->fallbacks(DashedRoute::class);
-        // });
-
-                // $builder->connect('/query-expander', ['plugin' => 'Tools/QueryExpander', 'controller' => 'QueryExpander', 'action' => 'queries']);
-        // $builder->connect('/query-expander', ['plugin' => 'Tools/QueryExpander', 'controller' => 'QueryExpander', 'action' => 'queries', '_ext' => NULL, ]);
-        $builder->connect('/tools/query-expander', ['plugin' => 'Tools/QueryExpander', 'controller' => 'QueryExpander', 'action' => 'queries', '_ext' => NULL, ]);
-
-
-
-
-        // $builder->connect('/queryExpander', ['plugin' => 'Tools/QueryExpander', 'controller' => 'QueryExpander', 'action' => 'queries', '_ext' => NULL]);
-
-        // $builder->plugin('App/Users', ['path' => '/users'], function ($routes) {
-        //     $routes->fallbacks('DashedRoute');#
-        // });
-        //$builder->connect('/users/index', ['controller' => 'Users', 'action' => 'index']);
-
 
         /*
          * Connect catchall routes for all controllers.
@@ -101,12 +86,12 @@ return function (RouteBuilder $routes): void {
         $builder->fallbacks();
     });
 
-    
 
-    $routes->scope('/apps', function (RouteBuilder $builder): void {
-        $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'apps']);
-
-
+    $routes->scope('/tools', function (RouteBuilder $builder): void {
+        $builder->scope('/query-expander', function ($routes) {
+            $routes->loadPlugin('QueryExpander');
+        });
+        //$builder->connect('/', ['controller' => 'Users', 'action' => 'listUser']);
 
         // $builder->connect('/users', ['plugin' => null, 'controller' => 'Users', 'action' => 'listAdmin']);
         // $builder->connect('/reports', ['plugin' => null, 'controller' => 'Reports', 'action' => 'listUser']);
@@ -123,9 +108,6 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/settings/*', defaults: ['controller' => 'Users', 'action' => 'settings']);
         $builder->connect('/change-password/*', defaults: ['controller' => 'Users', 'action' => 'changePassword']);
 
-        // $builder->connect('/users', ['plugin' => null, 'controller' => 'Users', 'action' => 'listAdmin']);
-        // $builder->connect('/reports', ['plugin' => null, 'controller' => 'Reports', 'action' => 'listUser']);
-
         $builder->fallbacks();
     });
 
@@ -140,6 +122,7 @@ return function (RouteBuilder $routes): void {
         $builder->fallbacks();
     });
 
+    
 
     /*
      * If you need a different set of middleware or none at all,

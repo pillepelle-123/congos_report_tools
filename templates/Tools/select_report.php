@@ -96,6 +96,11 @@
     <?= $this->Form->button(__('Auswählen'), [
         'class' => 'btn-primary'
     ]) ?>
+
+<?php echo $this->Html->link(
+    'New todo',
+    ['plugin' => 'QueryExpander', 'controller' => 'QueryExpander', 'action' => 'queries']
+); ?>
     
     <?= $this->Form->end() ?>
 </div>
