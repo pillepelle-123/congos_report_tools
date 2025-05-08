@@ -7,7 +7,7 @@
  * different URLs to chosen controllers and their actions (functions).
  *
  * It's loaded within the context of `Application::routes()` method which
- * receives a `RouteBuilder` instance `$routes` as method argument.
+ * receives a `Routeroutes` instance `$routes` as method argument.
  *
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -49,26 +49,26 @@ return function (RouteBuilder $routes): void {
      */
     $routes->setRouteClass(DashedRoute::class);
 
-    // $routes->plugin('Tools/QueryExpander', function (RouteBuilder $routes) {
+    // $routes->plugin('Tools/QueryExpander', function (Routeroutes $routes) {
     //     // Routes connected here are prefixed with '/debug-kit' and
     //     // have the plugin route element set to 'DebugKit'.
     //     $routes->connect('/{controller}');
     // });
 
-    $routes->scope('/', function (RouteBuilder $builder): void {
+    $routes->scope('/', function (RouteBuilder $routes): void {
         /*
          * Here, we are connecting '/' (base path) to a controller called 'Pages',
          * its action called 'display', and we pass a param to select the view file
          * to use (in this case, templates/Pages/home.php)...
          */
-        $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+        $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
         /*
          * ...and connect the rest of 'Pages' controller's URLs.
          */
-        $builder->connect('/pages/*', 'Pages::display');
+        $routes->connect('/pages/*', 'Pages::display');
 
-        $builder->connect('/users', ['plugin' => null, 'controller' => 'Users', 'action' => 'listAdmin']);
-        $builder->connect('/reports', ['plugin' => null, 'controller' => 'Reports', 'action' => 'listUser']);
+        $routes->connect('/users', ['plugin' => null, 'controller' => 'Users', 'action' => 'listAdmin']);
+        $routes->connect('/reports', ['plugin' => null, 'controller' => 'Reports', 'action' => 'listUser']);
 
         /*
          * Connect catchall routes for all controllers.
@@ -76,50 +76,59 @@ return function (RouteBuilder $routes): void {
          * The `fallbacks` method is a shortcut for
          *
          * ```
-         * $builder->connect('/{controller}', ['action' => 'index']);
-         * $builder->connect('/{controller}/{action}/*', []);
+         * $routes->connect('/{controller}', ['action' => 'index']);
+         * $routes->connect('/{controller}/{action}/*', []);
          * ```
          *
          * It is NOT recommended to use fallback routes after your initial prototyping phase!
          * See https://book.cakephp.org/5/en/development/routing.html#fallbacks-method for more information
          */
-        $builder->fallbacks();
+        $routes->fallbacks();
     });
 
 
-    $routes->scope('/tools', function (RouteBuilder $builder): void {
-        $builder->scope('/query-expander', function ($routes) {
+    $routes->scope('/tools', function (RouteBuilder $routes): void {
+        $routes->connect('/',['controller' => 'Tools', 'action' => 'index']);
+        $routes->connect('/select-report',['controller' => 'Tools', 'action' => 'selectReport']);
+        $routes->connect('/process-selection',['controller' => 'Tools', 'action' => 'processSelection']);
+        // Tool: QueryExpander
+        $routes->scope('/query-expander', function ($routes) {
             $routes->loadPlugin('QueryExpander');
+            $routes->get('/queries', ['controller' => 'QueryExpander', 'action' => 'queries']);
+            $routes->get('/step2', ['controller' => 'QueryExpander', 'action' => 'step2']);
+            $routes->get('/results', ['controller' => 'QueryExpander', 'action' => 'results']);
+            $routes->get('/result-download', ['controller' => 'QueryExpander', 'action' => 'resultDownload']);
+            
         });
-        //$builder->connect('/', ['controller' => 'Users', 'action' => 'listUser']);
+        //$routes->connect('/', ['controller' => 'Users', 'action' => 'listUser']);
 
-        // $builder->connect('/users', ['plugin' => null, 'controller' => 'Users', 'action' => 'listAdmin']);
-        // $builder->connect('/reports', ['plugin' => null, 'controller' => 'Reports', 'action' => 'listUser']);
+        // $routes->connect('/users', ['plugin' => null, 'controller' => 'Users', 'action' => 'listAdmin']);
+        // $routes->connect('/reports', ['plugin' => null, 'controller' => 'Reports', 'action' => 'listUser']);
 
-        $builder->fallbacks();
+        $routes->fallbacks();
     });
 
-    $routes->scope('/users', function (RouteBuilder $builder): void {
-        $builder->connect('/', ['controller' => 'Users', 'action' => 'listUser']);
-        $builder->connect('/view/*', ['controller' => 'Users', 'action' => 'view']);
-        $builder->connect('/add', ['controller' => 'Users', 'action' => 'add']);
-        $builder->connect('/edit/*', ['controller' => 'Users', 'action' => 'edit']);
-        $builder->connect('/delete/*', defaults: ['controller' => 'Users', 'action' => 'delete']);
-        $builder->connect('/settings/*', defaults: ['controller' => 'Users', 'action' => 'settings']);
-        $builder->connect('/change-password/*', defaults: ['controller' => 'Users', 'action' => 'changePassword']);
+    $routes->scope('/users', function (RouteBuilder $routes): void {
+        $routes->connect('/', ['controller' => 'Users', 'action' => 'listUser']);
+        $routes->connect('/view/*', ['controller' => 'Users', 'action' => 'view']);
+        $routes->connect('/add', ['controller' => 'Users', 'action' => 'add']);
+        $routes->connect('/edit/*', ['controller' => 'Users', 'action' => 'edit']);
+        $routes->connect('/delete/*', defaults: ['controller' => 'Users', 'action' => 'delete']);
+        $routes->connect('/settings/*', defaults: ['controller' => 'Users', 'action' => 'settings']);
+        $routes->connect('/change-password/*', defaults: ['controller' => 'Users', 'action' => 'changePassword']);
 
-        $builder->fallbacks();
+        $routes->fallbacks();
     });
 
-    $routes->scope('/reports', function (RouteBuilder $builder): void {
-        $builder->connect('/', ['controller' => 'Reports', 'action' => 'listUser']);
-        $builder->connect('/list-admin', ['controller' => 'Reports', 'action' => 'listAdmin']);
-        $builder->connect('/view/*', ['controller' => 'Reports', 'action' => 'view']);
-        $builder->connect('/add', ['controller' => 'Reports', 'action' => 'add']);
-        $builder->connect('/edit/*', ['controller' => 'Reports', 'action' => 'edit']);
-        $builder->connect('/delete/*', ['controller' => 'Reports', 'action' => 'delete']);
+    $routes->scope('/reports', function (RouteBuilder $routes): void {
+        $routes->connect('/', ['controller' => 'Reports', 'action' => 'listUser']);
+        $routes->connect('/list-admin', ['controller' => 'Reports', 'action' => 'listAdmin']);
+        $routes->connect('/view/*', ['controller' => 'Reports', 'action' => 'view']);
+        $routes->connect('/add', ['controller' => 'Reports', 'action' => 'add']);
+        $routes->connect('/edit/*', ['controller' => 'Reports', 'action' => 'edit']);
+        $routes->connect('/delete/*', ['controller' => 'Reports', 'action' => 'delete']);
 
-        $builder->fallbacks();
+        $routes->fallbacks();
     });
 
     
@@ -129,11 +138,11 @@ return function (RouteBuilder $routes): void {
      * open new scope and define routes there.
      *
      * ```
-     * $routes->scope('/api', function (RouteBuilder $builder): void {
-     *     // No $builder->applyMiddleware() here.
+     * $routes->scope('/api', function (Routeroutes $routes): void {
+     *     // No $routes->applyMiddleware() here.
      *
      *     // Parse specified extensions from URLs
-     *     // $builder->setExtensions(['json', 'xml']);
+     *     // $routes->setExtensions(['json', 'xml']);
      *
      *     // Connect API actions here.
      * });

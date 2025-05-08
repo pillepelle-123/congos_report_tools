@@ -1,7 +1,7 @@
 <div class="query-expander">
     <h1><?= $this->get('title') ?></h1>   
     <?= $this->Form->create(null, [
-        'url' => [/*'controller' => 'Crtapps',*/ 'action' => 'settings'],
+        'url' => ['plugin' => 'QueryExpander', 'controller' => 'QueryExpander', 'action' => 'step2'],
         'type' => 'post'
     ]) ?>
     <fieldset>

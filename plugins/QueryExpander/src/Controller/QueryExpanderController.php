@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace QueryExpander\Controller;
 
 use QueryExpander\Controller\AppController;
+use QueryExpander\Lib\QueryExpanderUtility;
 
 /**
  * QueryExpander Controller
@@ -24,82 +25,246 @@ class QueryExpanderController extends AppController
         $this->set(compact('queryExpander'));
     }
 
-    public function queries() {
-        debug(var: 'Controller (Action queries) des QueryExpander erreicht!'); 
-
-    }
-    /**
-     * View method
-     *
-     * @param string|null $id Query Expander id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
+    public function queries()  // Umbenannt von queryExpander()
     {
-        $queryExpander = $this->QueryExpander->get($id, contain: []);
-        $this->set(compact('queryExpander'));
-    }
+        //debug($this->request->getSession()->read('crt.report'));
+        $user = $this->my_user;
+        $report = $this->request->getSession()->read('crt.report');
+        // debug($report);
+        // debug($report->xml);
+        // die();
+        // $report = $this->Reports->get($report_id, [
+        //     'contain' => []
+        // ]);
+        $content = $report->xml;
+        // Report Informationen in Session speichern, um sie in allen andern Funktionen hier zu benutzen
+        //$this->request->getSession()->write(['crt.report'=> $report]);
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
-    public function add()
-    {
-        $queryExpander = $this->QueryExpander->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $queryExpander = $this->QueryExpander->patchEntity($queryExpander, $this->request->getData());
-            if ($this->QueryExpander->save($queryExpander)) {
-                $this->Flash->success(__('The query expander has been saved.'));
+        try {
+            // Entfernen von xmlns-Attributen, um Namespace-Probleme zu vermeiden
+            $content = preg_replace('/xmlns[^=]*="[^"]*"/i', '', $content);
 
-                return $this->redirect(['action' => 'index']);
+            // XML-Parsing
+            $xml = simplexml_load_string($content);
+
+            // Überprüfen auf Fehler beim Parsen
+            if ($xml === false) {
+                $errors = libxml_get_errors();
+                $errorMsg = "XML-Fehler: ";
+                foreach ($errors as $error) {
+                    $errorMsg .= sprintf("Zeile %d: %s; ", $error->line, trim($error->message));
+                }
+                die($errorMsg);
             }
-            $this->Flash->error(__('The query expander could not be saved. Please, try again.'));
-        }
-        $this->set(compact('queryExpander'));
-    }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Query Expander id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $queryExpander = $this->QueryExpander->get($id, contain: []);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $queryExpander = $this->QueryExpander->patchEntity($queryExpander, $this->request->getData());
-            if ($this->QueryExpander->save($queryExpander)) {
-                $this->Flash->success(__('The query expander has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+            //Namespace-unabhängige XPath-Abfrage nach "Query"-Elementen
+            $queries = [];
+            $found = $xml->xpath('//*[local-name()="queries"]/*[local-name()="query"]');
+            
+            if (empty($found)) {
+                // Alternative Suche ohne Namespace
+                $found = $xml->xpath('//queries/query');
             }
-            $this->Flash->error(__('The query expander could not be saved. Please, try again.'));
-        }
-        $this->set(compact('queryExpander'));
+            
+            $i = 0;
+            foreach ($found as $query) {
+                $queries[$i] = [
+                    'name' => (string)$query['name'],
+                    'xml' => $query->asXML()
+                ];
+                $i++;
+            }
+
+
+            
+            if (empty($queries)) {
+                die("Keine Queries in der XML-Datei gefunden. Ist dies eine gültige Congos Report Definition?");
+            }
+            
+            $this->set(compact('user', 'report', 'queries'));
+
+        } catch (\Exception $e) {
+            $this->Flash->error('Fehler beim Parsen und Auslesen der Queries: ' . $e->getMessage());
+            return $this->redirect(['controller' => 'Reports', 'action' => 'index']);
+        } 
+        $this->set('title', 'Query Expander');
     }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Query Expander id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
+    public function step2()  // Umbenannt von queryExpanderDataItems()
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $queryExpander = $this->QueryExpander->get($id);
-        if ($this->QueryExpander->delete($queryExpander)) {
-            $this->Flash->success(__('The query expander has been deleted.'));
+        $user = $this->my_user;
+        $report = $this->request->getSession()->read('crt.report');
+
+
+        if ($this->request->is('post')) {        
+
+            $data = $this->request->getData();   
+
+            if (!isset($data['selected_query'])) {
+                $this->Flash->error('Bitte wählen Sie eine Query aus');
+                return $this->redirect($this->referer());
+            }
+
+            // Ausgewählte Query ermitteln, Name und XML auslesen
+            $selectedIndex = $data['selected_query'];
+            $selectedQuery = $data['queries'][$selectedIndex];
+
+
+            if (!isset($selectedQuery['name']) || !isset($selectedQuery['xml'])) {
+                $this->Flash->error('Ungültige Query-Daten');
+                return $this->redirect($this->referer());
+            }
+            
+            // XML verarbeiten
+            $xml = simplexml_load_string($selectedQuery['xml']);
+            if ($xml === false) {
+                $this->Flash->error('Fehler beim Parsen der Query XML');
+                return $this->redirect($this->referer());
+            }
+            
+            $dataItems = QueryExpanderUtility::extractDataItems($xml);
+    #
+            $this->set(compact('user', 'report', 'selectedQuery', 'dataItems'));
+            $this->request->getSession()->write(['crt.selectedQuery'=> $selectedQuery]);
+            $this->request->getSession()->write(['crt.dataItems'=> $dataItems]);
+
+            //$this->Flash->error('Ungültiger Zugriff');
+            //return $this->redirect(['action' => 'queryExpander']);
         } else {
-            $this->Flash->error(__('The query expander could not be deleted. Please, try again.'));
+            $user = $this->my_user;
+            $report = $this->request->getSession()->read('crt.report');
+            $selectedQuery = $this->request->getSession()->read('crt.selectedQuery');
+            $dataItems = $this->request->getSession()->read('crt.dataItems');
+        }
+        $this->set('title', 'Data Item Settings');
+        $this->set(compact('user', 'report', 'selectedQuery', 'dataItems'));
+        return $this->render('step2' );
+
+    }
+
+    public function result()  // Umbenannt von queryExpanderResult()
+    {
+        $user = $this->my_user;
+        //$session = $this->request->getSession();
+        //$dataItems = $session->read('crt.dataItems');
+        $report = $this->request->getSession()->read('crt.report');
+        $xml = $report->xml;
+        // Daten aus dem Formular
+        $data = $this->request->getData();
+        $query = $this->request->getQuery();
+
+ 
+        if ($this->request->is('post') && $this->request->getQuery('form') === 'form_data_items') {
+        
+            // Original XML laden
+            $xmlContent = $report->xml;
+            preg_match('/<report[^>]+xmlns="([^"]+)"/', $xmlContent, $matches);
+            $namespace = $matches[1] ?? 'http://developer.cognos.com/schemas/report/17.2/';
+            
+            // Temporären Namespace entfernen
+            $tempXmlContent = preg_replace('/xmlns="[^"]+"/', '', $xmlContent);
+            $xml = simplexml_load_string($tempXmlContent);
+            
+            if ($xml === false) {
+                die("Fehler beim Parsen der XML-Datei: " . implode("\n", libxml_get_errors()));
+            }
+        
+            $selectedItems = $data['selected_items'];
+            $nameSearch = $data['name_search'];
+            $exprSearch = $data['expr_search'];
+            
+            // Replace-Pairs sammeln
+            $replacePairs = [];
+            if (isset($data['expr_replace'])) {
+                $replacePairs[] = [
+                    'name' => $data['name_replace'],
+                    'expr' => $data['expr_replace']
+                ];
+            }
+        
+            // Prüfen ob Index-Operation gewünscht ist
+            $nameIndexOp = preg_match('/^\[index\((\d+)\)\]$/', $nameSearch, $nameIndexMatches);
+            $exprIndexOp = preg_match('/^\[index\((\d+)\)\]$/', $exprSearch, $exprIndexMatches);
+        
+            foreach ($selectedItems as $itemName) {
+                $dataItems = $xml->xpath("//*[local-name()='dataItem'][@name='$itemName']");
+                        
+                foreach ($dataItems as $originalItem) {
+                    $originalDom = dom_import_simplexml($originalItem);
+                    
+                    foreach ($replacePairs as $pair) {
+                        $newItem = clone $originalItem;
+                        
+                        // Name bearbeiten
+                        if ($nameIndexOp) {
+                            $index = (int)$nameIndexMatches[1];
+                            $originalName = (string)$newItem['name'];
+                            $newName = substr_replace($originalName, $pair['name'], $index, 0);
+                            $newItem['name'] = $newName;
+                        } else {
+                            $newName = str_replace($nameSearch, $pair['name'], (string)$newItem['name']);
+                            $newItem['name'] = $newName;
+                        }
+                        
+                        // Expression bearbeiten
+                        if (isset($newItem->expression)) {
+                            $expression = (string)$newItem->expression;
+                            
+                            if ($exprIndexOp) {
+                                $index = (int)$exprIndexMatches[1];
+                                $newExpression = substr_replace($expression, $pair['expr'], $index, 0);
+                            } else {
+                                $newExpression = str_replace($exprSearch, $pair['expr'], $expression);
+                            }
+                            
+                            $newItem->expression = $newExpression;
+                        }
+                        
+                        // Neues Element einfügen
+                        $newDom = dom_import_simplexml($newItem);
+                        $originalDom->parentNode->insertBefore($newDom, $originalDom->nextSibling);
+                    }
+                }
+            }
+        
+            // XML mit Namespace zurück konvertieren
+            $modifiedXmlContent = $xml->asXML();
+            $modifiedXmlContent = preg_replace(
+                '/<report ([^>]*)>/',
+                "<report $1 xmlns=\"$namespace\">", 
+                $modifiedXmlContent
+            );
+        
+            $this->set(name: compact('user', 'report', 'modifiedXmlContent'));
+            $this->request->getSession()->write(['crt.modifiedXmlContent'=> $modifiedXmlContent]);
+        } else if ($this->request->is('post') && $this->request->getQuery()['form'] = 'form_download') {
+            $this->resultDownload();
+        }
+        $this->set('title', 'Ergebnis');
+    }
+
+    public function resultDownload()  // Umbenannt von downloadModifiedXml()
+    {
+        // 1. Nur POST erlauben
+        $this->request->allowMethod(['post']);
+
+        // 2. Session-Daten lesen
+        $session = $this->request->getSession();
+        $xmlContent = $session->read('crt.modifiedXmlContent');
+        $report = $this->request->getSession()->read('crt.report');
+
+        // 3. Validierung
+        if (empty($xmlContent)) {
+            throw new \RuntimeException('Keine XML-Daten zum Download verfügbar');
         }
 
-        return $this->redirect(['action' => 'index']);
+        // 4. Response vorbereiten
+        $response = $this->response
+            ->withType('application/xml')
+            //->withHeader('Content-Disposition', 'attachment; filename="'.$report->report_name.'modified_report.xml"')
+            ->withDownload($report->name.'_modified.xml')
+            ->withStringBody($xmlContent);
+
+        return $response;
     }
 }

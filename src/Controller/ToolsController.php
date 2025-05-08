@@ -56,8 +56,8 @@ class ToolsController extends AppController
 
     public function processSelection()
     {
-        $report = $this->request->getData('selected_report');
-        // $tool_controller = $this->request->getQuery('tool');
+        $request = $this->request->getData('selected_report');
+        $report = json_decode($request);
         // debug($report);
         // die();
 
