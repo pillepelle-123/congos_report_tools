@@ -28,6 +28,7 @@ use Cake\Controller\Controller;
  */
 class AppController extends Controller
 {
+    public $helpers = ['Html', 'Form', 'Flash'];
     protected $identity;
     protected $my_user; // beinhaltet auch die Reports des Users
     protected $all_users;
@@ -52,6 +53,7 @@ class AppController extends Controller
         $this->loadComponent('Flash');
         
         $this->viewBuilder()->setHelpers(helpers: ['Authentication.Identity']); // wichtig für Views!
+        // $this->viewBuilder()->setHelpers(helpers: ['SessionLink']); // wichtig für Views!
 
         $this->identity = $this->request->getAttribute('identity') ?? [];
    

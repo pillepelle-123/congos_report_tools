@@ -1,5 +1,5 @@
 <?php
-$report = $this->request->getSession()->read('QueryExpander.report');
+$report = $this->request->getSession()->read('crt.report');
 
 ?>
 <div class="query-expander data-items">

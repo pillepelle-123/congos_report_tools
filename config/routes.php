@@ -91,11 +91,13 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/',['controller' => 'Tools', 'action' => 'index']);
         $routes->connect('/select-report',['controller' => 'Tools', 'action' => 'selectReport']);
         $routes->connect('/process-selection',['controller' => 'Tools', 'action' => 'processSelection']);
+        $routes->connect('/store',['controller' => 'Tools', 'action' => 'storeTool']);
+
         // Tool: QueryExpander
         $routes->scope('/query-expander', function ($routes) {
             $routes->loadPlugin('QueryExpander');
             $routes->get('/queries', ['controller' => 'QueryExpander', 'action' => 'queries']);
-            $routes->get('/step2', ['controller' => 'QueryExpander', 'action' => 'step2']);
+            $routes->get('/data', ['controller' => 'QueryExpander', 'action' => 'data']);
             $routes->get('/results', ['controller' => 'QueryExpander', 'action' => 'results']);
             $routes->get('/result-download', ['controller' => 'QueryExpander', 'action' => 'resultDownload']);
             

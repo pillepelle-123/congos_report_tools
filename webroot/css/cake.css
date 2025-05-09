@@ -264,11 +264,12 @@ pre {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 1rem;
+    padding: 1.5rem 1rem;
     margin: 0 auto;
     background-color: var(--color-crt-blau-stufe-12);
     color: var(--color-white);
     box-shadow: 0 5px 3px -2px var(--color-crt-grau-stufe-8);
+    border-radius: 0px 0px 15px 15px;
 }
 .top-nav-title {
     display: flex;
@@ -283,10 +284,10 @@ pre {
     /* margin: 11px 0px 0px 10px; */
 }
 
-
 .top-nav-title a {
-    font-size: 2.4rem;
+    /* font-size: 2.4rem; */
     color: var(--color-white);
+    height: 50px;
 }
 .top-nav-title span {
     color: var(--color-crt-blau-stufe-4);
@@ -314,9 +315,12 @@ pre {
 .breadcrumb {
     display: flex;
     justify-content: baseline;
+    padding: 1rem;
+    margin: 0 auto;
     font-size: 1.2rem;
     width: 100%;
     height: 3.4rem;
+    max-width: 112rem;
     padding-top: 10px;
     padding-left: 1%;
     padding-right: 1%;
@@ -459,38 +463,46 @@ pre {
     gap: 20px;
 }
 
-.app-card-user, .app-card-admin {
-    border: 1px solid #ddd;
-    /* padding: 20px; */
-    border-radius: 5px;
+.app-card-user, .app-card-admin, .tool-card-QueryExpander {
+
     width: 300px;
-    height: 160px;
+    height: 180px;
     box-shadow: 3px 4px 3px var(--color-crt-grau-stufe-2);
     /* box-shadow: 0 3px 6px 1px var(--color-crt-grau-stufe-2); */
-
+    border: 1px solid #ddd;
+    /* padding: 20px; */
+    border-radius: 15px;
 }
 
-.app-card-user:hover, .app-card-admin:hover {
+.app-card-user:hover, .app-card-admin:hover, .tool-card-QueryExpander:hover {
     box-shadow: 0 3px 6px 1px var(--color-crt-grau-stufe-4);
     transition: box-shadow .3s linear;
 }
 
-.app-card-user header {
+.tool-card-QueryExpander header, .app-card-user header, .app-card-admin header {
     height: 70px;
+    color: var(--color-white);
+    padding: 20px 20px 0px 20px;
+    border-radius: 15px 15px 0px 0px;
+    padding: 20px 20px 0px 20px;
+}
+
+.tool-card-QueryExpander header {
+    background-color:  var(--color-crt-waldgrün);
+    color: var(--color-white);
+}
+
+.app-card-user header {
     background-color:  var(--color-crt-blau-stufe-4);
     color: var(--color-white);
-    padding: 20px 20px 0px 20px;
 }
-
 
 .app-card-admin header {
-    height: 70px;
     background-color:  var(--color-crt-blau-stufe-7);
     color: var(--color-white);
-    padding: 20px 20px 0px 20px;
 }
 
-.app-card-user h3, .app-card-admin h3 {
+.app-card-user h3, .app-card-admin h3, .tool-card-QueryExpander h3 {
     position: relative;
     top: 10px;
     left: 0px;
@@ -499,7 +511,7 @@ pre {
     line-height: 32px;
 }
 
-.app-card-user img, .app-card-admin img {
+.app-card-user img, .app-card-admin img, .tool-card-QueryExpander img {
     position: relative;
     width: 50px;
     height: 50px;
@@ -508,8 +520,12 @@ pre {
 }
 
 
-.app-card-user div, .app-card-admin div {
+.app-card-user div, .app-card-admin div, .tool-card-QueryExpander div {
     padding: 10px 20px 20px 20px;
+}
+
+.tool-card-QueryExpander div {
+    font-size: 1.4rem;
 }
 
 

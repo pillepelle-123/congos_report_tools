@@ -27,6 +27,7 @@ class ToolsController extends AppController
      */
     public function index()
     {
+
         $query = $this->Tools->find();
         $tools = $this->paginate($query);
 
@@ -35,11 +36,37 @@ class ToolsController extends AppController
         $this->set(compact('tools', 'user'));
     }
 
+    public function storeTool()
+    {
+        $session = $this->request->getSession();
+        $queryParams = $this->request->getQuery();
+        
+        // Alle Query-Parameter in Session speichern (außer _redirect)
+        foreach ($queryParams as $key => $value) {
+            if ($key !== '_redirect') {
+                $key = 'tool_controller';
+                $session->write($key, $value);
+            }
+        }
+
+        // Weiterleitung zur Ziel-URL
+        return $this->redirect(['action' => 'selectReport']);
+        // return $this->redirect($queryParams['_redirect'] ?? '/');
+
+    }
+
     public function selectReport()
     {
         // Neue Report-Instanz, die die den vom User ausgewählten Report repräsentiert
         $report = $this->reports_table->newEmptyEntity();
-        $tool_controller = $this->request->getQuery('tool');
+        //$tool_controller = $this->request->getQuery('tool');
+        $tool_controller = $this->request->getSession()->read('tool_controller');
+        // debug($tool_controller);
+
+        if (!$tool_controller) {
+            return $this->redirect(['controller' => 'Tools', 'action' => 'index']);
+        }
+
         // $tool = $this->query->find()->contain(['Reports'])->where(['id' => $id])->first();
         $id = 1;
         $tool = $this->Tools->find('all')

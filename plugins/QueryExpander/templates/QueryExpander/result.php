@@ -1,6 +1,6 @@
 <?php
-$modifiedXmlContent = $this->request->getSession()->read('QueryExpander.modifiedXmlContent');
-$report = $this->request->getSession()->read('QueryExpander.report');
+// $modifiedXmlContent = $this->request->getSession()->read('crt.modifiedXmlContent');
+// $report = $this->request->getSession()->read('crt.report');
 
 ?>
 

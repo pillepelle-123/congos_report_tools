@@ -70,10 +70,10 @@ $cakeDescription = 'Congos Report Tools';
             </div>
             
         </nav>
-            <!-- Breadcrumb Navi eingebunden, s. element\breadcrumb.php -->
-            <?= $this->element('breadcrumb'/*, ['user' => $user]*/) ?>
-            <!-- Breadcrumb Navi -------------------------------------- -->
-
+    </div>
+        <!-- Breadcrumb Navi eingebunden, s. element\breadcrumb.php -->
+        <?= $this->element('breadcrumb'/*, ['user' => $user]*/) ?>
+        <!-- Breadcrumb Navi -------------------------------------- -->
     <main class="main">
         <div class="container">
             <?php

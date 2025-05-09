@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace QueryExpander\Controller;
 
+use ParseError;
 use QueryExpander\Controller\AppController;
 use QueryExpander\Lib\QueryExpanderUtility;
 
@@ -27,35 +28,48 @@ class QueryExpanderController extends AppController
 
     public function queries()  // Umbenannt von queryExpander()
     {
-        //debug($this->request->getSession()->read('crt.report'));
+        $method =  ($this->request->getMethod());
         $user = $this->my_user;
         $report = $this->request->getSession()->read('crt.report');
-        // debug($report);
-        // debug($report->xml);
-        // die();
-        // $report = $this->Reports->get($report_id, [
-        //     'contain' => []
-        // ]);
+
+        // debug($this->request->getSession()->read('clickpath')[1]['url']);
+                
+            //debug($this->request->getSession()->read('crt.report'));
+
         $content = $report->xml;
-        // Report Informationen in Session speichern, um sie in allen andern Funktionen hier zu benutzen
-        //$this->request->getSession()->write(['crt.report'=> $report]);
 
         try {
             // Entfernen von xmlns-Attributen, um Namespace-Probleme zu vermeiden
             $content = preg_replace('/xmlns[^=]*="[^"]*"/i', '', $content);
 
-            // XML-Parsing
-            $xml = simplexml_load_string($content);
+            libxml_use_internal_errors(true);
 
-            // Überprüfen auf Fehler beim Parsen
+            $xml = simplexml_load_string($content);
+            
+            // Abfangen bei erfolglosem XML-Parsing
             if ($xml === false) {
                 $errors = libxml_get_errors();
-                $errorMsg = "XML-Fehler: ";
-                foreach ($errors as $error) {
-                    $errorMsg .= sprintf("Zeile %d: %s; ", $error->line, trim($error->message));
+                libxml_clear_errors();
+
+                $index = 0;
+                $error_messages = [];
+                foreach ($errors as $index => $error) {
+                    $error_messages[$index] = trim($error->message);
+                    $index++;
                 }
-                die($errorMsg);
-            }
+                if (empty($error)) {
+                    $error_messages[$index] = 'XML ist leer';
+                    $index++;
+                }
+                $error_messages = array_unique($error_messages);
+                $error_message = implode(', ', $error_messages);
+
+                // Redirect zur selben Seite select-report
+                if($this->request->getSession()->read('clickpath')[1]['url'] === '/tools/process-selection') {
+                    $this->Flash->error('Fehler beim Parsen der XML-Datei: ' . $error_message);
+                }
+                return $this->redirect('/tools/store?tool='. $this->getPlugin());
+            };
 
             //Namespace-unabhängige XPath-Abfrage nach "Query"-Elementen
             $queries = [];
@@ -81,16 +95,19 @@ class QueryExpanderController extends AppController
                 die("Keine Queries in der XML-Datei gefunden. Ist dies eine gültige Congos Report Definition?");
             }
             
-            $this->set(compact('user', 'report', 'queries'));
+            $this->set(compact('queries'));
 
-        } catch (\Exception $e) {
-            $this->Flash->error('Fehler beim Parsen und Auslesen der Queries: ' . $e->getMessage());
-            return $this->redirect(['controller' => 'Reports', 'action' => 'index']);
+        } catch ( ParseError $e2) {
+            $this->Flash->error('Fehler beim Parsen und Auslesen der Queries: ' . $e2->getMessage());
+            $this->redirect($this->referer());
+            // return $this->redirect(['controller' => 'Reports', 'action' => 'index']);
         } 
+        
+        $this->set (compact('user', 'report'));
         $this->set('title', 'Query Expander');
     }
 
-    public function step2()  // Umbenannt von queryExpanderDataItems()
+    public function data()  // Umbenannt von queryExpanderDataItems()
     {
         $user = $this->my_user;
         $report = $this->request->getSession()->read('crt.report');
@@ -138,7 +155,7 @@ class QueryExpanderController extends AppController
         }
         $this->set('title', 'Data Item Settings');
         $this->set(compact('user', 'report', 'selectedQuery', 'dataItems'));
-        return $this->render('step2' );
+        // return $this->render('data' );
 
     }
 

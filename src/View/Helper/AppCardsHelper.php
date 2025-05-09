@@ -111,4 +111,12 @@ class AppCardsHelper extends Helper
         }
         return $html;
     }
+
+    public function renderToolCard(array $tool = []): string
+    {
+        // $tool['role'] = $this->Identity->get('role');
+        // $tool['color'] = 'var(--color-crt-waldgrün)';
+    
+        return $this->getView()->element('tool_card', compact('tool'));
+    }
 }

@@ -1,8 +1,8 @@
 <div class="query-expander">
     <h1><?= $this->get('title') ?></h1>   
     <?= $this->Form->create(null, [
-        'url' => ['plugin' => 'QueryExpander', 'controller' => 'QueryExpander', 'action' => 'step2'],
-        'type' => 'post'
+        'url' => ['controller' => 'QueryExpander', 'action' => 'data'],
+        // 'type' => 'post'
     ]) ?>
     <fieldset>
     <p>Query auswählen</p>

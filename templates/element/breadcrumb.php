@@ -7,6 +7,9 @@
                         $lastPageTitle = '';
                         $lastPageLink = [];
                         $backLinkText = '';
+                        // debug($this);
+                        // debug($this->plugin);
+                        // die();
                         $info = $this->UserInfo->getInfo($this, $this->request);
 
                         //debug($info);
@@ -14,7 +17,7 @@
 
                         if ($info['template'] !== 'home') {
                             $lastPageTitle = 'Home';
-                            $lastPageLink = ['controller' => 'Pages', 'action' => 'home'];
+                            $lastPageLink = ['plugin' => false, 'controller' => 'Pages', 'action' => 'home'];
                             $backLinkText .= $this->Html->link($lastPageTitle, url: $lastPageLink);
                         }
                         if ($info['controller'] === 'Users') {
@@ -43,18 +46,83 @@
                                 $backLinkText .= $delimiter . $this->Html->link($lastPageTitle, url: $lastPageLink);
                             }
                         }
+                        if ($info['controller'] === 'Tools' || isset($info['plugin'])) {     
+                            if ($info['action'] === 'selectReport' || isset($info['plugin'])) {
+                                $lastPageTitle = 'Tools';
+                                $lastPageLink = ['plugin' => false, 'controller' => 'Tools', 'action' => 'index'];
+                                $backLinkText .= $delimiter . $this->Html->link($lastPageTitle, url: $lastPageLink);
 
-                        if ($info['plugin'] === 'QueryExpander') {
-                            $backLinkText .= $delimiter . $this->Html->link('App Hub', ['plugin' => false, 'controller' => 'Reports', 'action' => 'crtApps', '?' => ['report_id' => $report->id]]);
-                            if ($info['template'] === 'settings' || $info['template'] === 'result') {
-                                $backLinkText .= $delimiter . $this->Html->link('Auswahl Query', [
-                                    'action' => 'queries']);
-                                    if ($info['template'] === 'result') {
-                                        $backLinkText .= $delimiter . $this->Html->link('Data Item Settings', [
-                                            'action' => 'settings']);
+                                if ($info['action'] === 'processSelection' || isset($info['plugin'])) {
+                                    $lastPageTitle = 'Select Report';
+                                    $lastPageLink = ['plugin' => false, 'controller' => 'Tools', 'action' => 'selectReport'];
+                                    $sessionData = ['tool' => 'QueryExpander'];
+
+// $this->SessionLink->create(
+//     'QueryExpander',                  // Titel des Links
+//     ['controller' => 'Tools', 'action' => 'storeTool'],  // Ziel-URL
+//     ['tool' => 'QueryExpander']
+
+
+                                    $backLinkText .= $delimiter . $this->Html->link($lastPageTitle, url: $lastPageLink);
+                                }
+
+                                if ($info['plugin'] === 'QueryExpander') {
+                                    if ($info['action'] === 'data' || $info['action'] === 'result') {
+                                        $lastPageTitle = 'Query Expander';
+                                        $lastPageLink = ['plugin' => 'QueryExpander', 'controller' => 'QueryExpander', 'action' => 'queries'];
+                                        $backLinkText .= $delimiter . $this->Html->link($lastPageTitle, url: $lastPageLink);
+
+                                        if ($info['action'] === 'result') {
+                                            $lastPageTitle = 'Data Item Settings';
+                                            $lastPageLink = ['plugin' => 'QueryExpander', 'controller' => 'QueryExpander', 'action' => 'data'];
+                                            $backLinkText .= $delimiter . $this->Html->link($lastPageTitle, url: $lastPageLink);
+                                        }
                                     }
-                            } 
-                        } 
+                                    //     $lastPageTitle = 'Query Expander';
+                                    //     $lastPageLink = ['plugin' => 'QueryExpander', 'controller' => 'QueryExpander', 'action' => 'queries'];
+                                    //     $backLinkText .= $delimiter . $this->Html->link($lastPageTitle, url: $lastPageLink);
+                                    
+                                    // $lastPageTitle = 'Query Expander';
+                                    // $lastPageLink = ['plugin' => 'QueryExpander', 'controller' => 'QueryExpander', 'action' => 'queries'];
+                                    // $backLinkText .= $delimiter . $this->Html->link($lastPageTitle, url: $lastPageLink);
+                                }
+
+                            }
+                            }
+
+
+
+                        // if ($info['plugin'] === 'QueryExpander') {
+                        //     $lastPageTitle = 'Tools';
+                        //     $lastPageLink = ['plugin''controller' => 'Reports', 'action' => 'listAdmin'];
+
+
+                        //     if ($info['action'] === 'edit' || $info['action'] === 'view' || $info['action'] === 'add') {
+                        //         if($this->request->getSession()->read('clickpath')[1]['url'] === '/reports/list-admin') {
+                        //             $lastPageTitle = 'Admin: Reports';
+                        //             $lastPageLink = ['controller' => 'Reports', 'action' => 'listAdmin'];
+                        //         } else {
+                        //             $lastPageTitle = 'My Reports';
+                        //             $lastPageLink = ['controller' => 'Reports', 'action' => 'listUser'];
+                        //         }
+                        //         // $lastPageTitle = 'My Reports';
+                        //         // $lastPageLink = ['controller' => 'Reports', 'action' => 'listUser'];
+                        //         $backLinkText .= $delimiter . $this->Html->link($lastPageTitle, url: $lastPageLink);
+                        //     }
+                        // }
+                        // echo '<div style="z-index: 1000; position: relative;">';
+                        // debug($info);
+                        // echo '</div>';
+
+                        // if ($info['plugin'] === 'QueryExpander') {
+                        //     $backLinkText .= $delimiter . $this->Html->link('Tools', ['plugin' => false, 'controller' => 'Tools', 'action' => 'index']);
+                        //     if ($info['template'] === 'data' || $info['template'] === 'result') {
+                        //         $backLinkText .= $delimiter . $this->Html->link('Query Expander', ['plugin' => 'QueryExpander', 'controller' => 'QueryExpander', 'action' => 'queries']);
+                        //             if ($info['template'] === 'result') {
+                        //                 $backLinkText .= $delimiter . $this->Html->link('Data Item Settings', ['plugin' => 'QueryExpander', 'controller' => 'QueryExpander', 'action' => 'data']);
+                        //             }
+                        //     } 
+                        // } 
                         if ($info['template'] !== 'home') {
                             $backLinkText .= $delimiter;
                         }
@@ -69,7 +137,7 @@
                 <div class="right">      
                 <?php
                 if ($info['template'] !== 'home') {
-                echo $this->Html->image('icons/material_arrow_circle_back_292929.svg', array('title' => $lastPageTitle, 'url' => $lastPageLink));
+                echo $this->Html->image('icons/material_arrow_circle_back_292929.svg', array('title' => $lastPageTitle, 'url' => $lastPageLink, isset($sessionData) ? $sessionData : ''));
                 } ?>
                 <!-- REPORT -->
                  <?php /*

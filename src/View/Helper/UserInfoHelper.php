@@ -48,7 +48,7 @@ class UserInfoHelper extends Helper
             'parameter' => $requests->getParam('pass.0'),
             'template' => $page->getTemplate(),
             'title' => $page->get('title'),
-            'plugin' => $page->get('plugin'),
+            'plugin' => $requests->getParam('plugin'),
             'reports' => $this->reports, //->get('name'),
         );
     }

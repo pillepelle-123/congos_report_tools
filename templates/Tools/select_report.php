@@ -4,7 +4,6 @@
  * @var \App\Model\Entity\Tool $tool
  */
 ?>
-
 <div class="reports form content">
     <h3><?= __('Report auswählen') ?></h3>
     
