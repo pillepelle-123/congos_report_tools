@@ -71,8 +71,7 @@ class ReportsController extends AppController
 
 
         $user = $this->users_table->find('all')
-            ->where(['id' => $report->user_id])
-            ->order(['created' => 'DESC']);
+            ->where(['id' => $report->user_id]);
 
         $tool = $this->tools_table->find('all')
             ->where(['id' => 1]);

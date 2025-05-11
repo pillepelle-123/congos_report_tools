@@ -28,41 +28,44 @@ use Cake\Utility\Inflector;
     </div>
 </div>
     <div class="column column-20">
-        <?php if (isset($related_entities) && !empty($related_entities)) : ?>
-        <?php foreach ($related_entities as $related_entitiy): ?>
+        <?php if (isset($rel_entity_pages) && !empty($rel_entity_pages)) : ?>
+        <?php foreach ($rel_entity_pages as $key => $rel_entitiy_page): ?>
             <?php //echo debug($related_entitiy->params->count); die(); ?>
-
-
-            
-            <?php if (isset($related_entitiy) && !empty($related_entitiy) && !empty($related_entitiy->toArray()[0])  /*&& count($related_entity) > 0*/) : ?>
+      
+            <?php if (isset($rel_entitiy_page) && !empty($rel_entitiy_page) && !empty($rel_entitiy_page->toArray()[0])  /*&& count($related_entity) > 0*/) : ?>
             <div class="users view content" style="margin-top:20px;">
                 <div class="related">
-                    <h3><?= __('Related ' . $related_entitiy->toArray()[0]->getSource()) ?></h3>
+                    <h3><?= __('Related ' . $rel_entitiy_page->toArray()[0]->getSource()) ?></h3>
                     <div class="table-responsive">
                         <table>
                             <thead>
-                            <?php foreach ($related_fields[$related_entitiy->toArray()[0]->getSource()] as $related_field ) : ?>
-                                <th><?= $this->Paginator->sort( __($related_field)) ?></th>
+                                <?php //debug($rel_entitiy_page->toArray()[0]->getSource()); ?>
+                            <?php foreach ($rel_entity_fields[$rel_entitiy_page->toArray()[0]->getSource()] as $rel_entity_field ) : ?>
+                                <th><?= $this->Paginator->sort( __($rel_entity_field)) ?></th>
                             <?php endforeach; ?>
                             <th class="actions"><?php echo __('Actions') ?></th>
                             </thead>
                             <tbody>
-                            <?php foreach ($related_entitiy as $related_entitiy_item): ?> <!--related_entitiy_item = einzelner Report -->
+                                <?php // debug($rel_entitiy_page); 
+                                $i = 0;
+                                ?>
+                            <?php foreach ($rel_entitiy_page->toArray() as $rel_entity): ?> <!--related_entitiy_item = einzelner Report -->
                                 <tr>
-                            <?php foreach ($related_fields[$related_entitiy->toArray()[0]->getSource()] as $related_field ) : ?>
-                                        <td><?= h($related_entitiy_item->{$related_field} . ' ') ?></td>
+                            <?php foreach ($rel_entity_fields[$rel_entitiy_page->toArray()[0]->getSource()] as $rel_entity_field ) : ?>
+                                        <td><?= h($rel_entity->{$rel_entity_field} . ' ') ?></td>
                             <?php endforeach; ?>
                                     <td class="actions">
-                                        <?= $this->Html->image('icons/material_view_292929.svg', array('title' => 'View', 'alt' => 'View', 'url' => ['controller' => $related_entitiy_item->getSource(), 'action' => 'view', $related_entitiy_item->id])); ?>
-                                        <?= $this->Html->image('icons/material_edit_292929.svg', array('title' => 'Edit', 'alt' => 'Edit', 'url' => ['controller' => $related_entitiy_item->getSource(), 'action' => 'edit', $related_entitiy_item->id])); ?>
+                                        <?= $this->Html->image('icons/material_view_292929.svg', array('title' => 'View', 'alt' => 'View', 'url' => ['controller' => $rel_entity->getSource(), 'action' => 'view', $rel_entity->id])); ?>
+                                        <?= $this->Html->image('icons/material_edit_292929.svg', array('title' => 'Edit', 'alt' => 'Edit', 'url' => ['controller' => $rel_entity->getSource(), 'action' => 'edit', $rel_entity->id])); ?>
 
                                         <?=  $this->Form->postLink(
-                                            $this->Html->image('icons/material_delete_292929.svg', ['alt' => 'Delete']), ['controller' => $related_entitiy_item->getSource(), 'action' => 'delete', $related_entitiy_item->id], ['confirm' => 'Möchtest du den Report wirklich löschen?', 'escape' => false]
+                                            $this->Html->image('icons/material_delete_292929.svg', ['alt' => 'Delete']), ['controller' => $rel_entity->getSource(), 'action' => 'delete', $rel_entity->id], ['confirm' => 'Möchtest du den Report wirklich löschen?', 'escape' => false]
                                         ) ?>
                                     </td>
-                                    
+                    
             </tr>
         <?php endforeach; ?>
+        <?php $i++; ?>
         </tbody>
         </table>
      </div>
@@ -76,13 +79,13 @@ use Cake\Utility\Inflector;
                         </ul>
                         <p class="paginator-counter"><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
                     </div>
-     </div>
+     </>
      </div>
         <?php endif; ?>
+            </div>
 
         <?php endforeach; ?>
         <?php endif; ?>
-    </div>
 
 <?php /*
             <div class="users view content" style="margin-top:20px;">

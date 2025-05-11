@@ -88,21 +88,27 @@ class UsersController extends BaseUsersController
         $user =  $this->UsersTable->get($id, ['contain' => ['Reports']]); // $this->Users->get($id, ['contain' => ['Reports']]);
         $reports = $this->reports_table->find('all')
             ->where(['user_id' => $id]);
-
-        $reports = $this->paginate($reports);
+    
         parent::view($id);
         // $this->set(compact('user', 'reports'));
 
+        $reports = $this->paginate($reports);
+
         $this->set([
             'entity' => $user,
-            'relatedEntities' => $reports, // Hier wird die Beziehung zur User-Entität gesetzt
-            // 'related_entity' => $report->user,
-            'mainFields' => ['id', 'name', 'description'], // Felder der Hauptentität
-            'relatedFields' => [
-                'related_models' => ['id', 'title'], // HasMany
-                'another_relation' => ['name'] // BelongsTo
-            ]
+            'reports' => $reports,
         ]);
+
+        // $this->set([
+        //     'entity' => $user,
+        //     'relatedEntities' => $reports, // Hier wird die Beziehung zur User-Entität gesetzt
+        //     // 'related_entity' => $report->user,
+        //     'mainFields' => ['id', 'name', 'description'], // Felder der Hauptentität
+        //     'relatedFields' => [
+        //         'related_models' => ['id', 'title'], // HasMany
+        //         'another_relation' => ['name'] // BelongsTo
+        //     ]
+        // ]);
 
     }
 

@@ -14,10 +14,10 @@ $fields = ['id', 'username', 'role', 'created', 'modified'];
 echo $this->element('standard_view', [
 
 
-    'related_fields' => [
-     'Reports' => ['name', 'created', 'modified'] // Zeigt Autor-Daten
+    'rel_entity_fields' => [
+     'Reports' => ['name', 'created', 'modified']
      ],
-    'related_entities' => [$relatedEntities],
+    'rel_entity_pages' => [$reports],
     'entity' => $entity,
      'fields' => $fields,
     // 'additional' => []
