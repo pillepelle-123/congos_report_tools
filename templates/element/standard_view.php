@@ -5,10 +5,14 @@ use Cake\Utility\Inflector;
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Users Reports'), '#reports', ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('Edit User'), ['action' => 'edit', $entity->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $entity->id], ['confirm' => __('Are you sure you want to delete # {0}?', $entity->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('◀ Admin: Users'), ['action' => 'listAdmin'], ['class' => 'side-nav-item']) ?>
+            <?php // $this->Html->link(__('Related Reports'), '#reports', ['class' => 'side-nav-item'])
+            $entityName = (new \ReflectionClass($entity))->getShortName(); // Singular
+            $controllerName = Inflector::pluralize($entityName);
+
+            echo $this->Html->link(__('Edit ' . $entityName), ['controller' => $controllerName, 'action' => 'edit', $entity->id], ['class' => 'side-nav-item']);
+            echo $this->Form->postLink(__('Delete ' . $entityName), ['controller' => $controllerName, 'action' => 'delete', $entity->id], ['confirm' => __('Are you sure you want to delete # {0}?', $entity->id), 'class' => 'side-nav-item']);
+            echo $this->Html->link('◀ Admin: ' . $controllerName, ['controller' => $controllerName, 'action' => 'listAdmin'], ['class' => 'side-nav-item']) 
+            ?>
         </div>
     </aside>
     <div class="column column-80">
@@ -52,7 +56,7 @@ use Cake\Utility\Inflector;
                             <?php foreach ($rel_entitiy_page->toArray() as $rel_entity): ?> <!--related_entitiy_item = einzelner Report -->
                                 <tr>
                             <?php foreach ($rel_entity_fields[$rel_entitiy_page->toArray()[0]->getSource()] as $rel_entity_field ) : ?>
-                                        <td><?= h($rel_entity->{$rel_entity_field} . ' ') ?></td>
+                                <td><?= h($rel_entity->{$rel_entity_field} . ' ') ?></td>
                             <?php endforeach; ?>
                                     <td class="actions">
                                         <?= $this->Html->image('icons/material_view_292929.svg', array('title' => 'View', 'alt' => 'View', 'url' => ['controller' => $rel_entity->getSource(), 'action' => 'view', $rel_entity->id])); ?>
@@ -68,18 +72,17 @@ use Cake\Utility\Inflector;
         <?php $i++; ?>
         </tbody>
         </table>
-     </div>
-     <div class="paginator">
-                        <ul class="pagination">
-                            <?= $this->Paginator->first('<< ' . __('first')) ?>
-                            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-                            <?= $this->Paginator->numbers() ?>
-                            <?= $this->Paginator->next(__('next') . ' >') ?>
-                            <?= $this->Paginator->last(__('last') . ' >>') ?>
-                        </ul>
-                        <p class="paginator-counter"><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-                    </div>
-     </>
+    </div>
+    <div class="paginator">
+        <ul class="pagination">
+            <?= $this->Paginator->first('<< ' . __('first')) ?>
+            <?= $this->Paginator->prev('< ' . __('previous')) ?>
+            <?= $this->Paginator->numbers() ?>
+            <?= $this->Paginator->next(__('next') . ' >') ?>
+            <?= $this->Paginator->last(__('last') . ' >>') ?>
+        </ul>
+        <p class="paginator-counter"><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
+    </div>
      </div>
         <?php endif; ?>
             </div>

@@ -49,10 +49,14 @@ class ReportsController extends AppController
         // $reports = $this->my_reports;
         // debug($reports);
         // die();
+        $this->set('title', 'My Reports');
+
         $reports = $this->paginate($this->my_reports);
 
-        $this->set(compact('reports'));
-        $this->set('title', 'My Reports');
+        $this->set([
+            'entities' => $reports,
+            'users' => $this->all_users,
+        ]);
     }
     
     /**
@@ -73,16 +77,11 @@ class ReportsController extends AppController
         $user = $this->users_table->find('all')
             ->where(['id' => $report->user_id]);
 
-        $tool = $this->tools_table->find('all')
-            ->where(['id' => 1]);
-
         // Übergeben von Related Entities als PaginatedResultSet 
         $user = $this->paginate($user);
-        $tool = $this->paginate($tool);
         $this->set([
             'entity' => $report,
             'user' => $user,
-            'tool' => $tool,
         ]);
     }
 

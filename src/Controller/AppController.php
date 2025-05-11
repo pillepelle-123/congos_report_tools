@@ -75,7 +75,6 @@ class AppController extends Controller
             // Meine Reports
             $this->my_reports = $this->reports_table->find()
                 ->where(['user_id' => $this->identity['id']])
-                ->orderBy(['Reports.modified' => 'DESC'])
                 ->contain(['Users']);
             // Alle Apps
             $this->tools_table = $this->fetchTable('Tools');

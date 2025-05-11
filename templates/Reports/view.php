@@ -8,9 +8,6 @@
 <?php
 $fields = ['id', 'name', 'created', 'modified'];
 
-
-    // $report->hasValue('user') ? $this->Html->link($report->user->username, ['controller' => 'Users', 'action' => 'view', $report->user->id]) : '';
-
 echo $this->element('standard_view', [
 
 
@@ -18,7 +15,7 @@ echo $this->element('standard_view', [
         'Users' => ['username', 'created', 'modified'],
         'Tools' => ['name']
      ],
-    'rel_entity_pages' => [$user, $tool],
+    'rel_entity_pages' => [$user],
     'entity' => $entity,
      'fields' => $fields,
     // 'additional' => []
