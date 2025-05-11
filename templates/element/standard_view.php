@@ -1,4 +1,4 @@
-<t?php
+<?php
 use Cake\Utility\Inflector;
 ?>
 <div class="row">
@@ -31,8 +31,10 @@ use Cake\Utility\Inflector;
         <?php if (isset($related_entities) && !empty($related_entities)) : ?>
         <?php foreach ($related_entities as $related_entitiy): ?>
             <?php //echo debug($related_entitiy->params->count); die(); ?>
+
+
             
-            <?php if (isset($related_entitiy) && !empty($related_entitiy) /*&& count($related_entity) > 0*/) : ?>
+            <?php if (isset($related_entitiy) && !empty($related_entitiy) && !empty($related_entitiy->toArray()[0])  /*&& count($related_entity) > 0*/) : ?>
             <div class="users view content" style="margin-top:20px;">
                 <div class="related">
                     <h3><?= __($related_entitiy->toArray()[0]->getSource()) ?></h3>

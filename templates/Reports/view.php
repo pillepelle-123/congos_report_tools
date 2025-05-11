@@ -4,22 +4,28 @@
  * @var \App\Model\Entity\Report $report
  */
 ?>
+
 <?php
 $fields = ['id', 'name', 'created', 'modified'];
+
 
     // $report->hasValue('user') ? $this->Html->link($report->user->username, ['controller' => 'Users', 'action' => 'view', $report->user->id]) : '';
 
 echo $this->element('standard_view', [
 
-    // 'relatedFields' => [
-    // 'user' => ['name', 'email'] // Zeigt Autor-Daten
-    // ],
-    'related_entities' => [$relatedEntities],
+
+    'related_fields' => [
+     'reports' => ['username', 'created', 'modified'], // Zeigt Autor-Daten
+        'tools' => ['name'] // Zeigt Autor-Daten
+     ],
+    'related_entities' => [$user, $tool], // Zeigt Autor-Daten
     'entity' => $entity,
-    // 'fields' => $fields,
+     'fields' => $fields,
     // 'additional' => []
 ]);
 ?>
+
+
 <?php /*
 <div class="row">
     <aside class="column">

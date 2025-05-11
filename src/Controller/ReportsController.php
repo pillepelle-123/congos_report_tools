@@ -74,23 +74,17 @@ class ReportsController extends AppController
             ->where(['id' => $report->user_id])
             ->order(['created' => 'DESC']);
 
-        //     $report->user;
+        $tool = $this->tools_table->find('all')
+            ->where(['id' => 1]);
 
-        // $user = $this->my_user;
+        // Übergeben von Related Entities als PaginatedResultSet 
         $user = $this->paginate($user);
-
+        $tool = $this->paginate($tool);
         $this->set([
             'entity' => $report,
-            'relatedEntities' => $user, // Hier wird die Beziehung zur User-Entität gesetzt
-            // 'related_entity' => $report->user,
-            'mainFields' => ['id', 'name', 'description'], // Felder der Hauptentität
-            'relatedFields' => [
-                'related_models' => ['id', 'title'], // HasMany
-                'another_relation' => ['name'] // BelongsTo
-            ]
+            'user' => $user,
+            'tool' => $tool,
         ]);
-        // $report = $this->reports_table->get($id, contain: ['Users']);
-        // $this->set(compact('report'));
     }
 
     /**
