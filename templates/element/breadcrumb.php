@@ -28,7 +28,7 @@
                             }
                             if ($info['action'] === 'edit' || $info['action'] === 'view' || $info['action'] === 'add') {
                                 $lastPageTitle = 'Admin: Users';
-                                $lastPageLink = ['controller' => 'Users', 'action' => 'listAdmin'];
+                                $lastPageLink = ['controller' => 'Users', 'action' => 'indexAdmin'];
                                 $backLinkText .= $delimiter . $this->Html->link($lastPageTitle, url: $lastPageLink);
                             }
                         }
@@ -36,13 +36,13 @@
                             if ($info['action'] === 'edit' || $info['action'] === 'view' || $info['action'] === 'add') {
                                 if($this->request->getSession()->read('clickpath')[1]['url'] === '/reports/list-admin') {
                                     $lastPageTitle = 'Admin: Reports';
-                                    $lastPageLink = ['controller' => 'Reports', 'action' => 'listAdmin'];
+                                    $lastPageLink = ['controller' => 'Reports', 'action' => 'indexAdmin'];
                                 } else {
                                     $lastPageTitle = 'My Reports';
-                                    $lastPageLink = ['controller' => 'Reports', 'action' => 'listUser'];
+                                    $lastPageLink = ['controller' => 'Reports', 'action' => 'index'];
                                 }
                                 // $lastPageTitle = 'My Reports';
-                                // $lastPageLink = ['controller' => 'Reports', 'action' => 'listUser'];
+                                // $lastPageLink = ['controller' => 'Reports', 'action' => 'index'];
                                 $backLinkText .= $delimiter . $this->Html->link($lastPageTitle, url: $lastPageLink);
                             }
                         }
@@ -94,19 +94,19 @@
 
                         // if ($info['plugin'] === 'QueryExpander') {
                         //     $lastPageTitle = 'Tools';
-                        //     $lastPageLink = ['plugin''controller' => 'Reports', 'action' => 'listAdmin'];
+                        //     $lastPageLink = ['plugin''controller' => 'Reports', 'action' => 'indexAdmin'];
 
 
                         //     if ($info['action'] === 'edit' || $info['action'] === 'view' || $info['action'] === 'add') {
                         //         if($this->request->getSession()->read('clickpath')[1]['url'] === '/reports/list-admin') {
                         //             $lastPageTitle = 'Admin: Reports';
-                        //             $lastPageLink = ['controller' => 'Reports', 'action' => 'listAdmin'];
+                        //             $lastPageLink = ['controller' => 'Reports', 'action' => 'indexAdmin'];
                         //         } else {
                         //             $lastPageTitle = 'My Reports';
-                        //             $lastPageLink = ['controller' => 'Reports', 'action' => 'listUser'];
+                        //             $lastPageLink = ['controller' => 'Reports', 'action' => 'index'];
                         //         }
                         //         // $lastPageTitle = 'My Reports';
-                        //         // $lastPageLink = ['controller' => 'Reports', 'action' => 'listUser'];
+                        //         // $lastPageLink = ['controller' => 'Reports', 'action' => 'index'];
                         //         $backLinkText .= $delimiter . $this->Html->link($lastPageTitle, url: $lastPageLink);
                         //     }
                         // }

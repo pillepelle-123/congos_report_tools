@@ -1,12 +1,12 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var iterable<\App\Model\Entity\User> $users
+ * @var iterable<\App\Model\Entity\Report> $reports
  */
 ?>
 
 <?php
-$fields = [['username', 'admin'], ['email', 'admin'], ['active', 'admin'], ['role', 'admin'], ['created', 'admin'], ['modified', 'admin'], ['last_login', 'admin']]; // Feldname, 
+$fields = [['id', 'admin'], ['name', 'user'], ['user.username', 'admin'], ['created', 'user'], ['modified', 'user']]; // Feldname, 
 
 echo $this->element('standard_list', [
 
@@ -17,8 +17,7 @@ echo $this->element('standard_list', [
     // 'entity_pages' => [$user],
     'entities' => $entities,
     'fields' => $fields,
-    'related_entities' => [],
+    'related_entities' => [$users],
     'editable' => true,
-    // 'additional' => []
 ]);
 ?>

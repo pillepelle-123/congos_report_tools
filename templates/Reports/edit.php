@@ -14,9 +14,9 @@
                 ['action' => 'delete', $report->id],
                 ['confirm' => __('Are you sure you want to delete # {0}?', $report->id), 'class' => 'side-nav-item']
             ) ?>
-            <?= $this->Html->link(__('◀ My Reports'), ['action' => 'listUser'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('◀ My Reports'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
             <?php if ($this->Identity->get('role') === 'admin') {
-                    echo $this->Html->link(__('◀ Admin: Reports'), ['action' => 'listAdmin'], ['class' => 'side-nav-item']);
+                    echo $this->Html->link(__('◀ Admin: Reports'), ['action' => 'indexAdmin'], ['class' => 'side-nav-item']);
                 } ?>
         </div>
     </aside>

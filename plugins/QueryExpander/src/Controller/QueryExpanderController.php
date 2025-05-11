@@ -20,10 +20,6 @@ class QueryExpanderController extends AppController
      */
     public function index()
     {
-        $query = $this->QueryExpander->find();
-        $queryExpander = $this->paginate($query);
-
-        $this->set(compact('queryExpander'));
     }
 
     public function queries()  // Umbenannt von queryExpander()

@@ -17,7 +17,7 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __d('cake_d_c/users', 'Actions') ?></h3>
     <ul class="side-nav">
-        <?= $this->Html->link(__d('cake_d_c/users', '◀ Admin: Users'), ['action' => 'listAdmin']) ?>
+        <?= $this->Html->link(__d('cake_d_c/users', '◀ Admin: Users'), ['action' => 'indexAdmin']) ?>
     </ul>
 </div>
 <div class="users add content">
@@ -45,7 +45,7 @@
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('◀ Admin: Users'), ['action' => 'listAdmin'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('◀ Admin: Users'), ['action' => 'indexAdmin'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
     <div class="column column-80">

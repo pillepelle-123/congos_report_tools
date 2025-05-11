@@ -149,18 +149,18 @@ return [
         [
             'role' => '*',
             'controller' => 'Reports',
-            'action' => ['view', 'add', 'edit', 'delete', 'listUser'],
+            'action' => ['index', 'view', 'add', 'edit', 'delete', 'indexAdmin'],
         ],
-        [
-            'role' => 'admin',
-            'controller' => 'Reports',
-            'action' => ['index'],
-        ],
+        // [
+        //     'role' => 'admin',
+        //     'controller' => 'Reports',
+        //     'action' => ['index'],
+        // ],
         //all roles allowed to Reports
         [
             'role' => '*',
             'controller' => 'Users',
-            'action' => ['view', 'edit', 'settings', 'listUser'],
+            'action' => ['view', 'edit', 'settings', 'index'],
         ],
         // [
         //     'role' => '*',

@@ -4,6 +4,6 @@
     <span><h1 style="display: inline;"><?= h('Apps') ?> </h1></span>
 </div>
     <div class="home app-list">
-            <?= $this->AppCards->renderAll($this->getTemplate(), $user->get('role')) ?>
+            <?= $this->HomeCards->renderAll($this->getTemplate(), $user->get('role')) ?>
     </div>  
 <!-- </div> -->

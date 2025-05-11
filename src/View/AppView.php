@@ -38,11 +38,7 @@ class AppView extends View
     public function initialize(): void
     {
         parent::initialize();
-        // $this->loadHelper('Breadcrumbs', [
-        //     'templateVars' => [
-        //         'separator' => ' ▶ '            ]
-        // ]);
-        $this->loadHelper('AppCards');
+
         $this->loadHelper('SessionLink');
 
         $this->loadHelper('CakeDC/Users.AuthLink');

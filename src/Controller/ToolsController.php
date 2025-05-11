@@ -25,15 +25,28 @@ class ToolsController extends AppController
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index()
+    public function index() 
     {
+        $query = $this->Tools->find();
 
+        $tools = $this->paginate($query);
+        $this->set('title', 'Admin: Tools');
+
+        $this->set([
+            'entities' => $tools,
+        ]);
+    }
+
+    public function selectTool()
+    {
         $query = $this->Tools->find();
         $tools = $this->paginate($query);
 
         $user = $this->my_user;
         $this->set('title', 'Tools');
         $this->set(compact('tools', 'user'));
+
+
     }
 
     public function storeTool()

@@ -5,7 +5,7 @@
  */
 ?>
 <?php
-$fields = ['id', 'name', 'created', 'modified'];
+$fields = ['id', 'name', 'description', 'icon', 'created', 'modified'];
 
     // $report->hasValue('user') ? $this->Html->link($report->user->username, ['controller' => 'Users', 'action' => 'view', $report->user->id]) : '';
 

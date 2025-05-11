@@ -59,19 +59,29 @@ class UsersController extends BaseUsersController
      */
     public function index()
     {
-        // $query = $this->Users->find()
-        //     ->contain(['Reports']);
         $users = $this->paginate($this->all_users);
 
-        $this->set(compact('users'));
-        $this->set('title', 'Users');
+        //$this->set(compact('users'));
+        $this->set('title', 'Admin: Users');
+
+        //$reports = $this->paginate($this->all_reports);
+
+        $this->set([
+            'entities' => $users,
+        ]);
     }
 
-    public function listAdmin() {
+    public function indexAdmin() {
         $users = $this->paginate($this->all_users);
 
-        $this->set(compact('users'));
+        //$this->set(compact('users'));
         $this->set('title', 'Admin: Users');
+
+        //$reports = $this->paginate($this->all_reports);
+
+        $this->set([
+            'entities' => $users,
+        ]);
     }
 
     /**
@@ -144,7 +154,7 @@ class UsersController extends BaseUsersController
         if ($this->UsersTable->save($entity)) {
             $this->Flash->success(__d('cake_d_c/users', 'The User has been saved'));
             
-            return $this->redirect(['action' => 'listAdmin']);
+            return $this->redirect(['action' => 'indexAdmin']);
             
         }
         $this->Flash->error(__d('cake_d_c/users', 'The {0} could not be saved'));
@@ -189,7 +199,7 @@ class UsersController extends BaseUsersController
             $this->Flash->error(__('The user could not be deleted. Please, try again.'));
         }
         if(str_contains($this->referer(), '/users/view/') || str_contains($this->referer(), '/users/edit/')) {
-            return $this->redirect(['action' => 'listAdmin']);
+            return $this->redirect(['action' => 'indexAdmin']);
         }
         return $this->redirect(url: $this->referer());
     }

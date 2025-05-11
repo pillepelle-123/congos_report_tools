@@ -67,9 +67,6 @@ return function (RouteBuilder $routes): void {
          */
         $routes->connect('/pages/*', 'Pages::display');
 
-        $routes->connect('/users', ['plugin' => null, 'controller' => 'Users', 'action' => 'listAdmin']);
-        $routes->connect('/reports', ['plugin' => null, 'controller' => 'Reports', 'action' => 'listUser']);
-
         /*
          * Connect catchall routes for all controllers.
          *
@@ -88,10 +85,11 @@ return function (RouteBuilder $routes): void {
 
 
     $routes->scope('/tools', function (RouteBuilder $routes): void {
-        $routes->connect('/',['controller' => 'Tools', 'action' => 'index']);
+        $routes->connect('/',['controller' => 'Tools', 'action' => 'selectTool']);
         $routes->connect('/select-report',['controller' => 'Tools', 'action' => 'selectReport']);
         $routes->connect('/process-selection',['controller' => 'Tools', 'action' => 'processSelection']);
         $routes->connect('/store',['controller' => 'Tools', 'action' => 'storeTool']);
+        $routes->connect('/list',['controller' => 'Tools', 'action' => 'index']);
 
 
         $routes->connect('/view/*', ['controller' => 'Tools', 'action' => 'view']);
@@ -102,22 +100,15 @@ return function (RouteBuilder $routes): void {
         // Tool: QueryExpander
         $routes->scope('/query-expander', function ($routes) {
             $routes->loadPlugin('QueryExpander');
-            // $routes->get('/queries', ['controller' => 'QueryExpander', 'action' => 'queries']);
-            // $routes->get('/data', ['controller' => 'QueryExpander', 'action' => 'data']);
-            // $routes->get('/results', ['controller' => 'QueryExpander', 'action' => 'results']);
-            // $routes->get('/result-download', ['controller' => 'QueryExpander', 'action' => 'resultDownload']);
-            
-        });
-        //$routes->connect('/', ['controller' => 'Users', 'action' => 'listUser']);
 
-        // $routes->connect('/users', ['plugin' => null, 'controller' => 'Users', 'action' => 'listAdmin']);
-        // $routes->connect('/reports', ['plugin' => null, 'controller' => 'Reports', 'action' => 'listUser']);
+        });
+
 
         $routes->fallbacks();
     });
 
     $routes->scope('/users', function (RouteBuilder $routes): void {
-        $routes->connect('/', ['controller' => 'Users', 'action' => 'listUser']);
+        $routes->connect('/', ['controller' => 'Users', 'action' => 'index']);
         $routes->connect('/view/*', ['controller' => 'Users', 'action' => 'view']);
         $routes->connect('/add', ['controller' => 'Users', 'action' => 'add']);
         $routes->connect('/edit/*', ['controller' => 'Users', 'action' => 'edit']);
@@ -129,8 +120,8 @@ return function (RouteBuilder $routes): void {
     });
 
     $routes->scope('/reports', function (RouteBuilder $routes): void {
-        $routes->connect('/', ['controller' => 'Reports', 'action' => 'listUser']);
-        $routes->connect('/list-admin', ['controller' => 'Reports', 'action' => 'listAdmin']);
+        $routes->connect('/', ['controller' => 'Reports', 'action' => 'index']);
+        $routes->connect('/index-admin', ['controller' => 'Reports', 'action' => 'indexAdmin']);
         $routes->connect('/view/*', ['controller' => 'Reports', 'action' => 'view']);
         $routes->connect('/add', ['controller' => 'Reports', 'action' => 'add']);
         $routes->connect('/edit/*', ['controller' => 'Reports', 'action' => 'edit']);

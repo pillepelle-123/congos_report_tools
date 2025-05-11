@@ -11,9 +11,11 @@ use Cake\Utility\Inflector;
             <h4 class="heading"><?= __('Actions') ?></h4>
             <?php
             $entity_name = (new \ReflectionClass($entities->toArray()[0]))->getShortName(); // Singular
-            $rel_controller_name = Inflector::pluralize($entity_name);
-
-            echo $this->Html->link(__('New ' . $entity_name), ['controller' => $rel_controller_name, 'action' => 'add'], ['class' => 'side-nav-item']) 
+            $controller_name = Inflector::pluralize($entity_name);
+            
+            if($editable ? $editable : 1==2 ) {
+                echo $this->Html->link(__('New ' . $entity_name), ['controller' => $controller_name, 'action' => 'add'], ['class' => 'side-nav-item']);
+            }
             ?>
         </div>
     </aside>
@@ -25,7 +27,7 @@ use Cake\Utility\Inflector;
                 <thead>
                     <?php foreach ($fields as $field ) : ?>
                         <?php if ($field[1] === 'user' || $field[1] === $this->Identity->get('role')) : ?>
-                            <th><?= $this->Paginator->sort( __($field[0])) ?></th>
+                            <th><?= $this->Paginator->sort( __(explode('.', $field[0])[0])) ?></th>
                         <?php endif; ?>
                     <?php endforeach; ?>
                     <th class="actions"><?= __('Actions') ?></th>
@@ -51,12 +53,16 @@ use Cake\Utility\Inflector;
                             <td class="actions">
                             <?php
 
+                                
 
-                                echo $this->Html->image('icons/material_view_292929.svg', array('title' => 'View', 'alt' => 'View', 'url' => ['controller' => $rel_controller_name, 'action' => 'view', $entity->id]));
-                                echo $this->Html->image('icons/material_edit_292929.svg', array('title' => 'Edit', 'alt' => 'Edit', 'url' => ['controller' => $rel_controller_name, 'action' => 'edit', $entity->id]));
-                                echo $this->Form->postLink(
-                                $this->Html->image('icons/material_delete_292929.svg', ['alt' => 'Delete']), ['controller' => $rel_controller_name, 'action' => 'delete', $entity->id], ['confirm' => 'Möchtest du diesen ' . $entity_name . ' wirklich löschen?', 'escape' => false]
-                            ) ?>
+                                echo $this->Html->image('icons/material_view_292929.svg', array('title' => 'View', 'alt' => 'View', 'url' => ['controller' => $controller_name, 'action' => 'view', $entity->id]));
+                                if($editable ? $editable : 1==2 ) {
+                                    echo $this->Html->image('icons/material_edit_292929.svg', array('title' => 'Edit', 'alt' => 'Edit', 'url' => ['controller' => $controller_name, 'action' => 'edit', $entity->id]));
+                                    echo $this->Form->postLink(
+                                    $this->Html->image('icons/material_delete_292929.svg', ['alt' => 'Delete']), ['controller' => $controller_name, 'action' => 'delete', $entity->id], ['confirm' => 'Möchtest du diesen ' . $entity_name . ' wirklich löschen?', 'escape' => false]) ;
+                                }
+                                
+                                ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

@@ -14,7 +14,7 @@
                 ['action' => 'delete', $user->id],
                 ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'class' => 'side-nav-item']
             ) ?>
-            <?= $this->Html->link(__('◀ Admin: Users'), ['action' => 'listAdmin'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('◀ Admin: Users'), ['action' => 'indexAdmin'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
     <div class="column column-80">

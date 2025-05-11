@@ -23,35 +23,25 @@ class ReportsController extends AppController
      */
     public function index()
     {
-        // $query = $this->Reports->find()
-        //     ->contain(['Users']);
-        // if ($this->identity->get('role') === 'admin') { 
-        //     $query->where(['user_id IS NOT' => null]);
-        // } else {
-        //     $query->where(['user_id' => $this->identity->get('id')]);
-        // }
-
-        $reports = $this->paginate($this->all_reports);
-
-        $this->set(compact('reports'));
-        $this->set('title', 'Reports');
-    }
-
-    
-    public function listAdmin() {
-        $reports = $this->paginate($this->all_reports);
-
-        $this->set(compact('reports'));
-        $this->set('title', 'Admin: Reports');
-    }
-
-    public function listUser() {
         // $reports = $this->my_reports;
         // debug($reports);
         // die();
         $this->set('title', 'My Reports');
 
         $reports = $this->paginate($this->my_reports);
+
+        $this->set([
+            'entities' => $reports,
+            'users' => $this->all_users,
+        ]);
+    }
+
+
+    public function indexAdmin()
+    {
+        $this->set('title', 'Admin: Reports');
+
+        $reports = $this->paginate($this->all_reports);
 
         $this->set([
             'entities' => $reports,
@@ -100,9 +90,9 @@ class ReportsController extends AppController
                 $this->Flash->success(__('The report has been saved.'));
 
                 if ($this->identity->get('role') === 'admin') {
-                    return $this->redirect(['action' => 'listAdmin']);
+                    return $this->redirect(['action' => 'indexAdmin']);
                 } else {
-                    return $this->redirect(['action' => 'listUser']);
+                    return $this->redirect(['action' => 'index']);
                 }
                 //return $this->redirect(['action' => 'index']);
             }
@@ -174,9 +164,9 @@ class ReportsController extends AppController
         
         if(str_contains($this->referer(), '/reports/view/') || str_contains($this->referer(), '/reports/edit/')) {
             if ($this->identity->get('role') === 'admin') {
-                return $this->redirect(['action' => 'listAdmin']);
+                return $this->redirect(['action' => 'indexAdmin']);
             } else {
-                return $this->redirect(['action' => 'listUser']);
+                return $this->redirect(['action' => 'index']);
             }
         }
         return $this->redirect(url: $this->referer());

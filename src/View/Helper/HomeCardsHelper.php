@@ -3,7 +3,7 @@ namespace App\View\Helper;
 
 use Cake\View\Helper;
 
-class AppCardsHelper extends Helper
+class HomeCardsHelper extends Helper
 {
     //protected $identity;
     public array $helpers = ['Authentication.Identity']; // Load the helper here
@@ -38,7 +38,7 @@ class AppCardsHelper extends Helper
                 'header' => 'My Reports', 
                 'description' => 'Anzeigen, anlegen, editieren und löschen von Reports',
                 'controller' => 'Reports',
-                'action' => 'listUser',
+                'action' => 'index',
                 'role' => 'user',
                 'icon'=> '/img/icons/reports_ffffff.svg',
             ],
@@ -50,11 +50,21 @@ class AppCardsHelper extends Helper
                 'role' => 'user',
                 'icon' => '/img/icons/user_settings_ffffff.svg',
             ],
+                        [
+                'header' => 'Admin: Tools', 
+                'description' => 'Anzeigen, anlegen, editieren und löschen von Usern',
+                'controller' => 'Tools',
+                'action' => 'list',
+                //'plugin' => 'CakeDC/Users',
+                'role' => 'admin',
+                'icon'=> '/img/icons/admin_tools_ffffff.svg',
+        
+            ],
             [
                 'header' => 'Admin: Users', 
                 'description' => 'Anzeigen, anlegen, editieren und löschen von Usern',
                 'controller' => 'Users',
-                'action' => 'listAdmin',
+                'action' => 'index',
                 //'plugin' => 'CakeDC/Users',
                 'role' => 'admin',
                 'icon'=> '/img/icons/admin_users_ffffff.svg',
@@ -64,7 +74,7 @@ class AppCardsHelper extends Helper
                 'header' => 'Admin: Reports', 
                 'description' => 'Anzeigen, anlegen, editieren und löschen von Reports',
                 'controller' => 'Reports',
-                'action' => 'listAdmin',
+                'action' => 'indexAdmin',
                 'role' => 'admin',
                 'icon'=> '/img/icons/admin_reports_ffffff.svg',
             ],
@@ -78,7 +88,7 @@ class AppCardsHelper extends Helper
                 'action' => 'selectReport',
                 'tool' => 'queryExpander',
                 'role' => 'user',
-                'icon'=> '/img/icons/app_query_expander_ffffff.svg',
+                'icon'=> '/img/icons/tool_query_expander_ffffff.svg',
             ],
         ];
     }
@@ -98,16 +108,16 @@ class AppCardsHelper extends Helper
         return $this->_defaultConfig[$domain];
     }
 
-    public function renderCard(array $app_card): string
+    public function renderCard(array $home_card): string
     {
-        return $this->getView()->element('app_card', compact('app_card'));
+        return $this->getView()->element('home_card', compact('home_card'));
     }
 
     public function renderAll($domain = null, $role = null): string
     {
         $html = '';
-        foreach ($this->getCards($domain, $role) as $app_card) {
-            $html .= $this->renderCard($app_card);
+        foreach ($this->getCards($domain, $role) as $home_card) {
+            $html .= $this->renderCard($home_card);
         }
         return $html;
     }

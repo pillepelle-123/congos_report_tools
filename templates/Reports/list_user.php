@@ -18,6 +18,6 @@ echo $this->element('standard_list', [
     'entities' => $entities,
     'fields' => $fields,
     'related_entities' => [$users],
-    // 'additional' => []
+    'editable' => true,
 ]);
 ?>

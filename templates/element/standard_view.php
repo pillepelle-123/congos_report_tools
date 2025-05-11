@@ -11,7 +11,7 @@ use Cake\Utility\Inflector;
 
             echo $this->Html->link(__('Edit ' . $entityName), ['controller' => $controllerName, 'action' => 'edit', $entity->id], ['class' => 'side-nav-item']);
             echo $this->Form->postLink(__('Delete ' . $entityName), ['controller' => $controllerName, 'action' => 'delete', $entity->id], ['confirm' => __('Are you sure you want to delete # {0}?', $entity->id), 'class' => 'side-nav-item']);
-            echo $this->Html->link('◀ Admin: ' . $controllerName, ['controller' => $controllerName, 'action' => 'listAdmin'], ['class' => 'side-nav-item']) 
+            echo $this->Html->link('◀ Liste: ' . $controllerName, ['controller' => $controllerName, 'action' => 'index'], ['class' => 'side-nav-item']) 
             ?>
         </div>
     </aside>
@@ -22,7 +22,7 @@ use Cake\Utility\Inflector;
                 <?php foreach ($fields as $field): ?>
                     <?php if (isset($entity->{$field}) && !empty($entity->{$field})): ?>
                         <tr>
-                            <th><?= __($field) ?></th>
+                            <th><?= __(ucfirst($field)) ?></th>
                             <td><?= h($entity->{$field} . ' ') ?></td>
                         </tr>
                     <?php endif; ?> 
