@@ -50,7 +50,7 @@ $report = $this->request->getSession()->read('crt.report');
         <?= $this->Form->control('expr_replace', ['label' => 'Ersetzen mit']) ?>
     </div>
     
-    <?= $this->Form->button('Weiter', ['class' => 'btn btn-primary mt-3']) ?>
+    <?= $this->Form->button('Nächster Schritt', ['class' => 'btn btn-primary mt-3']) ?>
     <?= $this->Form->end() ?>
 
 </div>

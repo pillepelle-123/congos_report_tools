@@ -4,6 +4,22 @@
  * @var \App\Model\Entity\Tool $tool
  */
 ?>
+<?php
+$fields = ['id', 'name', 'created', 'modified'];
+echo $this->element('standard_view', [
+
+    // 'relatedFields' => [
+    // ],
+    'entity' => $entity,
+    'fields' => $fields,
+    // 'additional' => []
+]);
+?>
+
+
+
+
+<?php /*
 <div class="row">
     <aside class="column">
         <div class="side-nav">
@@ -26,3 +42,4 @@
         </div>
     </div>
 </div>
+*/ ?>

@@ -10,13 +10,13 @@
     <?= $this->Form->create($report, [
         'url' => ['action' => 'processSelection']
     ]) ?>
-    <fieldset>
+    <!-- <fieldset> -->
         <legend><?= __('Verfügbare Reports') ?></legend>
-        <div class="table-responsive">
+        
         <?php if (empty($reports)): ?>
             <p class="no-reports"><?= __('Keine Reports verfügbar.') ?></p>
         <?php else: ?>
-            
+        <div class="table-responsive">    
             <table>
                 <thead>
                     <tr>
@@ -27,28 +27,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($reports as $index => $report): ?>
-                    <tr>
-                        <td>
-                            <?= $this->Form->radio('selected_report', [
-                                [
-                                    'value' => $report,
-                                    'text' => h('$report->name'),
-                                    'label' => [
-                                        'style' => 'report-label',
-                                        'escape' => false,
-                                        'text' => '', //$this->Html->tag('strong', h($report->name)),
+                    <?php foreach ($reports as $index => $report): ?>
+                        <tr>
+                            <td>
+                                <?= $this->Form->radio('selected_report', [
+                                    [
+                                        'value' => $report,
+                                        'text' => h('$report->name'),
+                                        'label' => [
+                                            'style' => 'report-label',
+                                            'escape' => false,
+                                            'text' => '', //$this->Html->tag('strong', h($report->name)),
+                                        ]
                                     ]
-                                ]
-                            ], [
-                                'required' => true,
-                                'hiddenField' => ($index === 0) //Nur für erstes Element
-                            ]) ?>
-                        </td>
-                        <td><?= h($report->name) ?></td>
-                        <td><?= h($report->created) ?></td>
-                        <td><?= h($report->modified) ?></td>
-                    </tr>
+                                ], [
+                                    'required' => true,
+                                    'hiddenField' => ($index === 0) //Nur für erstes Element
+                                ]) ?>
+                            </td>
+                            <td><?= h($report->name) ?></td>
+                            <td><?= h($report->created) ?></td>
+                            <td><?= h($report->modified) ?></td>
+                        </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
@@ -90,36 +90,17 @@
                 <?php endforeach; ?>
                 */ ?>
         <?php endif; ?>
-    </fieldset>
+    <!-- </fieldset> -->
     
-    <?= $this->Form->button(__('Auswählen'), [
+    <?= $this->Form->button(__('Nächster Schritt'), [
         'class' => 'btn-primary'
     ]) ?>
-
-<?php echo $this->Html->link(
-    'New todo',
-    ['plugin' => 'QueryExpander', 'controller' => 'QueryExpander', 'action' => 'queries']
-); ?>
     
     <?= $this->Form->end() ?>
 </div>
 <style>
-.report-options {
-    display: grid;
-    gap: 1rem;
-}
-.report-option {
-    display: flex;
-    justify-content: flex-start;
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-.report-option div {
-    align-items: left;
-    justify-content: left;
-    flex-grow: 1;
-}
+
+
 .table-responsive input[type="radio"] {
     width: 25px;
     height: 25px;

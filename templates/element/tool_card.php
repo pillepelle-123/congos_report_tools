@@ -25,7 +25,7 @@ use function PHPUnit\Framework\isEmpty;
         $content, 
         // isset($tool['url']) ? $tool['url'] : 
         // (isset($tool['plugin']) ? array('plugin' => $plugin_name) : array()) +
-        array('plugin' => false, 'controller'=> 'Tools' /*$tool['controller']*/, 'action'=> 'selectReport' /*$tool['action']*/, '?' => ['tool' => $tool['plugin']]),
+        array('plugin' => false, 'controller'=> 'Tools' /*$tool['controller']*/, 'action'=> 'storeTool' /*$tool['action']*/, '?' => ['tool' => $tool['plugin']]),
         array('escape' => false)
         
     ); 

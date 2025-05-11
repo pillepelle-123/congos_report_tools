@@ -13,7 +13,7 @@
             'type' => 'post',
             'id' => 'downloadForm'
         ]) ?>
-        <?= $this->Form->button('XML herunterladen', [
+        <?= $this->Form->button('Download', [
             'class' => 'btn btn-success',
             'id' => 'downloadBtn'
         ]) ?>

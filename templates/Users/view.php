@@ -4,6 +4,27 @@
  * @var \App\Model\Entity\User $user
  */
 ?>
+
+<?php
+$fields = ['id', 'username', 'role', 'created', 'modified'];
+
+
+    // $report->hasValue('user') ? $this->Html->link($report->user->username, ['controller' => 'Users', 'action' => 'view', $report->user->id]) : '';
+
+echo $this->element('standard_view', [
+
+
+    'related_fields' => [
+     'reports' => ['name', 'created', 'modified'] // Zeigt Autor-Daten
+     ],
+    'related_entities' => [$relatedEntities],
+    'entity' => $entity,
+     'fields' => $fields,
+    // 'additional' => []
+]);
+?>
+
+<?php /*
 <div class="row">
     <aside class="column">
         <div class="side-nav">
@@ -112,7 +133,7 @@
         </div>
         <div class="users view content" style="margin-top:20px;">
             <div class="related">
-                <h4 id="reports"><?= __('Users Reports') ?></h4>
+                <h3 id="reports"><?= __('Users Reports') ?></h3>
                 <?php if ($reports->count() > 0) : ?>
                 <div class="table-responsive">
                     <table>
@@ -139,19 +160,6 @@
                                 <?= $this->Form->postLink(
                                     $this->Html->image('icons/material_delete_292929.svg', ['alt' => 'Delete']), ['controller' => 'Reports', 'action' => 'delete', $report->id], ['confirm' => 'Möchtest du den Report wirklich löschen?', 'escape' => false]
                                 ) ?>
-
-<?php /*
-                                <?= $this->Html->link(__('View'), ['controller' => 'Reports', 'action' => 'view', $report->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'Reports', 'action' => 'edit', $report->id]) ?>
-                                <?= $this->Form->postLink(
-                                    __('Delete'),
-                                    ['controller' => 'Reports', 'action' => 'delete', $report->id],
-                                    [
-                                        'method' => 'delete',
-                                        'confirm' => __('Are you sure you want to delete # {0}?', $report->id),
-                                    ]
-                                ) ?>
-*/ ?>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -175,3 +183,4 @@
         </div>
     </div>
 </div>
+*/ ?>

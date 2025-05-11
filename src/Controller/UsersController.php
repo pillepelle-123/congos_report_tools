@@ -13,6 +13,7 @@ use Cake\Utility\Inflector;
 use CakeDC\Users\Plugin;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
+use Cake\View\View;
 use CakeDC\Users\Exception\UserNotFoundException;
 use CakeDC\Users\Exception\WrongPasswordException;
 use Exception;
@@ -82,14 +83,26 @@ class UsersController extends BaseUsersController
      */
     public function view($id = null)
     {
+        parent::view($id);
+        // $parentResult = $this->parent->view($id);
         $user =  $this->UsersTable->get($id, ['contain' => ['Reports']]); // $this->Users->get($id, ['contain' => ['Reports']]);
         $reports = $this->reports_table->find('all')
-            ->where(['user_id' => $id])
-            ->order(['created' => 'DESC']);
+            ->where(['user_id' => $id]);
 
         $reports = $this->paginate($reports);
         parent::view($id);
-        $this->set(compact('user', 'reports'));
+        // $this->set(compact('user', 'reports'));
+
+        $this->set([
+            'entity' => $user,
+            'relatedEntities' => $reports, // Hier wird die Beziehung zur User-Entität gesetzt
+            // 'related_entity' => $report->user,
+            'mainFields' => ['id', 'name', 'description'], // Felder der Hauptentität
+            'relatedFields' => [
+                'related_models' => ['id', 'title'], // HasMany
+                'another_relation' => ['name'] // BelongsTo
+            ]
+        ]);
 
     }
 

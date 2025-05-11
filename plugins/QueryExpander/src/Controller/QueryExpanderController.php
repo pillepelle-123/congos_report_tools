@@ -109,6 +109,7 @@ class QueryExpanderController extends AppController
 
     public function data()  // Umbenannt von queryExpanderDataItems()
     {
+        // $this->request->allowMethod(['get', 'post']);
         $user = $this->my_user;
         $report = $this->request->getSession()->read('crt.report');
 

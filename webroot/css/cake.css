@@ -83,6 +83,7 @@
 .button, button, input[type='button'], input[type='reset'], input[type='submit'] {
     background-color: var(--color-crt-blau-stufe-4);
     border: none;
+    margin: 15px 0px;
 }
 
 
@@ -205,7 +206,14 @@ button a:focus {
     transition: background .4s,color .4s;
 }
 
-
+.table-responsive input[type="radio"] {
+    width: 25px;
+    height: 25px;
+    float: left;
+    clear: none;
+    display: inline;
+    margin: 8px 10px;
+}
 
 input::file-selector-button {
     background-color: var(--color-crt-blau-stufe-4);
@@ -346,8 +354,12 @@ pre {
     height: 35px;
     
 }
-
+/* 
 .side-nav a,
+.top-nav-links a {
+} */
+
+.side-nav a:hover,
 .top-nav-links a:hover {
     color: var(--color-crt-blau-stufe-4);
     transition: .2s linear;

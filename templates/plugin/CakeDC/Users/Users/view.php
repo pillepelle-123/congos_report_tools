@@ -8,7 +8,7 @@
 <div class="row">
     <aside class="column">
         <div class="side-nav">
-            <h4 class="heading"><?= __('Actios') ?></h4>
+            <h3 class="heading"><?= __('Actios') ?></h>
             <?= $this->Html->link(__('Edit User'), ['action' => 'edit', $Users->id], ['class' => 'side-nav-item']) ?>
             <?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $Users->id], ['confirm' => __('Are you sure you want to delete # {0}?', $Users->id), 'class' => 'side-nav-item']) ?>
             <?= $this->Html->link(__('List Users'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>

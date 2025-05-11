@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
  * Application Controller
@@ -84,6 +85,25 @@ class AppController extends Controller
             'limit' => 10, // Max. 25 Einträge pro Seite
             'maxLimit' => 100 // Absolute Obergrenze (falls per URL manipuliert)
         ];
+    }
+
+    public function view($id = null)
+    {
+        $modelName = $this->name; // z. B. 'Reports', 'Users', etc.
+        // $table = $this->loadModel($modelName); // Lädt automatisch 'ReportsTable', usw.
+        // CakePHP lädt das Model automatisch, wenn der Controller-Namenskonventionen folgt
+        $table = $this->{$this->name};
+
+        try {
+            $entity = $this->$modelName->get($id);
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error('Eintrag nicht gefunden.');
+            return $this->redirect(['action' => 'index']);
+        }
+
+        // Dynamisch an die View übergeben
+        $this->set('entity', $entity);
+        $this->set('_serialize', ['entity']);
     }
 
     public function beforeRender(\Cake\Event\EventInterface $event)

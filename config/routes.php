@@ -93,13 +93,19 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/process-selection',['controller' => 'Tools', 'action' => 'processSelection']);
         $routes->connect('/store',['controller' => 'Tools', 'action' => 'storeTool']);
 
+
+        $routes->connect('/view/*', ['controller' => 'Tools', 'action' => 'view']);
+        $routes->connect('/add', ['controller' => 'Tools', 'action' => 'add']);
+        $routes->connect('/edit/*', ['controller' => 'Tools', 'action' => 'edit']);
+        $routes->connect('/delete/*', defaults: ['controller' => 'Tools', 'action' => 'delete']);
+
         // Tool: QueryExpander
         $routes->scope('/query-expander', function ($routes) {
             $routes->loadPlugin('QueryExpander');
-            $routes->get('/queries', ['controller' => 'QueryExpander', 'action' => 'queries']);
-            $routes->get('/data', ['controller' => 'QueryExpander', 'action' => 'data']);
-            $routes->get('/results', ['controller' => 'QueryExpander', 'action' => 'results']);
-            $routes->get('/result-download', ['controller' => 'QueryExpander', 'action' => 'resultDownload']);
+            // $routes->get('/queries', ['controller' => 'QueryExpander', 'action' => 'queries']);
+            // $routes->get('/data', ['controller' => 'QueryExpander', 'action' => 'data']);
+            // $routes->get('/results', ['controller' => 'QueryExpander', 'action' => 'results']);
+            // $routes->get('/result-download', ['controller' => 'QueryExpander', 'action' => 'resultDownload']);
             
         });
         //$routes->connect('/', ['controller' => 'Users', 'action' => 'listUser']);

@@ -112,11 +112,11 @@ class ToolsController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
-        $tool = $this->Tools->get($id, contain: []);
-        $this->set(compact('tool'));
-    }
+    // public function view($id = null)
+    // {
+    //     $tool = $this->Tools->get($id, contain: []);
+    //     $this->set(compact('tool'));
+    // }
 
     /**
      * Add method

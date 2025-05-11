@@ -4,6 +4,23 @@
  * @var \App\Model\Entity\Report $report
  */
 ?>
+<?php
+$fields = ['id', 'name', 'created', 'modified'];
+
+    // $report->hasValue('user') ? $this->Html->link($report->user->username, ['controller' => 'Users', 'action' => 'view', $report->user->id]) : '';
+
+echo $this->element('standard_view', [
+
+    // 'relatedFields' => [
+    // 'user' => ['name', 'email'] // Zeigt Autor-Daten
+    // ],
+    'related_entities' => [$relatedEntities],
+    'entity' => $entity,
+    // 'fields' => $fields,
+    // 'additional' => []
+]);
+?>
+<?php /*
 <div class="row">
     <aside class="column">
         <div class="side-nav">
@@ -52,3 +69,4 @@
         </div>
     </div>
 </div>
+*/ ?>
