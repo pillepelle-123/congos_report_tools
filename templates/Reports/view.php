@@ -15,8 +15,8 @@ echo $this->element('standard_view', [
 
 
     'related_fields' => [
-     'reports' => ['username', 'created', 'modified'], // Zeigt Autor-Daten
-        'tools' => ['name'] // Zeigt Autor-Daten
+        'Users' => ['username', 'created', 'modified'], // Zeigt Autor-Daten
+        'Tools' => ['name'] // Zeigt Autor-Daten
      ],
     'related_entities' => [$user, $tool], // Zeigt Autor-Daten
     'entity' => $entity,

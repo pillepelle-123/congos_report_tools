@@ -37,11 +37,11 @@ use Cake\Utility\Inflector;
             <?php if (isset($related_entitiy) && !empty($related_entitiy) && !empty($related_entitiy->toArray()[0])  /*&& count($related_entity) > 0*/) : ?>
             <div class="users view content" style="margin-top:20px;">
                 <div class="related">
-                    <h3><?= __($related_entitiy->toArray()[0]->getSource()) ?></h3>
+                    <h3><?= __('Related ' . $related_entitiy->toArray()[0]->getSource()) ?></h3>
                     <div class="table-responsive">
                         <table>
                             <thead>
-                            <?php foreach ($related_fields['reports'] as $related_field ) : ?>
+                            <?php foreach ($related_fields[$related_entitiy->toArray()[0]->getSource()] as $related_field ) : ?>
                                 <th><?= $this->Paginator->sort( __($related_field)) ?></th>
                             <?php endforeach; ?>
                             <th class="actions"><?php echo __('Actions') ?></th>
@@ -49,7 +49,7 @@ use Cake\Utility\Inflector;
                             <tbody>
                             <?php foreach ($related_entitiy as $related_entitiy_item): ?> <!--related_entitiy_item = einzelner Report -->
                                 <tr>
-                            <?php foreach ($related_fields['reports'] as $related_field ) : ?>
+                            <?php foreach ($related_fields[$related_entitiy->toArray()[0]->getSource()] as $related_field ) : ?>
                                         <td><?= h($related_entitiy_item->{$related_field} . ' ') ?></td>
                             <?php endforeach; ?>
                                     <td class="actions">
