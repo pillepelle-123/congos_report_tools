@@ -98,37 +98,6 @@ class InitMenuCommand extends Command
                                 'action' => 'edit',
                                 'url'=> 'tools/edit/*'
                             ],
-                            // [
-                            //     'title' => 'Select Report',
-                            //     'controller' => 'Tools',
-                            //     'action' => 'selectReport',
-                            //     'url'=> 'tools/select-report'
-                            // ],
-                            // [
-                            //     'title' => 'Query Expander',
-                            //     'plugin' => 'QueryExpander',
-                            //     'controller' => 'QueryExpander',
-                            //     'action' => 'queries',
-                            //     'url'=> 'tools/query-expander/queries',
-                            //     'children' => [
-                            //         [
-                            //             'title' => 'Query Data',
-                            //             'plugin' => 'QueryExpander',
-                            //             'controller' => 'QueryExpander',
-                            //             'action' => 'data',
-                            //             'url'=> 'tools/query-expander/data',
-                            //             'children' => [
-                            //                 [
-                            //                     'title' => 'Query Result',
-                            //                     'plugin' => 'QueryExpander',
-                            //                     'controller' => 'QueryExpander',
-                            //                     'action' => 'result',
-                            //                     'url'=> 'tools/query-expander/result',
-                            //                 ]
-                            //             ]
-                            //         ]
-                            //     ]
-                            // ]
                         ]
                     ],
 
@@ -145,13 +114,6 @@ class InitMenuCommand extends Command
                                 'url'=> 'tools/select-report',
                                 'children' => [
                                     // Tool: QueryExpander
-                                    [
-                                        'title' => 'Query Expander',
-                                        'plugin' => 'QueryExpander',
-                                        'controller' => 'QueryExpander',
-                                        'action' => 'queries',
-                                        'url'=> 'tools/query-expander/queries'
-                                    ],
                                     [
                                         'title' => 'Query Expander',
                                         'plugin' => 'QueryExpander',

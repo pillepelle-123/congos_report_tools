@@ -17,11 +17,11 @@ echo $this->element('standard_view', [
      ],
     'rel_entity_pages' => [$user],
     'entity' => $entity,
+    'instance_name' => $entity->name,
     'fields' => $fields,
     'editable' => true,
 
 ]);
-debug( ['entity']);
 ?>
 
 

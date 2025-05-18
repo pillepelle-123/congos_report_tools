@@ -4,6 +4,59 @@
  * @var \App\Model\Entity\Report $report
  */
 ?>
+<?php
+$fields2 = [['id', 'admin'], ['name', 'user'], ['user.username', 'admin'], ['created', 'user'], ['modified', 'user']]; // Feldname, 
+
+$usernames = [];
+foreach ($users as $user) {
+    $usernames[$user->id] = $user->username;
+}
+$fields = [
+    [
+        'name' => 'name', 
+        'form_options' => [
+            'type' => 'text',
+        ]
+    ],
+    [
+        'name' => 'xml',
+        'form_options' => [
+            'type' => 'textarea',
+            'class' => 'form-xml',
+            'maxlength' => 1000000,
+            'resize' => 'none'
+        ]
+    ],
+    [
+        'name' => 'user_id',
+        'form_options' => [
+            'type' => 'select',
+            'options' => $usernames,
+            'default' => $this->Identity->get('id'),
+            // 'empty' => true,
+            // 'label' => __('User'),
+            // 'disabled' => ($this->Identity->get('role') !== 'admin')
+        ]
+    ]
+];
+
+echo $this->element('standard_edit', [
+
+
+    // 'rel_entity_fields' => [
+    //     'Users' => ['username', 'created', 'modified'],
+    //     'Tools' => ['name']
+    //  ],
+    // 'rel_entity_pages' => [$user],
+    'entity' => $entity,
+    'instance_name' => $entity->name,
+    'fields' => $fields,
+    'editable' => true,
+
+]);
+?>
+
+<?php /*
 <div class="row">
     <aside class="column">
         <div class="side-nav">
@@ -43,3 +96,4 @@
         </div>
     </div>
 </div>
+*/ ?>

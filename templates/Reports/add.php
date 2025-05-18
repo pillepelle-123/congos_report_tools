@@ -29,7 +29,13 @@
                     echo $this->Form->control('name');
                     echo $this->Form->control('xml', ['type' => 'textarea', 'class' => 'form_xml']);
                     if ($this->Identity->get('role') === 'admin') {
-                        echo $this->Form->control('user_id', ['options' => $usernames, 'default'=> $this->Identity->get('id')]);
+                        if($type == 'admin') {
+                            echo $this->Form->control('user_id', ['options' => $usernames, 'default'=> $this->Identity->get('id')]);
+                        } else {
+                            echo '<label>User</label>';
+                            echo h($this->Identity->get('username'));
+                        }
+                        // echo $this->Form->control('user_id', ['options' => $usernames, 'default'=> $this->Identity->get('id')]);
                     }
                     //echo $this->Form->control('user_id', ['options' => $users]);
                 ?>

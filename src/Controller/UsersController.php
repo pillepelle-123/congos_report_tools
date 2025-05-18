@@ -63,6 +63,7 @@ class UsersController extends BaseUsersController
     {
         $this->Crud->setQuery();
         $entities = $this->Crud->index();
+        parent::setPaginationConfig(['field' => 'created', 'direction' => 'desc']);
         $entities = $this->paginate($entities);
         $this->set(['title' => 'Admin: Users', 'entities' => $entities]);
 
@@ -91,10 +92,12 @@ class UsersController extends BaseUsersController
     public function view($id = null)
     {
         // CrudComponent Funktionen aufrufrufen
-        $this->Crud->setQuery(['Reports'], [], false);
+        $this->Crud->setQuery();
         $entity = $this->Crud->view($id);
         
-        $reports = $this->reports_table->find('all');
+        $reports = $this->fetchTable('Reports')->find('all')
+            ->where(['user_id' => $entity->id]);
+        // $reports = $this->reports_table->find('all');
         $this->paginate = array(
             'order' => array( 
             'created' => 'desc'
@@ -131,20 +134,8 @@ class UsersController extends BaseUsersController
      */
     public function edit($id = null)
     {
-        $this->Crud->setQuery(['Users'], [], false);
+        $this->Crud->setQuery();
         $user = $this->Crud->edit($id);
-
-
-        // $user = $this->UsersTable->get($id);
-        // if ($this->getRequest()->is(['patch', 'post', 'put'])) {
-
-        //     $user = $this->UsersTable->patchEntity($user, $this->request->getData());
-        //     if ($this->UsersTable->save($user)) {
-        //         $this->Flash->success(__d('cake_d_c/users', 'The user has been saved'));
-        //     } else {
-        //         $this->Flash->error(__d('cake_d_c/users', 'The user could not be saved'));
-        //     }
-        // }
         $this->set(compact('user'));
     }
 
@@ -157,16 +148,10 @@ class UsersController extends BaseUsersController
      */
     public function delete($id = null)
     {
+
         $this->request->allowMethod(['post', 'delete']);
-        $user = $this->UsersTable->get($id);
-        if ($this->UsersTable->delete($user)) {
-            $this->Flash->success(__('The user has been deleted.'));
-        } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
-        }
-        if(str_contains($this->referer(), '/users/view/') || str_contains($this->referer(), '/users/edit/')) {
-            return $this->redirect(['action' => 'index']);
-        }
+        $this->Crud->delete($id);
+
         return $this->redirect(url: $this->referer());
     }
 

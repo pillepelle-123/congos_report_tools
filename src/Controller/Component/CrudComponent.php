@@ -5,6 +5,8 @@ use Cake\Controller\Component;
 use Cake\Controller\ComponentRegistry;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\Query\SelectQuery;
+use Cake\Utility\Inflector;
+use Cake\ORM\TableRegistry;
 
 class CrudComponent extends Component {
 
@@ -97,6 +99,40 @@ class CrudComponent extends Component {
         return $entity;
     }
 
+    public function delete($id = null): bool
+    {
+        $request = $this->config['request'];
+        $model_name = $this->config['model_name'];
+        $table = \Cake\ORM\TableRegistry::getTableLocator()->get($model_name);
+        $entity = $table->get($id);
+
+        if ($request->is(['post', 'delete'])) {
+            try {
+                $entity = $table->get($id);
+                if ($table->delete($entity)) {
+                    $this->Flash->success(__('The ' . Inflector::singularize($model_name) . ' "' . $entity->name . '" has been deleted.'));
+                    return true;
+                } else {
+                    $this->Flash->error(__('The ' . Inflector::singularize($model_name) . ' could not be deleted. Please, try again.'));
+                    return false;
+                }
+            } catch (\Cake\Database\Exception\QueryException $e) {
+                
+
+                $error_message = __('The ' . Inflector::singularize($model_name) . ' could not be deleted. ');
+                if ($e->getCode() == 23000) {    
+                    $dependentEntities = $this->getDependentEntities($model_name);
+                    foreach ($dependentEntities as $dependentEntity) {
+                        $error_message .= __(' Please delete his ' . $dependentEntity['model'] . ' first.');
+                    }
+                }
+                $this->Flash->error($error_message);
+                return false;
+            }
+        }
+        return false;
+    }
+
     /**
      * Summary of setQuery
      * @param array $contain Array of containable associations
@@ -105,7 +141,7 @@ class CrudComponent extends Component {
      * @param array $only_user_data Only fetch data for the logged-in user ['user_id_field' => $this->identity['id']]
      * @return void
      */
-    public function setQuery(array $contain = [], array $where = [], bool $first_row = false, bool $only_user_data = false): void
+    public function setQuery(bool $only_user_data = false, array $contain = [], array $where = [], bool $first_row = false): void
     {
         $table = \Cake\ORM\TableRegistry::getTableLocator()->get($this->config['model_name']);
 
@@ -124,6 +160,31 @@ class CrudComponent extends Component {
             $this->query = $this->query->first();
         }
 
+    }
+
+    public function getDependentEntities($target_model): array
+    {
+        $all_table_aliases = ['Users', 'Reports', 'Tools'];
+
+        // $targetModel = 'Users'; // z. B. du willst wissen, wer auf Users zeigt
+
+        $dependent_models = [];
+
+        foreach ($all_table_aliases as $alias) {
+            $table = TableRegistry::getTableLocator()->get($alias);
+            foreach ($table->associations() as $association) {
+                if ($association->getTarget()->getAlias() === $target_model) {
+                    $dependent_models[] = [
+                        'model' => $alias,
+                        'foreignKey' => $association->getForeignKey(),
+                        'associationType' => $association->type(),
+                    ];
+                }
+            }
+        }
+
+        // debug($dependentModels);
+        return $dependent_models;
     }
 
 }

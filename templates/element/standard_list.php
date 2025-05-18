@@ -10,11 +10,17 @@ use Cake\Utility\Inflector;
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
             <?php
-            $entity_name = (new \ReflectionClass($entities->toArray()[0]))->getShortName(); // Singular
-            $controller_name = Inflector::pluralize($entity_name);
-            
+            $model_name_singular = (new \ReflectionClass($entities->toArray()[0]))->getShortName(); // Singular
+            $model_name_plural = Inflector::pluralize($model_name_singular);
+
+            // Besonderheit für Reports: Unterscheidung zwischen Admin und User
+            $link_addon = '';
+            if ($model_name_singular == 'Report') {
+                $link_addon = $this->getTemplate() === 'index' ? 'user' : 'admin';                
+            }
+
             if($editable ? $editable : 1==2 ) {
-                echo '<i class="fa-solid fa-circle-plus"></i> ' . $this->Html->link(__('New ' . $entity_name), ['controller' => $controller_name, 'action' => 'add'], ['class' => 'side-nav-item']);
+                echo '<i class="fa-solid fa-circle-plus"></i> ' . $this->Html->link(__('New ' . $model_name_singular), ['controller' => $model_name_plural, 'action' => 'add', '?' => ['type' => $link_addon] /*'?' => ['template' => $this->getTemplate()]*/], ['class' => 'side-nav-item']);
             }
             ?>
         </div>
@@ -55,11 +61,11 @@ use Cake\Utility\Inflector;
 
                                 
 
-                                echo $this->Html->image('icons/material_view_292929.svg', array('title' => 'View', 'alt' => 'View', 'url' => ['controller' => $controller_name, 'action' => 'view', $entity->id]));
+                                echo $this->Html->image('icons/material_view_292929.svg', array('title' => 'View', 'alt' => 'View', 'url' => ['controller' => $model_name_plural, 'action' => 'view', $entity->id]));
                                 if($editable ? $editable : 1==2 ) {
-                                    echo $this->Html->image('icons/material_edit_292929.svg', array('title' => 'Edit', 'alt' => 'Edit', 'url' => ['controller' => $controller_name, 'action' => 'edit', $entity->id]));
+                                    echo $this->Html->image('icons/material_edit_292929.svg', array('title' => 'Edit', 'alt' => 'Edit', 'url' => ['controller' => $model_name_plural, 'action' => 'edit', $entity->id]));
                                     echo $this->Form->postLink(
-                                    $this->Html->image('icons/material_delete_292929.svg', ['alt' => 'Delete']), ['controller' => $controller_name, 'action' => 'delete', $entity->id], ['confirm' => 'Möchtest du diesen ' . $entity_name . ' wirklich löschen?', 'escape' => false]) ;
+                                    $this->Html->image('icons/material_delete_292929.svg', ['alt' => 'Delete']), ['controller' => $model_name_plural, 'action' => 'delete', $entity->id], ['confirm' => __('Are you sure you want to delete {0} {1}?',$model_name_singular, $entity->{$instance_name}), 'escape' => false]) ;
                                 }
                                 
                                 ?>

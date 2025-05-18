@@ -130,11 +130,15 @@ class ToolsController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    // public function view($id = null)
-    // {
-    //     $tool = $this->Tools->get($id, contain: []);
-    //     $this->set(compact('tool'));
-    // }
+    public function view($id = null)
+    {
+        $this->Crud->setQuery();
+        $entity = $this->Crud->view($id);
+        
+        $this->set([
+            'entity' => $entity
+        ]);
+    }
 
     /**
      * Add method
@@ -143,24 +147,17 @@ class ToolsController extends AppController
      */
     public function add()
     {
-        $newEntity = $this->Add->add($this->name, $this->request);
+        // $type = $this->request->getParam('type');
+        $type = $this->request->getQuery('type');
+        // CrudComponent aufrufrufen
+        $newEntity = $this->Crud->add([]);
 
         if ($this->request->is('post')) {
             return $this->redirect(['action' => 'index']);
         }
-        $this->set('newEntity', $newEntity);
 
-        // $tool = $this->Tools->newEmptyEntity();
-        // if ($this->request->is('post')) {
-        //     $tool = $this->Tools->patchEntity($tool, $this->request->getData());
-        //     if ($this->Tools->save($tool)) {
-        //         $this->Flash->success(__('The tool has been saved.'));
+        $this->set(compact('newEntity', 'type'));
 
-        //         return $this->redirect(['action' => 'index']);
-        //     }
-        //     $this->Flash->error(__('The tool could not be saved. Please, try again.'));
-        // }
-        // $this->set(compact('tool'));
     }
 
     /**

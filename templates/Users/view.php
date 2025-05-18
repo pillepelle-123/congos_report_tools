@@ -6,7 +6,7 @@
 ?>
 
 <?php
-$fields = ['id', 'username', 'role', 'created', 'modified'];
+$fields = ['id', 'username', 'email', 'first_name', 'last_name', 'role', 'created', 'modified'];
 
 
     // $report->hasValue('user') ? $this->Html->link($report->user->username, ['controller' => 'Users', 'action' => 'view', $report->user->id]) : '';
@@ -19,6 +19,7 @@ echo $this->element('standard_view', [
      ],
     'rel_entity_pages' => [$reports],
     'entity' => $entity,
+    'instance_name' => 'username',
      'fields' => $fields,
     'editable' => true,
 ]);

@@ -14,6 +14,7 @@ echo $this->element('standard_list', [
     //  ],
     // 'entity_pages' => [$user],
     'entities' => $entities,
+    'instance_name' => 'name',
     'fields' => $fields,
     // 'related_entities' => [],
     'editable' => true,
