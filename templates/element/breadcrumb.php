@@ -3,7 +3,7 @@
                 <div class="left">
                     <?php
                     if ($this->Identity->isLoggedIn()) {
-                        $delimiter = '&nbsp;▶&nbsp;';
+                        $delimiter = '&nbsp;/&nbsp;';
                         $lastPageTitle = '';
                         $lastPageLink = [];
                         $backLinkText = '';
@@ -28,7 +28,7 @@
                             }
                             if ($info['action'] === 'edit' || $info['action'] === 'view' || $info['action'] === 'add') {
                                 $lastPageTitle = 'Admin: Users';
-                                $lastPageLink = ['controller' => 'Users', 'action' => 'indexAdmin'];
+                                $lastPageLink = ['controller' => 'Users', 'action' => 'index'];
                                 $backLinkText .= $delimiter . $this->Html->link($lastPageTitle, url: $lastPageLink);
                             }
                         }
@@ -47,9 +47,9 @@
                             }
                         }
                         if ($info['controller'] === 'Tools' || isset($info['plugin'])) {     
-                            if ($info['action'] === 'selectReport' || isset($info['plugin'])) {
+                            if ($info['action'] === 'selectReport' || $info['action'] === 'view' || isset($info['plugin']) ) {
                                 $lastPageTitle = 'Tools';
-                                $lastPageLink = ['plugin' => false, 'controller' => 'Tools', 'action' => 'index'];
+                                $lastPageLink = ['plugin' => false, 'controller' => 'Tools', 'action' => 'selectTool'];
                                 $backLinkText .= $delimiter . $this->Html->link($lastPageTitle, url: $lastPageLink);
 
                                 if ($info['action'] === 'processSelection' || isset($info['plugin'])) {

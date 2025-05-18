@@ -40,7 +40,7 @@
                     echo $this->Form->control('token_send_requested');
                 ?>
             </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Form->button(__('Save')) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>

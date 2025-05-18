@@ -6,22 +6,24 @@
 ?>
 
 <!-- <div class="users view content"> -->
-<div class="apps-title">
+<div class="tool-title">
     <?= $this->Html->image('icons/crt_292929.svg', [''=> '','class'=> '', 'style' => 'width: 40px; height: 40px; display: inline-block;']) ?>
     <span><h1 style="display: inline;"><?= h($this->get('title')) ?> </h1></span>
 </div>
-<div class="home tools-list">
-    <?php foreach ($tools as $tool): ?>
+<div class="home tool-card-list">
+    <?php // $this->Form->create($selected_tool); 
+    foreach ($tools as $tool): ?>
         <div class="tool-card">
-            <?= $this->HomeCards->renderToolCard($tool->toArray()) ?>
+            <?= $this->Cards->renderToolCard($tool) ?>
         </div>
     <?php endforeach; ?>
+    <?php //$this->Form->end() ?>
 </div>  
 
 <?php /*
 
-<div class="home tools-list">
-        <?= $this->HomeCards->renderAll('tools', $user->get('role')) ?>
+<div class="home tool-carad-list">
+        <?= $this->Cards->renderAllTool('tools', $user->get('role')) ?>
 </div>  
 <!-- </div> -->
  <div>

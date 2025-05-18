@@ -11,7 +11,7 @@ $routes->plugin(
         $routes->connect('/', ['plugin' => null, 'controller' => 'Tools', 'action' => 'selectReport']);
         $routes->connect('/queries', ['controller' => 'QueryExpander', 'action' => 'queries']);
         $routes->connect('/data', ['controller' => 'QueryExpander', 'action' => 'data']);
-        $routes->connect('/results', ['controller' => 'QueryExpander', 'action' => 'results']);
+        $routes->connect('/result', ['controller' => 'QueryExpander', 'action' => 'result']);
         // $routes->get('/contacts/{id}', ['controller' => 'Contacts', 'action' => 'view']);
         // $routes->put('/contacts/{id}', ['controller' => 'Contacts', 'action' => 'update']);
     }

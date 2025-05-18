@@ -8,16 +8,17 @@ use Cake\Utility\Inflector;
             <?php // $this->Html->link(__('Related Reports'), '#reports', ['class' => 'side-nav-item'])
             $entityName = (new \ReflectionClass($entity))->getShortName(); // Singular
             $controllerName = Inflector::pluralize($entityName);
-
-            echo $this->Html->link(__('Edit ' . $entityName), ['controller' => $controllerName, 'action' => 'edit', $entity->id], ['class' => 'side-nav-item']);
-            echo $this->Form->postLink(__('Delete ' . $entityName), ['controller' => $controllerName, 'action' => 'delete', $entity->id], ['confirm' => __('Are you sure you want to delete # {0}?', $entity->id), 'class' => 'side-nav-item']);
-            echo $this->Html->link('◀ Liste: ' . $controllerName, ['controller' => $controllerName, 'action' => 'index'], ['class' => 'side-nav-item']) 
+            if($editable ? $editable : 1==2 ) {
+                echo $this->Html->image('icons/circle_filled_add_292929.svg', ['width' => '20px', 'height' => '20px']) . $this->Html->link(__(' Edit ' . $entityName), ['controller' => $controllerName, 'action' => 'edit', $entity->id], ['class' => 'side-nav-item']);
+                echo '<i class="fa-solid fa-circle-minus"></i> ' . $this->Form->postLink(__('Delete ' . $entityName), ['controller' => $controllerName, 'action' => 'delete', $entity->id], ['confirm' => __('Are you sure you want to delete # {0}?', $entity->id), 'class' => 'side-nav-item']);
+            }
+            echo '<i class="fa-solid fa-circle-left"></i> ' . $this->Html->link($controllerName, ['controller' => $controllerName, 'action' => 'index'], ['class' => 'side-nav-item']) 
             ?>
         </div>
     </aside>
     <div class="column column-80">
         <div class="users view content vertical-table">
-            <h3><?= h($entity->name) ?></h3>
+            <h3 style="word-break: normal;"><?= h($entity->name) ?></h3>
             <table>
                 <?php foreach ($fields as $field): ?>
                     <?php if (isset($entity->{$field}) && !empty($entity->{$field})): ?>

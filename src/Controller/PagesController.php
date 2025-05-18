@@ -21,6 +21,7 @@ use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Response;
 use Cake\View\Exception\MissingTemplateException;
+use App\Model\Table\MenuNodesTable;
 
 /**
  * Static content controller
@@ -102,5 +103,7 @@ class PagesController extends AppController
             throw new NotFoundException();
         }
     }
+
+
 
 }

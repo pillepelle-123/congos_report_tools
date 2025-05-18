@@ -48,6 +48,8 @@ class UsersController extends BaseUsersController
         if ($this->request->getParam('_csrfToken') === false) {
             $this->loadComponent('Csrf');
         }
+        // $this->loadComponent('Crud');
+        // $this->Crud->initialize(['model_name' => '', 'request' => $this->request]);
 
         $this->UsersTable = $this->getUsersTable();
     }
@@ -59,30 +61,25 @@ class UsersController extends BaseUsersController
      */
     public function index()
     {
-        $users = $this->paginate($this->all_users);
+        $this->Crud->setQuery();
+        $entities = $this->Crud->index();
+        $entities = $this->paginate($entities);
+        $this->set(['title' => 'Admin: Users', 'entities' => $entities]);
 
-        //$this->set(compact('users'));
-        $this->set('title', 'Admin: Users');
-
-        //$reports = $this->paginate($this->all_reports);
-
-        $this->set([
-            'entities' => $users,
-        ]);
     }
 
-    public function indexAdmin() {
-        $users = $this->paginate($this->all_users);
+    // public function indexAdmin() {
+    //     $users = $this->paginate($this->all_users);
 
-        //$this->set(compact('users'));
-        $this->set('title', 'Admin: Users');
+    //     //$this->set(compact('users'));
+    //     $this->set('title', 'Admin: Users');
 
-        //$reports = $this->paginate($this->all_reports);
+    //     //$reports = $this->paginate($this->all_reports);
 
-        $this->set([
-            'entities' => $users,
-        ]);
-    }
+    //     $this->set([
+    //         'entities' => $users,
+    //     ]);
+    // }
 
     /**
      * View method
@@ -93,72 +90,37 @@ class UsersController extends BaseUsersController
      */
     public function view($id = null)
     {
-        parent::view($id);
-        // $parentResult = $this->parent->view($id);
-        $user =  $this->UsersTable->get($id, ['contain' => ['Reports']]); // $this->Users->get($id, ['contain' => ['Reports']]);
-        $reports = $this->reports_table->find('all')
-            ->where(['user_id' => $id]);
-    
-        parent::view($id);
-        // $this->set(compact('user', 'reports'));
-
+        // CrudComponent Funktionen aufrufrufen
+        $this->Crud->setQuery(['Reports'], [], false);
+        $entity = $this->Crud->view($id);
+        
+        $reports = $this->reports_table->find('all');
+        $this->paginate = array(
+            'order' => array( 
+            'created' => 'desc'
+            )
+        );
         $reports = $this->paginate($reports);
 
         $this->set([
-            'entity' => $user,
+            'entity' => $entity,
             'reports' => $reports,
         ]);
-
-        // $this->set([
-        //     'entity' => $user,
-        //     'relatedEntities' => $reports, // Hier wird die Beziehung zur User-Entität gesetzt
-        //     // 'related_entity' => $report->user,
-        //     'mainFields' => ['id', 'name', 'description'], // Felder der Hauptentität
-        //     'relatedFields' => [
-        //         'related_models' => ['id', 'title'], // HasMany
-        //         'another_relation' => ['name'] // BelongsTo
-        //     ]
-        // ]);
-
     }
-
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
-    // public function add()
-    // {
-    //     $user = $this->Users->newEmptyEntity();
-    //     if ($this->request->is('post')) {
-    //         $user = $this->Users->patchEntity($user, $this->request->getData());
-    //         if ($this->Users->save($user)) {
-    //             $this->Flash->success(__('The user has been saved.'));
-
-    //             return $this->redirect(['action' => 'index']);
-    //         }
-    //         $this->Flash->error(__('The user could not be saved. Please, try again.'));
-    //     }
-    //     $this->set(compact('user'));
-    // }
 
     public function add()
     {
-        $user = $this->UsersTable->newEmptyEntity();
-        $this->set('user', $user);
-        $this->viewBuilder()->setOption('serialize', [$user, 'user']);
-        if (!$this->getRequest()->is('post')) {
-            return;
+        // CrudComponent aufrufrufen
+        $newEntity = $this->Crud->add();
+
+        if ($this->request->is('post')) {
+            return $this->redirect(['action' => 'index']);
         }
-        $entity = $this->UsersTable->patchEntity($user, $this->getRequest()->getData());
-        if ($this->UsersTable->save($entity)) {
-            $this->Flash->success(__d('cake_d_c/users', 'The User has been saved'));
-            
-            return $this->redirect(['action' => 'indexAdmin']);
-            
-        }
-        $this->Flash->error(__d('cake_d_c/users', 'The {0} could not be saved'));
+        $this->set('newEntity', $newEntity);
+
+        // $this->set(compact('newEntity'));
     }
+
 
         /**
      * Edit method
@@ -169,16 +131,20 @@ class UsersController extends BaseUsersController
      */
     public function edit($id = null)
     {
-        $user = $this->UsersTable->get($id);
-        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+        $this->Crud->setQuery(['Users'], [], false);
+        $user = $this->Crud->edit($id);
 
-            $user = $this->UsersTable->patchEntity($user, $this->request->getData());
-            if ($this->UsersTable->save($user)) {
-                $this->Flash->success(__d('cake_d_c/users', 'The user has been saved'));
-            } else {
-                $this->Flash->error(__d('cake_d_c/users', 'The user could not be saved'));
-            }
-        }
+
+        // $user = $this->UsersTable->get($id);
+        // if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+
+        //     $user = $this->UsersTable->patchEntity($user, $this->request->getData());
+        //     if ($this->UsersTable->save($user)) {
+        //         $this->Flash->success(__d('cake_d_c/users', 'The user has been saved'));
+        //     } else {
+        //         $this->Flash->error(__d('cake_d_c/users', 'The user could not be saved'));
+        //     }
+        // }
         $this->set(compact('user'));
     }
 
@@ -199,7 +165,7 @@ class UsersController extends BaseUsersController
             $this->Flash->error(__('The user could not be deleted. Please, try again.'));
         }
         if(str_contains($this->referer(), '/users/view/') || str_contains($this->referer(), '/users/edit/')) {
-            return $this->redirect(['action' => 'indexAdmin']);
+            return $this->redirect(['action' => 'index']);
         }
         return $this->redirect(url: $this->referer());
     }

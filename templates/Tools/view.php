@@ -18,7 +18,9 @@ echo $this->element('standard_view', [
      ],
     'rel_entity_pages' => [], // [$user, $tool], 
     'entity' => $entity,
-     'fields' => $fields,
+    'fields' => $fields,
+    'editable' => false,
+
     // 'additional' => []
 ]);
 ?>

@@ -20,6 +20,6 @@
         <legend><?= __d('cake_d_c/users', 'Please enter your email or username to reset your password') ?></legend>
         <?= $this->Form->control('reference') ?>
     </fieldset>
-    <?= $this->Form->button(__d('cake_d_c/users', 'Submit')); ?>
+    <?= $this->Form->button(__d('cake_d_c/users', 'Save')); ?>
     <?= $this->Form->end() ?>
 </div>

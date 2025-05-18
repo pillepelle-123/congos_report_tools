@@ -1,5 +1,5 @@
 <?php /*
-<div class="app-card-<?= $card['role'] ?>">
+<div class="home-card-<?= $card['role'] ?>">
     <header>
         <h3><?= h($card['header']) ?></h3>
         <?= $this->Html->image($card['icon'], ['alt' => $card['header']]) ?>
@@ -36,8 +36,8 @@ use function PHPUnit\Framework\isEmpty;
                 $icon = $home_card['icon'];
                 $description = $home_card['description'];
 
-                // $content = '<div class="app-card-'.$home_card['role'].'"><header'.$color.'><h3>'.$home_card['header'].'</h3><img src="'.$home_card['icon'].'" width="32" height="32"></header><div>'.$home_card['description'].'</div></div>';
-                $content = "<div class=\"app-card-{$role}\"><header{$color}><h3>{$header}</h3><img src=\"{$icon}\" width=\"32\" height=\"32\"></header><div>{$description}</div></div>";                
+                // $content = '<div class="home-card-'.$home_card['role'].'"><header'.$color.'><h3>'.$home_card['header'].'</h3><img src="'.$home_card['icon'].'" width="32" height="32"></header><div>'.$home_card['description'].'</div></div>';
+                $content = "<div class=\"home-card-{$role}\"><header{$color}><h3>{$header}</h3><img src=\"{$icon}\" width=\"32\" height=\"32\"></header><div>{$description}</div></div>";                
                 
                 echo $this->Html->link(
                     $content, 
@@ -48,4 +48,17 @@ use function PHPUnit\Framework\isEmpty;
                     
                 ); 
             }
+
+
+
+    //             $content = "<div class=\"tool-card-{$plugin_name}\"><header><h3>{$name}</h3><img src=\"{$icon}\" width=\"32\" height=\"32\"></header><div>{$description}</div></div>";                
+    
+    // echo $this->Html->link(
+    //     $content, 
+    //     // isset($tool['url']) ? $tool['url'] : 
+    //     // (isset($tool['plugin']) ? array('plugin' => $plugin_name) : array()) +
+    //     array('plugin' => false, 'controller'=> 'Tools' /*$tool['controller']*/, 'action'=> 'storeTool' /*$tool['action']*/, '?' => ['tool' => $tool['plugin']]),
+    //     array('escape' => false)
+        
+    // ); 
         //}

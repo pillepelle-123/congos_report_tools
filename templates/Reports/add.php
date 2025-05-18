@@ -17,7 +17,7 @@
     </aside>
     <div class="column column-80">
         <div class="reports add content">
-            <?= $this->Form->create($report) ?>
+            <?= $this->Form->create($newEntity) ?>
             <fieldset>
                 <!-- <h3><?= __($this->get('title')) ?></h3> -->
                 <?php
@@ -34,7 +34,7 @@
                     //echo $this->Form->control('user_id', ['options' => $users]);
                 ?>
             </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Form->button(__('Save')) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>

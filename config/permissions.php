@@ -64,12 +64,12 @@ return [
                 'socialEmail',
                 'verify',
                 // RegisterTrait
-                'register',
+                // 'register',
                 'validateEmail',
                 // PasswordManagementTrait used in RegisterTrait
                 'changePassword',
-                'resetPassword',
-                'requestResetPassword',
+                // 'resetPassword',
+                // 'requestResetPassword',
                 // UserValidationTrait used in PasswordManagementTrait
                 'resendTokenValidation',
                 'linkSocial',

@@ -2,7 +2,7 @@
     <?= $this->Flash->render('auth') ?>
     <?= $this->Form->create($user) ?>
     <fieldset>
-        <legend><?= __d('cake_d_c/users', 'Please enter the new password') ?></legend>
+        <h3><?= __($this->get('title')) ?></h3>
         <?php if ($validatePassword) : ?>
             <?= $this->Form->control('current_password', [
                 'type' => 'password',
@@ -26,6 +26,6 @@
         ?>
 
     </fieldset>
-    <?= $this->Form->button(__d('cake_d_c/users', 'Submit'), ['id' => 'btn-submit']); ?>
+    <?= $this->Form->button(__d('cake_d_c/users', 'Save'), ['id' => 'btn-submit']); ?>
     <?= $this->Form->end() ?>   
 </t>

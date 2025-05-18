@@ -14,7 +14,7 @@ use Cake\Utility\Inflector;
             $controller_name = Inflector::pluralize($entity_name);
             
             if($editable ? $editable : 1==2 ) {
-                echo $this->Html->link(__('New ' . $entity_name), ['controller' => $controller_name, 'action' => 'add'], ['class' => 'side-nav-item']);
+                echo '<i class="fa-solid fa-circle-plus"></i> ' . $this->Html->link(__('New ' . $entity_name), ['controller' => $controller_name, 'action' => 'add'], ['class' => 'side-nav-item']);
             }
             ?>
         </div>

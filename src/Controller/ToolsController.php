@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Core\Plugin;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
  * Tools Controller
@@ -19,6 +20,11 @@ class ToolsController extends AppController
     {
         parent::initialize();
         $this->ToolsTable = $this->fetchTable('Tools');
+
+        $this->loadComponent('Crud');
+
+
+
     }
     /**
      * Index method
@@ -46,60 +52,59 @@ class ToolsController extends AppController
         $this->set('title', 'Tools');
         $this->set(compact('tools', 'user'));
 
-
     }
 
     public function storeTool()
     {
-        $session = $this->request->getSession();
-        $queryParams = $this->request->getQuery();
-        
-        // Alle Query-Parameter in Session speichern (außer _redirect)
-        foreach ($queryParams as $key => $value) {
-            if ($key !== '_redirect') {
-                $key = 'tool_controller';
-                $session->write($key, $value);
-            }
+        // $session = $this->request->getSession();
+        $tool_id = $this->request->getQuery();
+        try { 
+            $tool = $this->Tools->get($tool_id);
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error(__('Tool not found.'));
+            return $this->redirect(['action' => 'selectTool']);
         }
 
-        // Weiterleitung zur Ziel-URL
-        return $this->redirect(['action' => 'selectReport']);
-        // return $this->redirect($queryParams['_redirect'] ?? '/');
+        $this->request->getSession()->write(['crt.tool'=> $tool]);
 
+        return $this->redirect(['action' => 'selectReport']);
     }
+    
 
     public function selectReport()
     {
         // Neue Report-Instanz, die die den vom User ausgewählten Report repräsentiert
         $report = $this->reports_table->newEmptyEntity();
         //$tool_controller = $this->request->getQuery('tool');
-        $tool_controller = $this->request->getSession()->read('tool_controller');
+        $tool = $this->request->getSession()->read('crt.tool');
         // debug($tool_controller);
 
-        if (!$tool_controller) {
-            return $this->redirect(['controller' => 'Tools', 'action' => 'index']);
+        if (!$tool) {
+            return $this->redirect(['action' => 'selectReport']);
         }
 
-        // $tool = $this->query->find()->contain(['Reports'])->where(['id' => $id])->first();
-        $id = 1;
-        $tool = $this->Tools->find('all')
-            ->where(['controller' => $tool_controller])
-            ->first();
 
         $reports = $this->paginate($this->my_reports);
-        $this->request->getSession()->write(['crt.tool'=> $tool]);
+        // $this->request->getSession()->write(['crt.tool'=> $tool]);
 
         $this->set('title', 'Select Report');
-        $this->set('tool', $this->tool);
+        $this->set('tool', $tool);
         $this->set(compact('reports', 'report'));
     }
 
     public function processSelection()
     {
         $request = $this->request->getData('selected_report');
-        $report = json_decode($request);
-        // debug($report);
-        // die();
+
+        if(!isset($request)) {
+            $this->Flash->warning(__('Bitte wähle einen Report aus'));
+            // return $this->redirect(['action' => 'selectReport']);
+            return $this->redirect($this->referer());
+        }
+
+        $report = $this->my_reports->find('all')
+            ->where(['Reports.id' => $request])
+            ->first();
 
         $tool = $this->request->getSession()->read('crt.tool');
         // debug($tool->get('plugin'));
@@ -138,17 +143,24 @@ class ToolsController extends AppController
      */
     public function add()
     {
-        $tool = $this->Tools->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $tool = $this->Tools->patchEntity($tool, $this->request->getData());
-            if ($this->Tools->save($tool)) {
-                $this->Flash->success(__('The tool has been saved.'));
+        $newEntity = $this->Add->add($this->name, $this->request);
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The tool could not be saved. Please, try again.'));
+        if ($this->request->is('post')) {
+            return $this->redirect(['action' => 'index']);
         }
-        $this->set(compact('tool'));
+        $this->set('newEntity', $newEntity);
+
+        // $tool = $this->Tools->newEmptyEntity();
+        // if ($this->request->is('post')) {
+        //     $tool = $this->Tools->patchEntity($tool, $this->request->getData());
+        //     if ($this->Tools->save($tool)) {
+        //         $this->Flash->success(__('The tool has been saved.'));
+
+        //         return $this->redirect(['action' => 'index']);
+        //     }
+        //     $this->Flash->error(__('The tool could not be saved. Please, try again.'));
+        // }
+        // $this->set(compact('tool'));
     }
 
     /**
@@ -192,4 +204,73 @@ class ToolsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+
+    // public function initMenu()
+    // {
+    //     $this->autoRender = false; // Kein Template rendern
+    //     $menuNodesTable = $this->getTableLocator()->get('MenuNodes');
+
+    //     // Zuerst alle vorhandenen Einträge löschen (optional)
+    //     $menuNodesTable->deleteAll([]);
+
+    //     $menuData = [
+    //         [
+    //             'title' => 'Home',
+    //             'controller' => 'Pages',
+    //             'action' => 'display',
+    //             'url' => '/',
+    //             'children' => [
+    //                 [
+    //                     'title' => 'Tools',
+    //                     'controller' => 'Tools',
+    //                     'action' => 'index',
+    //                     'children' => [
+    //                         ['title' => 'View', 'controller' => 'Tools', 'action' => 'view'],
+    //                         ['title' => 'Add', 'controller' => 'Tools', 'action' => 'add'],
+    //                     ],
+    //                 ],
+    //                 [
+    //                     'title' => 'Users',
+    //                     'controller' => 'Users',
+    //                     'action' => 'index',
+    //                     'children' => [
+    //                         ['title' => 'View', 'controller' => 'Users', 'action' => 'view'],
+    //                     ],
+    //                 ],
+    //             ],
+    //         ],
+    //     ];
+
+    //     $this->saveMenuTree($menuData);
+    //     echo "Menüstruktur erfolgreich importiert!";
+    // }
+
+    // private function saveMenuTree(array $data, ?int $parentId = null): void
+    // {
+    //     $menuNodesTable = $this->getTableLocator()->get('MenuNodes');
+
+    //     foreach ($data as $item) {
+    //         $children = $item['children'] ?? [];
+    //         unset($item['children']);
+
+    //         $node = $menuNodesTable->newEntity([
+    //             'title' => $item['title'],
+    //             'controller' => $item['controller'] ?? null,
+    //             'action' => $item['action'] ?? null,
+    //             'url' => $item['url'] ?? null,
+    //             'plugin' => $item['plugin'] ?? null,
+    //             'parent_id' => $parentId
+    //         ]);
+
+    //         if ($menuNodesTable->save($node)) {
+    //             if (!empty($children)) {
+    //                 $this->saveMenuTree($children, $node->id);
+    //             }
+    //         } else {
+    //             debug($node->getErrors()); // Fehler anzeigen
+    //         }
+    //     }
+    // }
+
 }

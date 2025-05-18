@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Datasource\Exception\RecordNotFoundException;
+
+
 /**
  * Reports Controller
  *
@@ -15,39 +18,43 @@ class ReportsController extends AppController
     {
         parent::initialize();
         $this->ReportsTable = $this->fetchTable('Reports');
+
+        $this->loadComponent('Crud');
+
     }
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
+    // public function index()
+    // {
+    //     parent::setQuery(['Users'], true);
+    //     parent::setPaginationOrder('created', 'desc');
+    //     parent::index();
+    //     $this->set('title', 'My Reports');
+    // }
+
     public function index()
     {
-        // $reports = $this->my_reports;
-        // debug($reports);
-        // die();
-        $this->set('title', 'My Reports');
+        $this->Crud->setQuery(['Users']);
+        $entities = $this->Crud->index();
+        parent::setPaginationConfig(['field' => 'created', 'direction' => 'desc'], '10');
+        $entities = $this->paginate($entities);
+        // parent::setPaginationOrder('created', 'desc');
 
-        $reports = $this->paginate($this->my_reports);
 
-        $this->set([
-            'entities' => $reports,
-            'users' => $this->all_users,
-        ]);
+        $this->set(['title' => 'Admin: Reports', 'entities' => $entities]);
+
     }
 
-
-    public function indexAdmin()
-    {
-        $this->set('title', 'Admin: Reports');
-
-        $reports = $this->paginate($this->all_reports);
-
-        $this->set([
-            'entities' => $reports,
-            'users' => $this->all_users,
-        ]);
-    }
+    // public function indexAdmin()
+    // {
+    //     parent::setQuery(['Users'], false);
+    //     parent::setPaginationOrder('created', 'desc');
+    //     // parent::index();
+    //     $this->set('title', 'Admin: Reports');
+    // }
     
     /**
      * View method
@@ -58,21 +65,14 @@ class ReportsController extends AppController
      */
     public function view($id = null)
     {
-        parent::view($id);
-        $report = $this->reports_table->get($id, [
-        'contain' => ['Users']
-        ]);
+        // parent::view($id);
 
-
+        // User zu Report finden
         $user = $this->users_table->find('all')
-            ->where(['id' => $report->user_id]);
-
-        // Übergeben von Related Entities als PaginatedResultSet 
+            ->where(['id' => parent::getEntity() ->user_id]);
         $user = $this->paginate($user);
-        $this->set([
-            'entity' => $report,
-            'user' => $user,
-        ]);
+        $this->set(compact('user'));
+
     }
 
     /**
@@ -82,24 +82,75 @@ class ReportsController extends AppController
      */
     public function add()
     {
-        $report = $this->reports_table->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $requestData = $this->request->getData();
-            $report = $this->Reports->patchEntity($report, $this->request->getData());
-            if ($this->Reports->save($report)) {
-                $this->Flash->success(__('The report has been saved.'));
+        $users = $this->fetchTable('Users')->find('all');
+        // CrudComponent aufrufrufen
+        $newEntity = $this->Crud->add([]);
 
-                if ($this->identity->get('role') === 'admin') {
-                    return $this->redirect(['action' => 'indexAdmin']);
-                } else {
-                    return $this->redirect(['action' => 'index']);
-                }
-                //return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The report could not be saved. Please, try again.'));
+        if ($this->request->is('post')) {
+            return $this->redirect(['action' => 'index']);
         }
-        $users = $this->all_users;
-        $this->set(compact('report' , 'users' ));
+
+        $this->set(compact('newEntity', 'users'));
+
+        // $this->set(compact('newEntity'));
+
+// #################################################################
+        // $users = parent::getOtherEntitiesSelectQuery('Users');
+        // $name = $this->name;
+        // $requ = $this->request;
+
+        // $newEntity = $this->Crud->add($this->name, $this->request);
+
+        // if ($this->request->is('post')) {
+        //     return $this->redirect(['action' => 'index']);
+        // }
+        // $this->set(compact('newEntity', 'users'));
+
+        // $users = parent::getOtherEntitiesSelectQuery('Users');
+
+        // parent::add();
+
+        // if ($this->request->is('post')) {
+        //     return $this->redirect(['action' => 'index']);
+        // } 
+        // $this->set(compact('users' ));
+
+// #################################################################
+
+
+        // $users = parent::getOtherEntitiesSelectQuery('Users');
+        // if ($this->request->is('post')) {
+        //     parent::add();
+
+        //     if ($this->identity->get('role') === 'admin') {
+        //         return $this->redirect(['action' => 'indexAdmin']);
+        //     } else {
+        //         return $this->redirect(['action' => 'index']);
+        //     }
+        // }
+        // $this->set(compact('users' ));
+
+
+        // #######################################################
+        // // $report = parent::getTable()->newEmptyEntity();
+        // // $report = $this->reports_table->newEmptyEntity();
+        // if ($this->request->is('post')) {
+        //     $requestData = $this->request->getData();
+        //     $report = $this->Reports->patchEntity($report, $this->request->getData());
+        //     if ($this->Reports->save($report)) {
+        //         $this->Flash->success(__('The report has been saved.'));
+
+        //         if ($this->identity->get('role') === 'admin') {
+        //             return $this->redirect(['action' => 'indexAdmin']);
+        //         } else {
+        //             return $this->redirect(['action' => 'index']);
+        //         }
+        //         //return $this->redirect(['action' => 'index']);
+        //     }
+        //     $this->Flash->error(__('The report could not be saved. Please, try again.'));
+        // }
+        // $users = $this->all_users;
+        // $this->set(compact('report' , 'users' ));
     }
 
     /**
@@ -113,11 +164,12 @@ class ReportsController extends AppController
     {
         $report = $this->reports_table->get($id, contain: ['Users']);
         if ($this->request->is(['patch', 'post', 'put'])) {
+            debug($this->request->getData());
             $report = $this->reports_table->patchEntity($report, $this->request->getData());
             if ($this->reports_table->save($report)) {
                 $this->Flash->success(__('The report has been saved.'));
 
-                return $this->redirect($this->referer());
+                return $this->redirect(['action' => 'view', $report->id]);
             }
             $this->Flash->error(__('The report could not be saved. Please, try again.'));
         }

@@ -3,7 +3,7 @@ namespace App\View\Helper;
 
 use Cake\View\Helper;
 
-class HomeCardsHelper extends Helper
+class CardsHelper extends Helper
 {
     //protected $identity;
     public array $helpers = ['Authentication.Identity']; // Load the helper here
@@ -108,25 +108,34 @@ class HomeCardsHelper extends Helper
         return $this->_defaultConfig[$domain];
     }
 
-    public function renderCard(array $home_card): string
+    public function renderHomeCard(array $home_card): string
     {
         return $this->getView()->element('home_card', compact('home_card'));
     }
 
-    public function renderAll($domain = null, $role = null): string
+    public function renderAllHome($domain = null, $role = null): string
     {
         $html = '';
-        foreach ($this->getCards($domain, $role) as $home_card) {
-            $html .= $this->renderCard($home_card);
+        foreach ($this->getCards($domain, $role) as $card) {
+            $html .= $this->renderHomeCard($card);
         }
         return $html;
     }
 
-    public function renderToolCard(array $tool = []): string
+    public function renderToolCard($tool = null): string
     {
         // $tool['role'] = $this->Identity->get('role');
         // $tool['color'] = 'var(--color-crt-waldgrün)';
     
         return $this->getView()->element('tool_card', compact('tool'));
     }
+
+    //     public function renderAllTool($domain = null, $role = null): string
+    // {
+    //     $html = '';
+    //     foreach ($this->getCards($domain, $role) as $card) {
+    //         $html .= $this->renderToolCard($card);
+    //     }
+    //     return $html;
+    // }
 }

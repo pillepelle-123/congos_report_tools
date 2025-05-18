@@ -33,20 +33,20 @@ use Cake\Core\Configure;
         }
         ?>
         <?php
-        $registrationActive = Configure::read('Users.Registration.active');
-        if ($registrationActive) {
-            echo $this->Html->link(__d('cake_d_c/users', 'Register'), ['action' => 'register']);
-        }
-        if (Configure::read('Users.Email.required')) {
-            if ($registrationActive) {
-                echo ' | ';
-            }
-            echo $this->Html->link(__d('cake_d_c/users', 'Reset Password'), ['action' => 'requestResetPassword']);
-            if (Configure::read('OneTimeLogin.enabled')) {
-                echo ' | ';
-                echo $this->Html->link(__d('cake_d_c/users', 'Send me a login link'), ['controller' => 'Users', 'action' => 'requestLoginLink'], ['allowed' => true, 'escape' => false]);
-            }
-        }
+        // $registrationActive = Configure::read('Users.Registration.active');
+        // if ($registrationActive) {
+        //     echo $this->Html->link(__d('cake_d_c/users', 'Register'), ['action' => 'register']);
+        // }
+        // if (Configure::read('Users.Email.required')) {
+        //     if ($registrationActive) {
+        //         echo ' | ';
+        //     }
+        //     // echo $this->Html->link(__d('cake_d_c/users', 'Reset Password'), ['action' => 'requestResetPassword']);
+        //     // if (Configure::read('OneTimeLogin.enabled')) {
+        //     //     echo ' | ';
+        //     //     echo $this->Html->link(__d('cake_d_c/users', 'Send me a login link'), ['controller' => 'Users', 'action' => 'requestLoginLink'], ['allowed' => true, 'escape' => false]);
+        //     // }
+        // }
         ?>
     </fieldset>
     <?= implode(' ', $this->User->socialLoginList()); ?>

@@ -1,13 +1,29 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Tool $tool
  */
 ?>
-<div class="reports form content">
-    <h3><?= __('Report auswählen') ?></h3>
-    
-    <?= $this->Form->create($report, [
+<div class="reports form select-report content">
+    <div class="title">
+
+        <div class="left">
+            <h3><?= __('Report auswählen') ?></h3>
+        </div>
+
+        <div class="right">
+            <div class="display-tool" style="">
+
+                <div><?= $tool['name'] ?></div>
+                <div><?= $this->Html->image($tool['icon'], [
+                    'alt' => h($tool['name']),
+                ]) ?>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="body" >
+    <?= $this->Form->create(null, [
         'url' => ['action' => 'processSelection']
     ]) ?>
     <!-- <fieldset> -->
@@ -27,23 +43,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($reports as $index => $report): ?>
+                    <?php foreach ($reports->toArray() as $report): ?>
                         <tr>
                             <td>
+                                <label class="radio-container">
                                 <?= $this->Form->radio('selected_report', [
-                                    [
-                                        'value' => $report,
-                                        'text' => h('$report->name'),
-                                        'label' => [
-                                            'style' => 'report-label',
-                                            'escape' => false,
-                                            'text' => '', //$this->Html->tag('strong', h($report->name)),
-                                        ]
-                                    ]
-                                ], [
-                                    'required' => true,
-                                    'hiddenField' => ($index === 0) //Nur für erstes Element
-                                ]) ?>
+                                    ['value' => $report->id, 'text' => 'Id']], [
+                                    'label' => false,
+                                    // 'required' => true,
+                                    'hiddenField' => false,
+                                    ]); ?>
+                                    <span class="checkmark"></span>
+                                </label>
                             </td>
                             <td><?= h($report->name) ?></td>
                             <td><?= h($report->created) ?></td>
@@ -97,6 +108,7 @@
     ]) ?>
     
     <?= $this->Form->end() ?>
+    </div>
 </div>
 <style>
 

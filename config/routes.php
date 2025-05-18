@@ -85,17 +85,23 @@ return function (RouteBuilder $routes): void {
 
 
     $routes->scope('/tools', function (RouteBuilder $routes): void {
+        $routes->connect('/list',['controller' => 'Tools', 'action' => 'index']);
         $routes->connect('/',['controller' => 'Tools', 'action' => 'selectTool']);
         $routes->connect('/select-report',['controller' => 'Tools', 'action' => 'selectReport']);
         $routes->connect('/process-selection',['controller' => 'Tools', 'action' => 'processSelection']);
-        $routes->connect('/store',['controller' => 'Tools', 'action' => 'storeTool']);
-        $routes->connect('/list',['controller' => 'Tools', 'action' => 'index']);
+        $routes->connect('/store/*',['controller' => 'Tools', 'action' => 'storeTool']);
 
 
         $routes->connect('/view/*', ['controller' => 'Tools', 'action' => 'view']);
         $routes->connect('/add', ['controller' => 'Tools', 'action' => 'add']);
         $routes->connect('/edit/*', ['controller' => 'Tools', 'action' => 'edit']);
         $routes->connect('/delete/*', defaults: ['controller' => 'Tools', 'action' => 'delete']);
+
+
+
+        $routes->connect('/initMenu', defaults: ['controller' => 'Tools', 'action' => 'initMenu']);
+
+
 
         // Tool: QueryExpander
         $routes->scope('/query-expander', function ($routes) {

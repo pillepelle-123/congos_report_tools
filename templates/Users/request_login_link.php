@@ -20,6 +20,6 @@
             echo $this->User->addReCaptcha();
         } ?>
     </fieldset>
-    <?= $this->User->button(__d('cake_d_c/users', 'Submit')); ?>
+    <?= $this->User->button(__d('cake_d_c/users', 'Save')); ?>
     <?= $this->Form->end() ?>
 </div>

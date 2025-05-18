@@ -13,13 +13,13 @@
     </aside>
     <div class="column column-80">
         <div class="tools form content">
-            <?= $this->Form->create($tool) ?>
+            <?= $this->Form->create($newEntity) ?>
             <fieldset>
                 <legend><?= __('Add Tool') ?></legend>
                 <?php
                 ?>
             </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Form->button(__('Save')) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>

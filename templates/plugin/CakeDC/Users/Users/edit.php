@@ -55,7 +55,7 @@ $Users = ${$tableAlias};
         ]);
         ?>
     </fieldset>
-    <?= $this->Form->button(__d('cake_d_c/users', 'Submit')) ?>
+    <?= $this->Form->button(__d('cake_d_c/users', 'Save')) ?>
     <?= $this->Form->end() ?>
     <?php if (Configure::read('OneTimePasswordAuthenticator.login')) : ?>
         <fieldset>

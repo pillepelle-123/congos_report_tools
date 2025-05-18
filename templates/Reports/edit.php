@@ -32,7 +32,7 @@
                     }
                     
                     echo $this->Form->control('name');
-                    echo $this->Form->control('xml', ['type' => 'textarea', 'class' => 'form-xml', ' maxlength' => '1000000']);
+                    echo $this->Form->control('xml', ['type' => 'textarea', 'class' => 'form-xml', ' maxlength' => '1000000', 'resize' => 'none']);
                     if ($this->Identity->get('role') === 'admin') {
                         echo $this->Form->control('user_id', ['options' => $usernames, 'default'=> $this->Identity->get('id')]);
                     } 

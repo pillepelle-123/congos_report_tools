@@ -1,4 +1,4 @@
-<?php
+<spa?php
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -42,6 +42,7 @@ $cakeDescription = 'Congos Report Tools';
     <link href="/fontawesome/css/regular.css" rel="stylesheet" />
     <link href="/fontawesome/css/brands.css" rel="stylesheet" />
 
+
 </head>
 <body>
     <div class="top-nav-container">
@@ -53,7 +54,7 @@ $cakeDescription = 'Congos Report Tools';
             <div class="top-nav-links">
 
                 <?php if ($this->Identity->isLoggedIn()): ?>
-                    <ul id="user_menu">
+                    <ul id="user-menu">
                         <li><i class="fa-solid fa-user"></i>&nbsp;
                         <?php echo $this->Identity->get('username'); ?></li>
                         <li><?php echo $this->Html->link('Logout', url: ['controller' => 'Users', 'action' => 'logout']); ?></li>
@@ -71,8 +72,116 @@ $cakeDescription = 'Congos Report Tools';
             
         </nav>
     </div>
+    <div class="breadcrumb">
+        <div class="left">
+        <ul class="breadcrumb-list" id="breadcrumb">
+    <?php $secondLastCrumb = null; ?>
+    <?php foreach ($breadcrumbs as $i => $crumb): ?>
+        <?php
+            $total = count($breadcrumbs);
+            $isFirst = $i === 0;
+            $isLast = $i === $total - 1;
+            $isSecondLast = $i === $total - 2;
+            $isCollapsible = !$isFirst && !$isLast && $total > 3;
+            if ($isSecondLast) {
+                $secondLastCrumb = $crumb;
+            }
+        ?>
+
+        <?php if ($i === 1 && $total > 3): ?>
+            <li class="breadcrumb-toggle" title="Ausklappen" onclick="toggleBreadcrumb(this)"><i class="fa-solid fa-circle-plus" style="margin-right: 6px;"></i></li>
+        <?php endif; ?>
+
+        <li class="breadcrumb-item<?= $isCollapsible ? ' collapsed' : '' ?><?= $isLast ? ' breadcrumb-item-last' : '' ?>"
+            <?= $isCollapsible ? 'data-collapsible="true"' : '' ?>>
+            <?php // $lastCrumb = $crumb; ?>
+            <?= $isLast
+                ? h($crumb->title)
+                : $this->Html->link($crumb->title, [
+                    'plugin' => $crumb->plugin,
+                    'controller' => $crumb->controller,
+                    'action' => $crumb->action
+                ]) ?>
+        </li>
+    <?php endforeach; ?>
+    <li class="breadcrumb-collapse-control hidden" title="Einklappen" onclick="toggleBreadcrumb(this)"><i class="fa-solid fa-circle-minus"></i></li>
+</ul>      
+</div> 
+                <div class="right">      
+                <?php
+                if ($secondLastCrumb) {
+                    $lastPageTitle = $secondLastCrumb->title;
+                    $lastPageLink = [
+                        'plugin' => $secondLastCrumb->plugin,
+                        'controller' => $secondLastCrumb->controller,
+                        'action' => $secondLastCrumb->action
+                    ];
+                    echo $this->Html->image('icons/material_arrow_circle_back_292929.svg', array('title' => $lastPageTitle, 'url' => $lastPageLink, isset($sessionData) ? $sessionData : ''));
+                }
+                //  $this->Html->link($lastCrumb->title, [
+                //     'plugin' => $crumb->plugin,
+                //     'controller' => $crumb->controller,
+                //     'action' => $crumb->action
+                // ])
+                
+                // if ($info['template'] !== 'home') {
+                // echo $this->Html->image('icons/material_arrow_circle_back_292929.svg', array('title' => $lastPageTitle, 'url' => $lastPageLink, isset($sessionData) ? $sessionData : ''));
+                // }
+                ?>
+                <!-- REPORT -->
+                 <?php /*
+                    <?php if (!empty($report)): ?>
+                        <?php echo h($report->report_name) . '&nbsp;';
+                        echo $this->Html->image('icons/material_view.svg', array('title' => 'Report', 'height' => '16', 'width' => '16'));
+                        ?>
+                    <?php endif; ?>
+                    */ ?>
+
+                </div>       
+
+        <?php /*
+    <nav aria-label="breadcrumb">
+        <ol>
+            <?php foreach ($breadcrumbs as $crumb): ?>
+                <li class="breadcrumb-item <?= empty($crumb->url) ? 'active' : '' ?>">
+                    <?= empty($crumb->url) ? $crumb->title : $this->Html->link($crumb->title, $crumb->url) ?>
+                </li>
+            <?php endforeach; ?>
+        </ol>
+    </nav>
+    */ ?>
+        </div>
+    </div>
         <!-- Breadcrumb Navi eingebunden, s. element\breadcrumb.php -->
-        <?= $this->element('breadcrumb'/*, ['user' => $user]*/) ?>
+        <?php // $this->element('breadcrumb'/*, ['user' => $user]*/) ?>
+        <?php /*
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <?php foreach ($breadcrumbs as $crumb): ?>
+                    <li class="breadcrumb-item <?= empty($crumb->url) ? 'active' : '' ?>">
+                        <?= empty($crumb->url) ? $crumb->title : $this->Html->link($crumb->title, $crumb->url) ?>
+                    </li>
+                <?php endforeach; ?>
+            </ol>
+        </nav>
+        */ ?> 
+        <?php /*
+        <?php if (!empty($breadcrumbs)): ?>
+            <nav class="breadcrumb-nav">
+                <ul class="breadcrumb">
+                    <?php foreach ($breadcrumbs as $crumb): ?>
+                        <li>
+                            <?= $this->Html->link($crumb->title, [
+                                'plugin' => $crumb->plugin,
+                                'controller' => $crumb->controller,
+                                'action' => $crumb->action
+                            ]) ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </nav>
+        <?php endif; ?>
+        */ ?>
         <!-- Breadcrumb Navi -------------------------------------- -->
     <main class="main">
         <div class="container">
@@ -166,6 +275,34 @@ $cakeDescription = 'Congos Report Tools';
                     }
                 });
             });
+
+
+        // Breadcrumb Collapse    
+            function toggleBreadcrumb(toggleEl) {
+                const list = document.getElementById('breadcrumb');
+                const collapsedItems = list.querySelectorAll('.breadcrumb-item[data-collapsible="true"]');
+                const dots = list.querySelector('.breadcrumb-toggle');
+                const collapseControl = list.querySelector('.breadcrumb-collapse-control');
+
+                const isExpanded = dots.classList.contains('hidden');
+
+                if (!isExpanded) {
+                    console.log('collapsed');
+                    // Aufklappen
+                    collapsedItems.forEach(el => el.classList.remove('collapsed'));
+                    dots.classList.add('hidden');
+                    collapseControl.classList.remove('hidden');
+                    // dots.style.hidden = 'true';
+                    // dots.style.transition = 'hidden 0.5s ease-in-out';
+                } else {
+                    console.log('expanded');
+                    // Zuklappen
+                    collapsedItems.forEach(el => el.classList.add('collapsed'));
+                    dots.classList.remove('hidden');
+                    collapseControl.classList.add('hidden');
+                    // dots.style.hidden = 'false';
+                }
+            }
         </script>
         
 </body>

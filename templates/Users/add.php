@@ -17,7 +17,7 @@
 <div class="actions columns large-2 medium-3">
     <h3><?= __d('cake_d_c/users', 'Actions') ?></h3>
     <ul class="side-nav">
-        <?= $this->Html->link(__d('cake_d_c/users', '◀ Admin: Users'), ['action' => 'indexAdmin']) ?>
+        <?= $this->Html->link(__d('cake_d_c/users', '◀ Admin: Users'), ['action' => 'index']) ?>
     </ul>
 </div>
 <div class="users add content">
@@ -36,7 +36,7 @@
             ]);
         ?>
     </fieldset>
-    <?= $this->Form->button(__d('cake_d_c/users', 'Submit')) ?>
+    <?= $this->Form->button(__d('cake_d_c/users', 'Save')) ?>
     <?= $this->Form->end() ?>
 </div>
 */ ?>
@@ -45,12 +45,12 @@
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('◀ Admin: Users'), ['action' => 'indexAdmin'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('◀ Admin: Users'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
     <div class="column column-80">
         <div class="users add content">
-            <?= $this->Form->create($user) ?>
+            <?= $this->Form->create($newEntity) ?>
             <fieldset>
             <h3><?= __d('cake_d_c/users', 'Add User') ?></h3>
                 <?php
@@ -65,7 +65,7 @@
                     ]);
                 ?>
             </fieldset>
-            <?= $this->Form->button(__d('cake_d_c/users', 'Submit')) ?>
+            <?= $this->Form->button(__d('cake_d_c/users', 'Save')) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>

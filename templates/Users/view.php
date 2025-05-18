@@ -20,7 +20,7 @@ echo $this->element('standard_view', [
     'rel_entity_pages' => [$reports],
     'entity' => $entity,
      'fields' => $fields,
-    // 'additional' => []
+    'editable' => true,
 ]);
 ?>
 
@@ -32,7 +32,7 @@ echo $this->element('standard_view', [
             <?= $this->Html->link(__('Users Reports'), '#reports', ['class' => 'side-nav-item']) ?>
             <?= $this->Html->link(__('Edit User'), ['action' => 'edit', $user->id], ['class' => 'side-nav-item']) ?>
             <?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('◀ Admin: Users'), ['action' => 'indexAdmin'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('◀ Admin: Users'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
     <div class="column column-80">

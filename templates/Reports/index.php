@@ -1,7 +1,6 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var iterable<\App\Model\Entity\Report> $reports
  */
 ?>
 <?php
@@ -16,7 +15,7 @@ echo $this->element('standard_list', [
     // 'entity_pages' => [$user],
     'entities' => $entities,
     'fields' => $fields,
-    'related_entities' => [$users],
+    // 'related_entities' => [],
     'editable' => true,
 
     // 'additional' => []

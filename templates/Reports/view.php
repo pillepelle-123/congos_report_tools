@@ -17,9 +17,11 @@ echo $this->element('standard_view', [
      ],
     'rel_entity_pages' => [$user],
     'entity' => $entity,
-     'fields' => $fields,
-    // 'additional' => []
+    'fields' => $fields,
+    'editable' => true,
+
 ]);
+debug( ['entity']);
 ?>
 
 

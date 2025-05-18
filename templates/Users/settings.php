@@ -41,7 +41,7 @@
                     echo '<p>'.h($user->created).'</p>';
                 ?>
             </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Form->button(__('Save')) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>

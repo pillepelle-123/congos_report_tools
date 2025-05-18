@@ -14,7 +14,7 @@
                 ['action' => 'delete', $user->id],
                 ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'class' => 'side-nav-item']
             ) ?>
-            <?= $this->Html->link(__('◀ Admin: Users'), ['action' => 'indexAdmin'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('◀ Admin: Users'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
     <div class="column column-80">
@@ -22,29 +22,80 @@
             <?= $this->Form->create($user) ?>
             <fieldset>
                 <h3><?= __($this->get('title')) ?></h3>
-                <?php
-                    echo $this->Form->control('username');
-                    echo $this->Form->control('email');
-                    echo $this->Form->control('password');
-                    echo $this->Form->control('first_name');
-                    echo $this->Form->control('last_name');
-                    echo $this->Form->control('token');
-                    echo $this->Form->control('token_expires', ['empty' => true]);
-                    echo $this->Form->control('api_token');
-                    echo $this->Form->control('activation_date', ['empty' => true]);
-                    echo $this->Form->control('secret');
-                    echo $this->Form->control('secret_verified');
-                    echo $this->Form->control('tos_date', ['empty' => true]);
-                    echo $this->Form->control('active');
-                    echo $this->Form->control('is_superuser');
-                    echo $this->Form->control('role');
-                    echo $this->Form->control('additional_data');
-                    echo $this->Form->control('last_login', ['empty' => true]);
-                    echo $this->Form->control('lockout_time', ['empty' => true]);
-                    echo $this->Form->control('login_token');
-                    echo $this->Form->control('login_token_date', ['empty' => true]);
-                    echo $this->Form->control('token_send_requested');
-                ?>
+                
+                    <?= $this->Form->control('username') ?>
+                    <?= $this->Form->control('email') ?>
+                    <?= $this->Form->control('password') ?>
+                    <?= $this->Form->control('first_name') ?>
+                    <?= $this->Form->control('last_name') ?>
+                    <?= $this->Form->control('token') ?>
+                    <?= $this->Form->control('token_expires', ['empty' => true]) ?>
+                    <?= $this->Form->control('api_token') ?>
+                    <?= $this->Form->control('activation_date', ['empty' => true]) ?>
+                    <?= $this->Form->control('secret') ?>
+<label for="secret_verified"><?= __('Secret verified') ?></label>
+
+                 <label class="checkbox-container">
+                    <?= $this->Form->checkbox('secret_verified', ['value' => 'secret_verified'], ['hiddenField' => false, 'label' => '']) ?>
+                    <span class="checkmark"></span>         
+                </label>
+
+                    <?php /*
+                    <label class="checkbox-container">
+                        <?= $this->Form->radio('secret_verified', [
+                                    ['value' => 'secret_verified']], [
+                                    'label' => false,
+                                    //'required' => true,
+                                    // 'hiddenField' => false,
+                                    ]); ?>
+                        <span class="checkmark"></span>
+                    </label>
+                    */ ?>
+                        <?php // $this->Form->control('secret_verified') ?>
+
+
+
+                    <?= $this->Form->control('tos_date', ['empty' => true]) ?>
+                    <div style="display: block;">
+                        <label for="active"><?= __('Is Active') ?></label>
+                        <?= $this->Form->control('active', ['label' => '']) ?>
+                    </div>
+                    <div style="display: block;">
+                        <label for="is_superuser"><?= __('Is Superuser') ?></label>
+                        
+                        <?= $this->Form->control('is_superuser', ['label' => '']) ?>
+                        
+                    </div>
+
+                    <?php if ($user->is_superuser) : ?>
+                        <label for="role"><?= __('Role') ?></label>
+                        
+                        <?php /*
+                        <?= $this->Form->control('role', ['options' => [
+                            'admin' => __('Admin'),
+                            'user' => __('User'),
+                        ], 'disabled' => true]); ?>#
+                        */ ?>
+                    <?php else : ?>
+                        <?= $this->Form->control('role', ['options' => [
+                            'admin' => __('Admin'),
+                            'user' => __('User'),
+                        ]]); ?>
+                    <?php endif; ?>
+                    <?php /*
+                    <?= $this->Form->control('role',
+                        ['options' => [
+                            'admin' => __('Admin'),
+                            'user' => __('User'),
+                        ], $user->is_superuser ? 'disabled' : '' , 'style' => '']) ?>  
+                    */ ?>  
+                    <?= $this->Form->control('additional_data') ?>
+                    <?= $this->Form->control('last_login', ['empty' => true]) ?>
+                    <?= $this->Form->control('lockout_time', ['empty' => true]) ?>
+                    <?= $this->Form->control('login_token') ?>
+                    <?= $this->Form->control('login_token_date', ['empty' => true]) ?>
+                    <?= $this->Form->control('token_send_requested') ?>
+                
             </fieldset>
             <?= $this->Form->button(__('Save')) ?>
             <?= $this->Form->end() ?>
