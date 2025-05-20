@@ -104,7 +104,7 @@
     <!-- </fieldset> -->
     
     <?= $this->Form->button(__('Nächster Schritt'), [
-        'class' => 'btn-primary'
+        'class' => 'button'
     ]) ?>
     
     <?= $this->Form->end() ?>

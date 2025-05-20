@@ -4,6 +4,73 @@
  * @var \App\Model\Entity\User $user
  */
 ?>
+<?php
+// $fields2 = [['id', 'admin'], ['name', 'user'], ['user.username', 'admin'], ['created', 'user'], ['modified', 'user']]; // Feldname, 
+
+
+$fields = [
+    [
+        'name' => 'username', 'form_options' => ['type' => 'text']
+    ],
+    [
+        'name' => 'email', 'form_options' => ['type' => 'text']
+    ],
+    ['name' => 'first_name', 'form_options' => ['type' => 'text']],
+    ['name' => 'last_name', 'form_options' => ['type' => 'text']],
+    [
+        'name' => 'role',
+        'form_options' => [
+            'type' => 'select',
+            'options' => [
+                'admin' => __('Admin'),
+                'user' => __('User'),
+            ],
+            'class' => 'input select',
+            ],
+    ],
+    [
+        'name' => 'is_superuser',
+        'form_options' => [
+            'type' => 'checkbox',
+            // 'hiddenField' => false,
+            'class' => ' checkbox-checked', // btn-check
+            'id' => 'is_superuser',
+            'autocomplete' => 'off',
+            'label' => false,
+            'disabled' => true,
+        ],
+    ],
+    [
+        'name' => 'active',
+        'form_options' => [
+            'type' => 'checkbox',
+            // 'hiddenField' => false,
+            'class' => 'checkbox-checked', // btn-check
+            'id' => 'active',
+            'autocomplete' => 'off',
+            'label' => false,
+        ],
+    ],
+    
+
+];
+
+echo $this->element('standard_edit', [
+
+
+    // 'rel_entity_fields' => [
+    //     'Users' => ['username', 'created', 'modified'],
+    //     'Tools' => ['name']
+    //  ],
+    // 'rel_entity_pages' => [$user],
+    'entity' => $entity,
+    'instance_name' => $entity->username,
+    'fields' => $fields,
+    'editable' => true,
+
+]);
+?>
+<?php /*
 <div class="row">
     <aside class="column">
         <div class="side-nav">
@@ -40,17 +107,17 @@
                     <span class="checkmark"></span>         
                 </label>
 
-                    <?php /*
-                    <label class="checkbox-container">
-                        <?= $this->Form->radio('secret_verified', [
-                                    ['value' => 'secret_verified']], [
-                                    'label' => false,
-                                    //'required' => true,
-                                    // 'hiddenField' => false,
-                                    ]); ?>
-                        <span class="checkmark"></span>
-                    </label>
-                    */ ?>
+                    
+                    // <label class="checkbox-container">
+                    //     <?= $this->Form->radio('secret_verified', [
+                    //                 ['value' => 'secret_verified']], [
+                    //                 'label' => false,
+                    //                 //'required' => true,
+                    //                 // 'hiddenField' => false,
+                    //                 ]); ?>
+                    //     <span class="checkmark"></span>
+                    // </label>
+                    
                         <?php // $this->Form->control('secret_verified') ?>
 
 
@@ -70,25 +137,25 @@
                     <?php if ($user->is_superuser) : ?>
                         <label for="role"><?= __('Role') ?></label>
                         
-                        <?php /*
-                        <?= $this->Form->control('role', ['options' => [
-                            'admin' => __('Admin'),
-                            'user' => __('User'),
-                        ], 'disabled' => true]); ?>#
-                        */ ?>
+                        
+                        // <?= $this->Form->control('role', ['options' => [
+                        //     'admin' => __('Admin'),
+                        //     'user' => __('User'),
+                        // ], 'disabled' => true]); ?>#
+                        // 
                     <?php else : ?>
                         <?= $this->Form->control('role', ['options' => [
                             'admin' => __('Admin'),
                             'user' => __('User'),
                         ]]); ?>
                     <?php endif; ?>
-                    <?php /*
-                    <?= $this->Form->control('role',
-                        ['options' => [
-                            'admin' => __('Admin'),
-                            'user' => __('User'),
-                        ], $user->is_superuser ? 'disabled' : '' , 'style' => '']) ?>  
-                    */ ?>  
+                    // <?php
+                    // <?= $this->Form->control('role',
+                    //     ['options' => [
+                    //         'admin' => __('Admin'),
+                    //         'user' => __('User'),
+                    //     ], $user->is_superuser ? 'disabled' : '' , 'style' => '']) ?>  
+                    //   
                     <?= $this->Form->control('additional_data') ?>
                     <?= $this->Form->control('last_login', ['empty' => true]) ?>
                     <?= $this->Form->control('lockout_time', ['empty' => true]) ?>
@@ -102,3 +169,4 @@
         </div>
     </div>
 </div>
+*/ ?>

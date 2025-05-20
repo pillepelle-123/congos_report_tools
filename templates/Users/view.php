@@ -19,7 +19,7 @@ echo $this->element('standard_view', [
      ],
     'rel_entity_pages' => [$reports],
     'entity' => $entity,
-    'instance_name' => 'username',
+    'instance_name' => $entity->username,
      'fields' => $fields,
     'editable' => true,
 ]);

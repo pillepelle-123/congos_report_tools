@@ -106,7 +106,7 @@
                 </tbody>
             </table>
         </div>
-        <?= $this->Form->button('Nächster Schritt', ['class' => 'btn btn-primary']) ?>
+        <?= $this->Form->button('Nächster Schritt', ['class' => 'button']) ?>
         <?= $this->Form->end() ?>
     </div>
 </div>

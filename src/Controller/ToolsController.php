@@ -169,17 +169,21 @@ class ToolsController extends AppController
      */
     public function edit($id = null)
     {
-        $tool = $this->Tools->get($id, contain: []);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $tool = $this->Tools->patchEntity($tool, $this->request->getData());
-            if ($this->Tools->save($tool)) {
-                $this->Flash->success(__('The tool has been saved.'));
+        $this->Crud->setQuery();
+        $entity = $this->Crud->edit($id);
+        $this->set(compact('entity'));
+        return $this->redirect(['action' => 'view', $id]);
+        // $tool = $this->Tools->get($id, contain: []);
+        // if ($this->request->is(['patch', 'post', 'put'])) {
+        //     $tool = $this->Tools->patchEntity($tool, $this->request->getData());
+        //     if ($this->Tools->save($tool)) {
+        //         $this->Flash->success(__('The tool has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The tool could not be saved. Please, try again.'));
-        }
-        $this->set(compact('tool'));
+        //         return $this->redirect(['action' => 'index']);
+        //     }
+        //     $this->Flash->error(__('The tool could not be saved. Please, try again.'));
+        // }
+        // $this->set(compact('tool'));
     }
 
     /**

@@ -135,8 +135,11 @@ class UsersController extends BaseUsersController
     public function edit($id = null)
     {
         $this->Crud->setQuery();
-        $user = $this->Crud->edit($id);
-        $this->set(compact('user'));
+        $entity = $this->Crud->edit($id);
+        $this->set(compact('entity'));
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            // return $this->redirect(['action' => 'view', $id]);
+        }
     }
 
     /**

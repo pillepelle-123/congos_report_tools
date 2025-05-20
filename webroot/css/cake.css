@@ -1,3 +1,9 @@
+
+/* ############################## */
+/* ########## GLOBAL ############ */
+/* ############################## */
+
+
 /* Milligram overrides */
 :root {
     /* CRT Colors grün */
@@ -82,12 +88,10 @@
     --color-message-info-border: #6cb2eb;
 }
 
-.button, button, input[type='button'], input[type='reset'], input[type='submit'] {
-    background-color: var(--color-crt-blau-stufe-4);
-    border: none;
-    margin: 15px 0px;
-}
 
+/* ############################## */
+/* ########### Body ############# */
+/* ############################## */
 
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -137,6 +141,7 @@ td, th {
 
 th {
     border-bottom: 0.4rem solid var(--color-crt-blau-stufe-4);
+    white-space: nowrap;
 }
 
 td,
@@ -160,23 +165,47 @@ a:active {
     color: var(--color-links-active);
 }
 
-button a:hover,
-button a:focus {
-    color: var(--color-white);
+pre {
+    width: 100%;
+    background: var(--color-white);
+    padding: 1rem;
+    border-radius: 0.4rem;
+    overflow-x: auto;
+    font-size: 1.4rem;
+    line-height: 2.0rem;
+    line-break: anywhere;
+    word-break: break-all; 
+    white-space:pre-wrap;
+    border-left: 3px solid var(--color-crt-blau-stufe-4);
 }
 
-.action-button-img {
+/* ################################ */
+/* ########### Button ############# */
+/* ################################ */
+
+.button, button, input[type='button'], input[type='reset'], input[type='submit'] {
+    background-color: var(--color-crt-blau-stufe-4);
+    border: none;
+    margin: 15px 0px;
+    border-radius: .4rem;
+    color: #fff;
     cursor: pointer;
-}
-
-.action-button-img:hover {
-    transform: scale(1.2);
-    transition: transform .2s linear;
+    display: inline-block;
+    font-size: 1.1rem;
+    font-weight: 700;
+    height: 3.8rem;
+    letter-spacing: .1rem;
+    line-height: 3.8rem;
+    padding: 0 3.0rem;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .button:focus,.button:hover,button:focus,button:hover,input[type='button']:focus,input[type='button']:hover,input[type='reset']:focus,input[type='reset']:hover,input[type='submit']:focus,input[type='submit']:hover{
     background-color: var(--color-crt-blau-stufe-12);
-    border: none;
+    /* border: 1px solid var(--color-crt-blau-stufe-12); */
     color: var(--color-white);
     transition: background .4s,color .4s;
 }
@@ -209,6 +238,21 @@ button a:focus {
     transition: background .4s,color .4s;
 }
 
+
+button a:hover,
+button a:focus {
+    color: var(--color-white);
+}
+
+.action-button-img {
+    cursor: pointer;
+}
+
+.action-button-img:hover {
+    transform: scale(1.2);
+    transition: transform .2s linear;
+}
+
 input::file-selector-button {
     background-color: var(--color-crt-blau-stufe-4);
     height: 38px;
@@ -221,7 +265,7 @@ input::file-selector-button {
     font-weight: 700;
     letter-spacing: .1rem;
     text-transform: uppercase;
-  }
+}
 
   input::file-selector-button:hover {
     background-color: var(--color-crt-blau-stufe-12);
@@ -236,23 +280,193 @@ input::file-selector-button {
     letter-spacing: .1rem;
     text-transform: uppercase;
     transition: background .4s,color .4s;
-  }
-
-pre {
-    width: 100%;
-    background: var(--color-white);
-    padding: 1rem;
-    border-radius: 0.4rem;
-    overflow-x: auto;
-    font-size: 1.4rem;
-    line-height: 2.0rem;
-    line-break: anywhere;
-    word-break: break-all; 
-    white-space:pre-wrap;
-    border-left: 3px solid var(--color-crt-blau-stufe-4);
 }
 
-/* Nav bar */
+/* ################################ */
+/* ########## Checkbox ############ */
+/* ################################ */
+
+
+.checkbox-container {
+    display: flex;
+    position: relative;
+    cursor: pointer;
+    width: 26px;
+    height: 26px;
+    font-size: 1.4rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-bottom: 2.0rem;
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkbox {
+    /* background-color: var(--color-crt-blau-stufe-4); */
+    border: none;
+    /* margin: 15px 0px; */
+    /* border-radius: .4rem; */
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1.1rem;
+    font-weight: 700;
+    width: 26px;
+    height: 26px;
+    letter-spacing: .1rem;
+    line-height: 3.8rem;
+    /* padding: 0 1.0rem; */
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+    z-index: 2;
+    margin-bottom: 0;
+}
+
+
+/* .checkbox-checked:checked+.checkbox, .checkbox-checked:checked+.checkbox:hover {
+    color: var(--color-white);
+    background-color: var(--color-crt-blau-stufe-12);
+    border: 1px solid var(--color-crt-blau-stufe-12);
+} */
+
+/* .checkbox-checked:checked+.checkbox:hover {
+    background-color: var(--color-crt-blau-stufe-4);
+    border-color: var(--color-crt-blau-stufe-4);
+} */
+
+/* .checkbox.checkbox-outline:hover {
+    color: var(--color-white);
+    background-color: var(--color-crt-grau-stufe-2);
+    border: 1px solid var(--color-crt-grau-stufe-3);
+} */
+
+.checkbox-checked:disabled+.checkbox, .checkbox-checked[disabled]+.checkbox {
+    /* pointer-events: none; */
+    cursor: not-allowed;
+    filter: none;
+    opacity: .65;
+    /* background-color: var(--color-crt-grau-stufe-2); */
+    background-image: linear-gradient(135deg, var(--color-crt-grau-stufe-2) 2.38%, var(--color-white) 2.38%, var(--color-white) 50%, var(--color-crt-grau-stufe-2) 50%, var(--color-crt-grau-stufe-2) 52.38%, var(--color-white) 52.38%, var(--color-white) 100%);
+    background-size: 15px 15px;
+}
+
+/* ######## Checkbox alt ######### */
+
+/* input[type="checkbox"] {
+    width: 25px;
+    height: 25px;
+    float: left;
+    clear: none;
+    display: inline;
+    /* margin: 8px 10px; 
+} */
+
+/* .checkbox-container {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    width: 26px;
+    height: 26px;
+    /* margin: 6px auto 0px auto;
+    font-size: 1.4rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+} */
+
+/* .checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+} */
+
+.checkbox-container .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    background-color: var(--color-white);
+    border-radius: 4px;
+    border: 1px solid var(--color-crt-grau-stufe-4);
+}
+
+.checkbox-container:hover input ~ .checkmark {
+    background-color: var(--color-crt-blau-stufe-4);
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: var(--color-crt-blau-stufe-12);
+  border: 1px solid var(--color-crt-blau-stufe-12);
+}
+
+.checkbox-container .checkmark:after {
+    display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after, .checkbox-container input:hover ~ .checkmark:after {
+    display: block;
+}
+
+/* Haken in Checkbox */
+.checkbox-container .checkmark:after {
+  left: 8px;
+  top: 3px;
+  width: 9px;
+  height: 16px;
+  border: solid white;
+  border-width: 0 4px 4px 0;
+  -webkit-transform: rotate(35deg);
+  -ms-transform: rotate(35deg);
+  transform: rotate(35deg);
+}
+
+
+
+/* .btn-check:disabled+.btn, .btn-check[disabled]+.btn {
+    pointer-events: none;
+    filter: none;
+    opacity: .65;
+    background-color: var(--color-crt-grau-stufe-2);
+} */
+
+/* .btn-check+.btn:hover {
+    color: var(--color-white);
+    background-color: var(--color-crt-blau-stufe-12);
+    border-color: var(--color-crt-blau-stufe-12);
+} */
+
+.btn-check+.btn:hover /* .btn-check:checked+.btn:hover*/ {
+    /* color: var(--color-white);
+    background-color: var(--color-crt-blau-stufe-12);
+    border-color: var(--color-crt-blau-stufe-12); */
+}
+
+.btn-check:checked+.btn {
+    /* color: var(--color-white);
+    background-color: var(--color-crt-blau-stufe-4);
+    border-color: var(--color-crt-blau-stufe-4); */
+}
+
+
+/* ############################## */
+/* ########### Header ########### */ 
+/* ############################## */
+
 .top-nav-container {
     display: block;
     align-items: center;
@@ -313,7 +527,22 @@ pre {
     display: inline-block;
     vertical-align: middle;
 }
-.breadcrumb {
+
+#user-menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+#user-menu li {
+    display: inline;
+    margin-right: 4px;
+}
+
+/* ################################### */
+/* ########### Breadcrumbs ########### */
+/* ################################### */
+
+.breadcrumb-container {
     display: flex;
     justify-content: baseline;
     /* padding: 1rem; */
@@ -333,39 +562,57 @@ pre {
     /* gap: 0.5em; */
 }
 
-.breadcrumb > .left {
+.breadcrumb-container > .left {
     flex: 1 1 auto;
 }
-.breadcrumb > .right {
+.breadcrumb-container > .right {
     flex: 1 1 auto; 
     text-align: right;
 }
 
-.breadcrumb > .right img {
+.breadcrumb-container > .right img {
     width: 40px;
     height: 40px;
 }
 
-/* #####################################
-########## Breadcrumbs #################
-##################################### */
-
-.breadcrumb-list {
+.breadcrumb-container-list {
     list-style: none;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
     /* gap: 0.5em; */
     align-items: center;
+    line-height: 20px;
 }
 
-.breadcrumb-list li {
+.breadcrumb-container-item {
     height: 16px;
+    margin-bottom: 1rem;
 }
 
-.breadcrumb li::after {
+.breadcrumb-container-item::after {
     content: "/";
     margin: 0 0.4em 0 0.1em;
+}
+
+.breadcrumb-container-item i:hover {
+    color: var(--color-links-active);
+    font-size: 16px; 
+    transition: font-size .2s linear, color .2s linear;
+}
+
+.breadcrumb-container-item.collapsed {
+    display: none;
+}
+
+.breadcrumb-container-item-last::after {
+    display: none;
+}
+
+.breadcrumb-toggle {
+    cursor: pointer;
+    /* color: #007bff; */
+    margin-bottom: 0.8rem;
 }
 
 .breadcrumb-toggle::after {
@@ -374,29 +621,7 @@ pre {
     pointer-events: none;
     cursor: default;
     color: initial;
-}
-
-.breadcrumb li:last-child::after {
-    content: "";
-}
-
-.breadcrumb-item.collapsed {
-    display: none;
-}
-
-.breadcrumb-item-last::after {
-    display: none;
-}
-
-.breadcrumb-toggle {
-    cursor: pointer;
-    /* color: #007bff; */
-}
-
-.breadcrumb-list > li > i:hover {
-    color: var(--color-links-active);
-    font-size: 16px; 
-    transition: font-size .2s linear, color .2s linear;
+    margin-right: 4px;
 }
 
 .breadcrumb-collapse-control {
@@ -435,8 +660,32 @@ pre {
 } */
 
 /* ############################################# */    
+/* ############### Actions Bar ################# */    
+/* ############################################# */    
 
-.actions img {
+.actions-container {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    max-width: 112rem;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.actions-container > .title {
+    flex-wrap: wrap;
+}
+
+.actions-container > .links {
+    display: flex;
+    flex-direction: row;
+}
+
+.actions-container > .links > a {
+    margin: 0 1rem;
+}
+
+.actions-container img {
     width: 35px;
     height: 35px;
     
@@ -477,8 +726,10 @@ pre {
     background-color: var(--color-crt-blau-stufe-1);
 }
 
+/* ############################### */
+/* ########### Main ############## */
+/* ############################### */
 
-/* Main */
 /* .main {
     padding-top: 40px;
 } */
@@ -487,6 +738,8 @@ pre {
     padding-left: 1%;
     padding-right: 1%;
 }
+
+/* ######### Content ######### */
 
 .content {
     padding: 10px;
@@ -540,6 +793,27 @@ pre {
     margin: 0;
 }
 
+/* ####### List Tables (Users, Reports etc. ######### */
+
+.table-responsive > table > tbody > tr > td {
+    max-width: 180px;
+}
+
+.actions a {
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 0 0.8rem 0.4rem 0.8rem;
+}
+
+/* ############ View action ############ */
+
+.view.content .text {
+    margin-top: 1.2rem;
+}
+.related {
+    margin-top: 2rem;
+}
+
 /* ############################## */
 /* ##### SEITEN-SPEZIFISCH ###### */
 /* ############################## */
@@ -554,15 +828,9 @@ pre {
     margin-bottom: 20px;
 }
 
-#user-menu {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-#user-menu li {
-    display: inline;
-    margin-right: 4px;
-}
+/* ##### für den Delete Confirm Button ####### */
+/* ##### (momentan nicht in Benutzung) ####### */
+
 .delete-container {
     display: inline-block;
 }
@@ -571,15 +839,6 @@ pre {
 }
 .delete-wrapper button {
     margin-right: 5px;
-}
-
-.index-column-actions {
-    text-align: right;
-}
-
-.actions a {
-    font-weight: bold;
-    padding: 0 0.8rem 0.4rem 0.8rem;
 }
 
 .deleteLink:hover, .deleteLink:focus, .deleteLink:active {
@@ -597,18 +856,121 @@ pre {
     color: var(--color-white);
 }
 
+
 /* ############################## */
-/* ########### Reports ########## */
+/* ######### Home Cards ######### */
+/* ######### Tool Cards ######### */
 /* ############################## */
 
-/* .list_admin > */ .table-responsive > table > tbody > tr > td {
-    max-width: 180px;
+.tool-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
-/* .list_admin > .table-responsive > table > tbody > tr > td:nth-child(2) {
-    width: 180px;
-} */
+.home-card-list, .tool-card-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start; /* Items linksbündig, kein Auffüllen */
+    /* height: 150px; */
+    /* align-items: stretch; */
+    /* align-content: stretch; */
+}
 
+.home-card, .tool-card {
+    flex-grow: 1;
+    /* flex: 1 0 32%; */
+    /* height: 200px; */
+    flex: 0 0 calc((100% - 4%) / 3); /* Drei Items, 2x1% Gap zwischen ihnen */
+           
+  box-sizing: border-box;    /* flex-grow: 1; */
+}
+
+.home-card-list a {
+    flex-grow: 1;
+    /* flex: 1 0 32%; */
+    /* height: 150px; */
+    flex: 0 0 calc((100% - 4%) / 3); /* Drei Items, 2x1% Gap zwischen ihnen */
+    box-sizing: border-box;
+    flex-grow: 1;
+}
+
+.home-card-user, .home-card-admin, .tool-card-QueryExpander {
+    height: 100%;
+    box-shadow: 3px 4px 3px var(--color-crt-grau-stufe-2);
+    /* box-shadow: 0 3px 6px 1px var(--color-crt-grau-stufe-2); */
+    border: 1px solid #ddd;
+    /* padding: 20px; */
+    border-radius: 15px;
+    /* width: calc(100% * (1/3) - 10px - 1px); */
+    /* max-width: 37,33rem; */
+
+}
+
+.home-card-user:hover, .home-card-admin:hover, .tool-card-QueryExpander:hover {
+    box-shadow: 0 3px 6px 1px var(--color-crt-grau-stufe-4);
+    transition: box-shadow .3s linear;
+}
+
+.tool-card-QueryExpander header, .home-card-user header, .home-card-admin header {
+    height: 70px;
+    color: var(--color-white);
+    padding: 20px 20px 0px 20px;
+    border-radius: 15px 15px 0px 0px;
+    /* padding: 20px 20px 0px 20px; */
+}
+
+.tool-card-QueryExpander header {
+    background-color:  var(--color-crt-waldgrün);
+    color: var(--color-white);
+}
+
+.home-card-user header {
+    background-color:  var(--color-crt-blau-stufe-4);
+    color: var(--color-white);
+}
+
+.home-card-admin header {
+    background-color:  var(--color-crt-blau-stufe-7);
+    color: var(--color-white);
+}
+
+.home-card-user h3, .home-card-admin h3, .tool-card-QueryExpander h3 {
+    position: relative;
+    top: 10px;
+    left: 0px;
+    color: var(--color-white);
+    margin: 0;
+    line-height: 32px;
+}
+
+.home-card-user img, .home-card-admin img, .tool-card-QueryExpander img {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    top: -40px;
+    left: 85%;
+}
+
+
+.home-card-user div, .home-card-admin div, .tool-card-QueryExpander div {
+    padding: 10px 20px 20px 20px;
+}
+
+.tool-card-QueryExpander div {
+    font-size: 1.4rem;
+}
+
+
+.home-card:hover {
+    box-shadow: 0 3px 6px 1px var(--color-crt-grau-stufe-4);
+    transition: box-shadow .3s linear;
+
+}
+
+/* ############################## */
+/* ####### PLUGIN TOOLS ######### */
 /* ############################## */
 /* ######## QueryExpander ####### */
 /* ############################## */
@@ -765,125 +1127,10 @@ pre {
     margin: 0px 5px;
 }
 
-/* ############################## */
-/* ######### Home Cards ######### */
-/* ######### Tool Cards ######### */
-/* ############################## */
+/* ############################ */
+/* ###### Flash messages ###### */
+/* ############################ */
 
-.home-card-list, .tool-card-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start; /* Items linksbündig, kein Auffüllen */
-    /* height: 150px; */
-    /* align-items: stretch; */
-    /* align-content: stretch; */
-}
-
-.home-card, .tool-card {
-    flex-grow: 1;
-    /* flex: 1 0 32%; */
-    /* height: 200px; */
-    flex: 0 0 calc((100% - 4%) / 3); /* Drei Items, 2x1% Gap zwischen ihnen */
-           
-  box-sizing: border-box;    /* flex-grow: 1; */
-}
-
-.home-card-list a {
-    flex-grow: 1;
-    /* flex: 1 0 32%; */
-    /* height: 150px; */
-    flex: 0 0 calc((100% - 4%) / 3); /* Drei Items, 2x1% Gap zwischen ihnen */
-    box-sizing: border-box;
-    flex-grow: 1;
-}
-
-.home-card-user, .home-card-admin, .tool-card-QueryExpander {
-    height: 100%;
-    box-shadow: 3px 4px 3px var(--color-crt-grau-stufe-2);
-    /* box-shadow: 0 3px 6px 1px var(--color-crt-grau-stufe-2); */
-    border: 1px solid #ddd;
-    /* padding: 20px; */
-    border-radius: 15px;
-    /* width: calc(100% * (1/3) - 10px - 1px); */
-    /* max-width: 37,33rem; */
-
-}
-
-.home-card-user:hover, .home-card-admin:hover, .tool-card-QueryExpander:hover {
-    box-shadow: 0 3px 6px 1px var(--color-crt-grau-stufe-4);
-    transition: box-shadow .3s linear;
-}
-
-.tool-card-QueryExpander header, .home-card-user header, .home-card-admin header {
-    height: 70px;
-    color: var(--color-white);
-    padding: 20px 20px 0px 20px;
-    border-radius: 15px 15px 0px 0px;
-    /* padding: 20px 20px 0px 20px; */
-}
-
-.tool-card-QueryExpander header {
-    background-color:  var(--color-crt-waldgrün);
-    color: var(--color-white);
-}
-
-.home-card-user header {
-    background-color:  var(--color-crt-blau-stufe-4);
-    color: var(--color-white);
-}
-
-.home-card-admin header {
-    background-color:  var(--color-crt-blau-stufe-7);
-    color: var(--color-white);
-}
-
-.home-card-user h3, .home-card-admin h3, .tool-card-QueryExpander h3 {
-    position: relative;
-    top: 10px;
-    left: 0px;
-    color: var(--color-white);
-    margin: 0;
-    line-height: 32px;
-}
-
-.home-card-user img, .home-card-admin img, .tool-card-QueryExpander img {
-    position: relative;
-    width: 50px;
-    height: 50px;
-    top: -40px;
-    left: 85%;
-}
-
-
-.home-card-user div, .home-card-admin div, .tool-card-QueryExpander div {
-    padding: 10px 20px 20px 20px;
-}
-
-.tool-card-QueryExpander div {
-    font-size: 1.4rem;
-}
-
-
-.home-card:hover {
-    box-shadow: 0 3px 6px 1px var(--color-crt-grau-stufe-4);
-    transition: box-shadow .3s linear;
-
-}
-
-th {
-    white-space: nowrap;
-}
-
-/* View action */
-.view.content .text {
-    margin-top: 1.2rem;
-}
-.related {
-    margin-top: 2rem;
-}
-
-/* Flash messages */
 .message {
     display: flex;
     flex-direction: row;
@@ -941,12 +1188,13 @@ th {
     border-color: var(--color-message-error-border);
 }
 
-/* Forms */
+/* ############################## */
+/* ########### Forms ############ */
+/* ############################## */
 
 .form-group h3 {
     margin: 0 10px;
 }
-
 
 .view-report-xml {
     overflow-y: scroll;
@@ -954,9 +1202,9 @@ th {
 }
 
 .input.radio,
-.input.checkbox,
 .input.multicheckbox {
-    /* margin-bottom: 2.0rem; */
+    display: flex;
+    margin-bottom: 2.0rem;
 }
 .input.radio input,
 .input.checkbox input,
@@ -966,9 +1214,11 @@ th {
 .input.radio label,
 .input.checkbox label,
 .input.multicheckbox label {
-    /* margin: 0; */
+    /* margin: 0; 
     display: flex;
+    /* flex-basis: 200px;
     align-items: center;
+    pointer-events: none; */
 }
 .input.radio label > input,
 .input.checkbox label > input,
@@ -996,14 +1246,14 @@ textarea:focus {
     width: 100%;
 }
 
-select {
+select, input[type='select'] {
     background-color: var(--color-crt-grau-stufe-1);
     border-radius: 6px 6px 0px 0px;
     border: none;
     border-bottom: 2px solid var(--color-crt-grau-stufe-3);
 }
 
-select:focus {
+select:focus, input[type='select']:focus {
     border-color: var(--color-crt-blau-stufe-8);
     border-bottom: 2px solid var(--color-crt-blau-stufe-8);
     transition: border .4s;
@@ -1111,89 +1361,35 @@ border-radius: 50%;
 	background: white;
 }
 
-/* ######## Checkbox ######### */
-
-input[type="checkbox"] {
-    width: 25px;
-    height: 25px;
-    float: left;
-    clear: none;
-    display: inline;
-    /* margin: 8px 10px; */
-}
-
-.checkbox-container {
-    display: block;
-    position: relative;
-    cursor: pointer;
-    width: 26px;
-    height: 26px;
-    /* margin: 6px auto 0px auto; */
-    font-size: 1.4rem;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.checkbox-container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-}
-
-.checkbox-container .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: var(--color-white);
-    /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;   */
-    border-radius: 4px;
-    border: 1px solid var(--color-crt-grau-stufe-3);
-}
-
-.checkbox-container:hover input ~ .checkmark {
-    background-color: var(--color-crt-grau-stufe-1a);
-}
-
-.checkbox-container input:checked ~ .checkmark {
-    background-color: var(--color-crt-blau-stufe-12);
-  border: 1px solid var(--color-crt-blau-stufe-12);
-}
-
-.checkbox-container .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-}
-
-.checkbox-container input:checked ~ .checkmark:after {
-    display: block;
-}
-
-.checkbox-container .checkmark:after {
-  left: 8px;
-  top: 3px;
-  width: 9px;
-  height: 16px;
-  border: solid white;
-  border-width: 0 4px 4px 0;
-  -webkit-transform: rotate(35deg);
-  -ms-transform: rotate(35deg);
-  transform: rotate(35deg);
-}
-
 
 input[type='color'] {
     max-width: 4rem;
     padding: 0.3rem .5rem 0.3rem;
 }
 
-/* Paginator */
+/* Bootstrap override */
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    color: inherit;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: inherit;
+    background-clip: inherit;
+    border: inherit;
+    border-radius: inherit;
+    transition: inherit;
+}
+
+/* ############################## */
+/* ######### Paginator ########## */
+/* ############################## */
+
 .paginator {
     text-align: right;
 }
@@ -1261,6 +1457,11 @@ input[type='color'] {
     height: 100vh;
     justify-content: center;
 }
+
+/* ################################ */
+/* ########### Responsive ######### */
+/* ########### bis 640 px ######### */
+/* ################################ */
 
 @media screen and (max-width: 640px) {
     /* Fix milligram not having a responsive column system */

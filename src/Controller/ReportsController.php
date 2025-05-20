@@ -120,8 +120,9 @@ class ReportsController extends AppController
         $users = $this->fetchTable('Users')->find('all');
 
         $this->set(compact('entity', 'users'));
-
-
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            return $this->redirect(['action' => 'view', $id]);
+        }
         // $report = $this->reports_table->get($id, contain: ['Users']);
         // if ($this->request->is(['patch', 'post', 'put'])) {
         //     // debug($this->request->getData());

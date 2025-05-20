@@ -29,7 +29,7 @@
                 'id' => 'downloadForm'
             ]) ?>
             <?= $this->Form->button('Download', [
-                'class' => 'btn btn-success',
+                'class' => 'button',
                 'id' => 'downloadBtn'
             ]) ?>
             <?= $this->Form->end() ?>

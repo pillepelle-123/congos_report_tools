@@ -25,8 +25,8 @@ use Cake\Utility\Inflector;
             ?>
         </div>
     </aside>
-    <div class="column column-80">
-        <div class="users list_admin content">
+    <div class="column">
+        <div class="list_admin content">
             <h3><?=__($this->get('title')) ?></h3>
             <div class="table-responsive">
             <table>
@@ -57,18 +57,25 @@ use Cake\Utility\Inflector;
                     <?php endforeach; ?>
 
                             <td class="actions">
-                            <?php
+                            
+
+                            <?= $this->Html->link('<i class="bi bi-caret-right-square"></i>', array('title' => 'View', 'alt' => 'View', 'url' => ['controller' => $model_name_plural, 'action' => 'view', $entity->id]), ['escape' => false, 'title' => __('View')]); ?>
+
+                            <?= $this->Html->link('<i class="bi bi-pencil-square"></i>', array('title' => 'Edit', 'alt' => 'Edit', 'url' => ['controller' => $model_name_plural, 'action' => 'edit', $entity->id]), ['escape' => false, 'title' => __('View')]); ?>
+
+                            <?=  $this->Form->postLink('<i class="bi bi-dash-square"></i>', ['controller' => $model_name_plural, 'action' => 'delete', $entity->id], ['confirm' => __('Are you sure you want to delete the {0}?', __('Are you sure you want to delete {0} {1}?',$model_name_singular, $entity->{$instance_name})), 'escape' => false]
+                            ) ?>
 
                                 
-
+                            <?php /*
                                 echo $this->Html->image('icons/material_view_292929.svg', array('title' => 'View', 'alt' => 'View', 'url' => ['controller' => $model_name_plural, 'action' => 'view', $entity->id]));
                                 if($editable ? $editable : 1==2 ) {
                                     echo $this->Html->image('icons/material_edit_292929.svg', array('title' => 'Edit', 'alt' => 'Edit', 'url' => ['controller' => $model_name_plural, 'action' => 'edit', $entity->id]));
                                     echo $this->Form->postLink(
                                     $this->Html->image('icons/material_delete_292929.svg', ['alt' => 'Delete']), ['controller' => $model_name_plural, 'action' => 'delete', $entity->id], ['confirm' => __('Are you sure you want to delete {0} {1}?',$model_name_singular, $entity->{$instance_name}), 'escape' => false]) ;
                                 }
+                               */ ?>
                                 
-                                ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

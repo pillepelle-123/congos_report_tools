@@ -100,7 +100,7 @@ $report = $this->request->getSession()->read('crt.report');
 
         </div>
         </div>
-        <?= $this->Form->button('Nächster Schritt', ['class' => 'btn btn-primary mt-3']) ?>
+        <?= $this->Form->button('Nächster Schritt', ['class' => 'button']) ?>
         <?= $this->Form->end() ?>
     </div>
 </div>

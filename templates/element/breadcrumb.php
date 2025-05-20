@@ -1,4 +1,4 @@
-<div class="breadcrumb">
+<div class="breadcrumb-container">
             <?php if ($this->Identity->isLoggedIn()): ?>
                 <div class="left">
                     <?php

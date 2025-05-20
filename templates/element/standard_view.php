@@ -1,30 +1,41 @@
 <?php
 use Cake\Utility\Inflector;
 ?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?php // $this->Html->link(__('Related Reports'), '#reports', ['class' => 'side-nav-item'])
-            $model_name_singular = (new \ReflectionClass($entity))->getShortName(); // Singular
-            $model_name_plural = Inflector::pluralize($model_name_singular);
+<!-- 
+ #############################################
+ ################## Actions ##################
+ #############################################
+-->
+<div class="actions-container">
+    <div class="links">
+        <?php // $this->Html->link(__('Related Reports'), '#reports', ['class' => 'side-nav-item'])
+        $model_name_singular = (new \ReflectionClass($entity))->getShortName(); // Singular
+        $model_name_plural = Inflector::pluralize($model_name_singular);
 
-            if($editable ? $editable : 1==2 ) {
-                echo $this->Html->image('icons/circle_filled_add_292929.svg', ['width' => '20px', 'height' => '20px']) . $this->Html->link(__(' Edit ' . $model_name_singular), ['controller' => $model_name_plural, 'action' => 'edit', $entity->id], ['class' => 'side-nav-item']);
-                echo '<i class="fa-solid fa-circle-minus"></i> ' . $this->Form->postLink(__('Delete ' . $model_name_singular), ['controller' => $model_name_plural, 'action' => 'delete', $entity->id], ['confirm' => __('Are you sure you want to delete {0} {1}?',$model_name_singular, $instance_name), 'class' => 'side-nav-item']);
-            }
-            echo '<i class="fa-solid fa-circle-left"></i> ' . $this->Html->link($model_name_plural, ['controller' => $model_name_plural, 'action' => 'index'], ['class' => 'side-nav-item']) 
-            ?>
-        </div>
-    </aside>
-    <div class="column column-80">
+        if($editable ? $editable : 1==2 ) {
+            echo $this->Html->link('<i class="bi bi-pencil-square"></i>&nbsp;Edit ' . $model_name_singular, ['controller' => $model_name_plural, 'action' => 'edit', $entity->id], ['class' => 'side-nav-item', 'escape' => false]);
+
+            // echo $this->Html->image('icons/circle_filled_add_292929.svg', ['width' => '20px', 'height' => '20px']) . $this->Html->link(__(' Edit ' . $model_name_singular), ['controller' => $model_name_plural, 'action' => 'edit', $entity->id], ['class' => 'side-nav-item']);
+
+            echo $this->Form->postLink(__('<i class="bi bi-dash-square"></i>&nbsp;Delete ' . $model_name_singular), ['controller' => $model_name_plural, 'action' => 'delete', $entity->id], ['confirm' => __('Are you sure you want to delete {0} {1}?',$model_name_singular, $instance_name), 'class' => 'side-nav-item', 'escape' => false]);
+        }
+        echo $this->Html->link('<i class="bi bi-arrow-left-square"></i>&nbsp;' . $model_name_plural, ['controller' => $model_name_plural, 'action' => 'index'], ['class' => 'side-nav-item', 'escape' => false]) 
+        ?>
+    </div>
+<!-- 
+ #############################################
+ ############### Entity View #################
+ #############################################
+-->
+</div>
+    <div class="column">
         <div class="users view content vertical-table">
             <h3 style="word-break: normal;"><?= h($model_name_singular . ': ' . $instance_name) ?></h3>
             <table>
                 <?php foreach ($fields as $field): ?>
                     <?php //if (isset($entity->{$field}) && !empty($entity->{$field})): ?>
                         <tr>
-                            <th><?= __(ucfirst($field)) ?></th>
+                            <th><?= __(ucfirst(Inflector::humanize($field))) ?></th>
                             <td><?= h($entity->{$field} . ' ') ?></td>
                         </tr>
                     <?php //endif; ?> 
@@ -32,8 +43,12 @@ use Cake\Utility\Inflector;
             </table>
         </div>
     </div>
-</div>
-    <div class="column column-20">
+    <!-- 
+    #############################################
+    ########### Related Entities ################
+    #############################################
+    -->
+    <div class="column">
         <?php if (isset($rel_entity_pages) && !empty($rel_entity_pages)) : ?>
         <?php foreach ($rel_entity_pages as $key => $rel_entity_page): ?>
             <?php //echo debug($related_entitiy->params->count); die(); ?>
@@ -72,11 +87,12 @@ use Cake\Utility\Inflector;
                                 <td><?= h($rel_entity->{$rel_entity_field} . ' ') ?></td>
                             <?php endforeach; ?>
                                     <td class="actions">
-                                        <?= $this->Html->image('icons/material_view_292929.svg', array('title' => 'View', 'alt' => 'View', 'url' => ['controller' => $rel_entity->getSource(), 'action' => 'view', $rel_entity->id])); ?>
-                                        <?= $this->Html->image('icons/material_edit_292929.svg', array('title' => 'Edit', 'alt' => 'Edit', 'url' => ['controller' => $rel_entity->getSource(), 'action' => 'edit', $rel_entity->id])); ?>
+                                        <?= $this->Html->link('<i class="bi bi-caret-right-square"></i>', ['controller' => $rel_entity->getSource(), 'action' => 'view', $rel_entity->id], ['escape' => false, 'title' => __('View')]); ?>
+                                        <?php // $this->Html->image('icons/material_view_292929.svg', array('title' => 'View', 'alt' => 'View', 'url' => ['controller' => $rel_entity->getSource(), 'action' => 'view', $rel_entity->id])); ?>
+                                        <?= $this->Html->link('<i class="bi bi-pencil-square"></i>', ['controller' => $rel_entity->getSource(), 'action' => 'edit', $rel_entity->id], ['escape' => false, 'title' => __('View')]); ?>
+                                        <?php // $this->Html->image('icons/material_edit_292929.svg', array('title' => 'Edit', 'alt' => 'Edit', 'url' => ['controller' => $rel_entity->getSource(), 'action' => 'edit', $rel_entity->id])); ?>
 
-                                        <?=  $this->Form->postLink(
-                                            $this->Html->image('icons/material_delete_292929.svg', ['alt' => 'Delete']), ['controller' => $rel_entity->getSource(), 'action' => 'delete', $rel_entity->id], ['confirm' => 'Möchtest du den Report wirklich löschen?', 'escape' => false]
+                                        <?=  $this->Form->postLink('<i class="bi bi-dash-square"></i>', ['controller' => $rel_entity->getSource(), 'action' => 'delete', $rel_entity->id], ['confirm' => __('Are you sure you want to delete the {0}?',Inflector::singularize($rel_entity->getSource())), 'escape' => false]
                                         ) ?>
                                     </td>
                     

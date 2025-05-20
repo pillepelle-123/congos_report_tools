@@ -1,4 +1,4 @@
-<spa?php
+<?php
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -31,16 +31,21 @@ $cakeDescription = 'Congos Report Tools';
     </title>
     <?= $this->Html->meta('icon') ?>
 
-    <?= $this->Html->css(['normalize.min', 'milligram.min', 'fonts', 'cake']) ?>
-
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <!-- fontawesome -->
     <link href="/fontawesome/css/fontawesome.css" rel="stylesheet" />
     <link href="/fontawesome/css/solid.css" rel="stylesheet" />
     <link href="/fontawesome/css/regular.css" rel="stylesheet" />
     <link href="/fontawesome/css/brands.css" rel="stylesheet" />
+
+    <?= $this->Html->css(['normalize.min', 'milligram.min', 'fonts', 'cake']) ?>
+
 
 
 </head>
@@ -72,9 +77,9 @@ $cakeDescription = 'Congos Report Tools';
             
         </nav>
     </div>
-    <div class="breadcrumb">
+    <div class="breadcrumb-container">
         <div class="left">
-        <ul class="breadcrumb-list" id="breadcrumb">
+        <ul class="breadcrumb-container-list" id="breadcrumb">
     <?php $secondLastCrumb = null; ?>
     <?php foreach ($breadcrumbs as $i => $crumb): ?>
         <?php
@@ -92,7 +97,7 @@ $cakeDescription = 'Congos Report Tools';
             <li class="breadcrumb-toggle" title="Ausklappen" onclick="toggleBreadcrumb(this)"><i class="fa-solid fa-circle-plus" style="margin-right: 6px;"></i></li>
         <?php endif; ?>
 
-        <li class="breadcrumb-item<?= $isCollapsible ? ' collapsed' : '' ?><?= $isLast ? ' breadcrumb-item-last' : '' ?>"
+        <li class="breadcrumb-container-item<?= $isCollapsible ? ' collapsed' : '' ?><?= $isLast ? ' breadcrumb-container-item-last' : '' ?>"
             <?= $isCollapsible ? 'data-collapsible="true"' : '' ?>>
             <?php // $lastCrumb = $crumb; ?>
             <?= $isLast
@@ -143,7 +148,7 @@ $cakeDescription = 'Congos Report Tools';
     <nav aria-label="breadcrumb">
         <ol>
             <?php foreach ($breadcrumbs as $crumb): ?>
-                <li class="breadcrumb-item <?= empty($crumb->url) ? 'active' : '' ?>">
+                <li class="breadcrumb-container-item <?= empty($crumb->url) ? 'active' : '' ?>">
                     <?= empty($crumb->url) ? $crumb->title : $this->Html->link($crumb->title, $crumb->url) ?>
                 </li>
             <?php endforeach; ?>
@@ -158,7 +163,7 @@ $cakeDescription = 'Congos Report Tools';
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <?php foreach ($breadcrumbs as $crumb): ?>
-                    <li class="breadcrumb-item <?= empty($crumb->url) ? 'active' : '' ?>">
+                    <li class="breadcrumb-container-item <?= empty($crumb->url) ? 'active' : '' ?>">
                         <?= empty($crumb->url) ? $crumb->title : $this->Html->link($crumb->title, $crumb->url) ?>
                     </li>
                 <?php endforeach; ?>
@@ -280,7 +285,7 @@ $cakeDescription = 'Congos Report Tools';
         // Breadcrumb Collapse    
             function toggleBreadcrumb(toggleEl) {
                 const list = document.getElementById('breadcrumb');
-                const collapsedItems = list.querySelectorAll('.breadcrumb-item[data-collapsible="true"]');
+                const collapsedItems = list.querySelectorAll('.breadcrumb-container-item[data-collapsible="true"]');
                 const dots = list.querySelector('.breadcrumb-toggle');
                 const collapseControl = list.querySelector('.breadcrumb-collapse-control');
 
@@ -304,6 +309,7 @@ $cakeDescription = 'Congos Report Tools';
                 }
             }
         </script>
-        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+ 
 </body>
 </html>
