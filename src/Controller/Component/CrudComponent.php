@@ -91,9 +91,9 @@ class CrudComponent extends Component {
 
             $entity = $table->patchEntity($entity, $request->getData());
             if ($table->save($entity)) {
-                $this->Flash->success(__d('cake_d_c/users', 'The user has been saved'));
+                $this->Flash->success(__('The ' . $model_name . ' has been saved'));
             } else {
-                $this->Flash->error(__d('cake_d_c/users', 'The user could not be saved'));
+                $this->Flash->error(__('The ' . $model_name . 'could not be saved'));
             }
         }
         return $entity;
@@ -110,7 +110,7 @@ class CrudComponent extends Component {
             try {
                 $entity = $table->get($id);
                 if ($table->delete($entity)) {
-                    $this->Flash->success(__('The ' . Inflector::singularize($model_name) . ' "' . $entity->name . '" has been deleted.'));
+                    $this->Flash->success(__('The ' . Inflector::singularize($model_name) . ' has been deleted.'));
                     return true;
                 } else {
                     $this->Flash->error(__('The ' . Inflector::singularize($model_name) . ' could not be deleted. Please, try again.'));

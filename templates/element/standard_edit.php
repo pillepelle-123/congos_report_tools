@@ -12,13 +12,13 @@ use Cake\Utility\Inflector;
         $model_name_plural = Inflector::pluralize($model_name_singular);
 
         if($editable ? $editable : 1==2 ) {
-            echo $this->Html->link('<i class="bi bi-caret-right-square"></i>&nbsp;View ' . $model_name_singular, ['controller' => $model_name_plural, 'action' => 'view', $entity->id], ['class' => 'side-nav-item', 'escape' => false]);
+            echo $this->Html->link('<i class="bi bi-caret-right-square"></i>&nbsp;View ' . $model_name_singular, ['controller' => $model_name_plural, 'action' => 'view', $entity->id], ['title' => 'View ' . $model_name_singular, 'class' => 'side-nav-item', 'escape' => false]);
 
             // echo $this->Html->image('icons/circle_filled_add_292929.svg', ['width' => '20px', 'height' => '20px']) . $this->Html->link(__(' Edit ' . $model_name_singular), ['controller' => $model_name_plural, 'action' => 'edit', $entity->id], ['class' => 'side-nav-item']);
 
-            echo $this->Form->postLink(__('<i class="bi bi-dash-square"></i>&nbsp;Delete ' . $model_name_singular), ['controller' => $model_name_plural, 'action' => 'delete', $entity->id], ['confirm' => __('Are you sure you want to delete {0} {1}?',$model_name_singular, $instance_name), 'class' => 'side-nav-item', 'escape' => false]);
+            echo $this->Form->postLink(__('<i class="bi bi-dash-square"></i>&nbsp;Delete ' . $model_name_singular), ['controller' => $model_name_plural, 'action' => 'delete', $entity->id], ['title' => 'Delete ' . $model_name_singular, 'confirm' => __('Are you sure you want to delete {0} {1}?',$model_name_singular, $instance_name), 'class' => 'side-nav-item', 'escape' => false]);
         }
-        echo $this->Html->link('<i class="bi bi-arrow-left-square"></i>&nbsp;' . $model_name_plural, ['controller' => $model_name_plural, 'action' => 'index'], ['class' => 'side-nav-item', 'escape' => false]) 
+        echo $this->Html->link('<i class="bi bi-arrow-left-square"></i>&nbsp;' . $model_name_plural, ['controller' => $model_name_plural, 'action' => 'index'], ['title' => 'List of ' . $model_name_plural, 'class' => 'side-nav-item', 'escape' => false]) 
         ?>
     </div>
         <!-- </div> -->
@@ -49,8 +49,7 @@ use Cake\Utility\Inflector;
 
             <?php endforeach; ?>
         </fieldset>
-        <?= $this->Html->Link('Cancel', 
-            ['controller' => $model_name_plural, 'action' => 'view', $entity->id], ['type' => 'button', 'class' => 'button', 'title' => 'Cancel']); ?>
+        <?= $this->Html->Link('Cancel', $this->request->referer() ? $this->request->referer() : ['controller' => $model_name_plural, 'action' => 'view', $entity->id], ['type' => 'button', 'class' => 'button', 'title' => 'Cancel']); ?>
         <?= $this->Form->button(__('Save')) ?>
         <?= $this->Form->end() ?>
     </div>

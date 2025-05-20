@@ -5,8 +5,33 @@ use Cake\Utility\Inflector;
  * @var iterable<\App\Model\Entity\Report> $entities
  */
 ?>
+<div class="actions-container">
+    <div class="links">
+        <?php // $this->Html->link(__('Related Reports'), '#reports', ['class' => 'side-nav-item'])
+        $model_name_singular = (new \ReflectionClass($entities->toArray()[0]))->getShortName(); // Singular
+        $model_name_plural = Inflector::pluralize($model_name_singular);
+
+        $link_addon = '';
+        if ($model_name_singular == 'Report') {
+            $link_addon = $this->getTemplate() === 'index' ? 'user' : 'admin';                
+        }
+
+        if($editable ? $editable : 1==2 ) {
+            echo $this->Html->link('<i class="bi bi-plus-square"></i>&nbsp; Add ' . $model_name_singular, ['controller' => $model_name_plural, 'action' => 'add'], ['title' => 'Add ' . $model_name_singular, 'class' => 'side-nav-item', 'escape' => false]); // /*'?' => ['template' => $this->getTemplate()]*
+        }
+        // echo $this->Html->link('<i class="bi bi-arrow-left-square"></i>&nbsp;' . $model_name_plural, ['controller' => $model_name_plural, 'action' => 'index'], ['title' => 'List of ' . $model_name_plural, 'class' => 'side-nav-item', 'escape' => false]);
+        ?>
+    </div>
+</div>
+<!-- 
+ #############################################
+ ############### Entity View #################
+ #############################################
+-->
 <div class="row">
+    <?php /*
     <aside class="column">
+        
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
             <?php
@@ -20,11 +45,13 @@ use Cake\Utility\Inflector;
             }
 
             if($editable ? $editable : 1==2 ) {
-                echo '<i class="fa-solid fa-circle-plus"></i> ' . $this->Html->link(__('New ' . $model_name_singular), ['controller' => $model_name_plural, 'action' => 'add', '?' => ['type' => $link_addon] /*'?' => ['template' => $this->getTemplate()]*/], ['class' => 'side-nav-item']);
+                echo '<i class="fa-solid fa-circle-plus"></i> ' . $this->Html->link(__('New ' . $model_name_singular), ['controller' => $model_name_plural, 'action' => 'add', '?' => ['type' => $link_addon] /], ['class' => 'side-nav-item']); // /*'?' => ['template' => $this->getTemplate()]*
             }
             ?>
         </div>
+        
     </aside>
+    */ ?>
     <div class="column">
         <div class="list_admin content">
             <h3><?=__($this->get('title')) ?></h3>
@@ -59,11 +86,13 @@ use Cake\Utility\Inflector;
                             <td class="actions">
                             
 
-                            <?= $this->Html->link('<i class="bi bi-caret-right-square"></i>', array('title' => 'View', 'alt' => 'View', 'url' => ['controller' => $model_name_plural, 'action' => 'view', $entity->id]), ['escape' => false, 'title' => __('View')]); ?>
+                            <?= $this->Html->link('<i class="bi bi-caret-right-square"></i>', ['controller' => $model_name_plural, 'action' => 'view', $entity->id], ['escape' => false, 'title' => __('View'), 'id' => 'View', 'alt' => 'View']); ?>
 
-                            <?= $this->Html->link('<i class="bi bi-pencil-square"></i>', array('title' => 'Edit', 'alt' => 'Edit', 'url' => ['controller' => $model_name_plural, 'action' => 'edit', $entity->id]), ['escape' => false, 'title' => __('View')]); ?>
+                            <?= $this->Html->link('<i class="bi bi-pencil-square"></i>', ['controller' => $model_name_plural, 'action' => 'edit', $entity->id], ['escape' => false, 'title' => __('Edit'), 'alt' => 'Edit']); ?>
 
-                            <?=  $this->Form->postLink('<i class="bi bi-dash-square"></i>', ['controller' => $model_name_plural, 'action' => 'delete', $entity->id], ['confirm' => __('Are you sure you want to delete the {0}?', __('Are you sure you want to delete {0} {1}?',$model_name_singular, $entity->{$instance_name})), 'escape' => false]
+                            <!-- // 'alt' => 'Edit', 'url' => ), ['escape' => false, 'title' => __('View')]; ?> -->
+
+                            <?=  $this->Form->postLink('<i class="bi bi-dash-square"></i>', ['controller' => $model_name_plural, 'action' => 'delete', $entity->id], ['title' => __('Delete'), 'confirm' => __('Are you sure you want to delete {0} {1}?',$model_name_singular, $entity->{$instance_name}), 'escape' => false, 'alt' => 'Delete']
                             ) ?>
 
                                 
@@ -147,3 +176,36 @@ use Cake\Utility\Inflector;
     </div>
 </div>
 */ ?>
+
+<!-- <script>
+
+    // Funktionen, um Bootstrap Icons zu ändern. Dafür muss dem Optionen-Attributen der Links folgendes hinzugefügt werden:
+    // 'onmouseenter' => 'overIcon(this)', 'onmouseleave' => 'icon(this)'
+
+    function icon(element) {
+        var viewIcon = element.children[0];
+        var viewIconClass = viewIcon.getAttribute('class');
+
+        // viewIconClass = viewIconClass.replace('-fill', '');
+
+        viewIcon.setAttribute('class', viewIconClass.replace('-fill', ''));
+    }
+
+    function overIcon(element) {
+        var viewIcon = element.children[0];
+        var viewIconClass = viewIcon.getAttribute('class');
+
+        viewIcon.setAttribute('class', viewIconClass + '-fill');
+    }
+
+    function changeIcon() {
+        // console.log('changeIcon()');
+        var viewIcon = document.getElementById('View').children[0];
+        console.log(viewIcon);
+        if (viewIcon.getAttribute('class') === 'bi bi-caret-right-square') {
+            viewIcon.setAttribute('class', 'bi bi-caret-right-square-fill');
+        } else {
+            viewIcon.setAttribute('class', 'bi bi-caret-right-square');
+        }
+    }
+</script> -->

@@ -94,7 +94,7 @@ $cakeDescription = 'Congos Report Tools';
         ?>
 
         <?php if ($i === 1 && $total > 3): ?>
-            <li class="breadcrumb-toggle" title="Ausklappen" onclick="toggleBreadcrumb(this)"><i class="fa-solid fa-circle-plus" style="margin-right: 6px;"></i></li>
+            <li class="breadcrumb-toggle" title="Ausklappen" onclick="toggleBreadcrumb(this)"><i class="bi bi-plus-circle" style="margin-right: 6px;"></i></li>
         <?php endif; ?>
 
         <li class="breadcrumb-container-item<?= $isCollapsible ? ' collapsed' : '' ?><?= $isLast ? ' breadcrumb-container-item-last' : '' ?>"
@@ -109,7 +109,7 @@ $cakeDescription = 'Congos Report Tools';
                 ]) ?>
         </li>
     <?php endforeach; ?>
-    <li class="breadcrumb-collapse-control hidden" title="Einklappen" onclick="toggleBreadcrumb(this)"><i class="fa-solid fa-circle-minus"></i></li>
+    <li class="breadcrumb-collapse-control hidden" title="Einklappen" onclick="toggleBreadcrumb(this)"><i class="bi bi-dash-circle"></i></li>
 </ul>      
 </div> 
                 <div class="right">      
@@ -121,7 +121,12 @@ $cakeDescription = 'Congos Report Tools';
                         'controller' => $secondLastCrumb->controller,
                         'action' => $secondLastCrumb->action
                     ];
-                    echo $this->Html->image('icons/material_arrow_circle_back_292929.svg', array('title' => $lastPageTitle, 'url' => $lastPageLink, isset($sessionData) ? $sessionData : ''));
+                    echo $this->Html->Link('<i class="bi bi-arrow-left-circle"></i>', $lastPageLink, [
+                        'escape' => false,
+                        'title' => $lastPageTitle,
+                        'class' => 'breadcrumb-back-link'
+                    ]);
+                    // echo $this->Html->image('icons/material_arrow_circle_back_292929.svg', array('title' => $lastPageTitle, 'url' => $lastPageLink, isset($sessionData) ? $sessionData : ''));
                 }
                 //  $this->Html->link($lastCrumb->title, [
                 //     'plugin' => $crumb->plugin,

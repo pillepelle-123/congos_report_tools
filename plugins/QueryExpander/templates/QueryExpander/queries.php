@@ -54,9 +54,9 @@
                             ?>
                             
                             <a <?php
-                            echo 'onClick=" childrenToggleVisibility(' . $i .', this)"' ?> class="" style="cursor: pointer;"><i class="fa-solid fa-eye"></i></a>
+                            echo 'onClick=" childrenToggleVisibility(' . $i .', this)"' ?> class="" style="cursor: pointer;"><i class="bi bi-eye-fill"></i></a>
             
-                                <div <?php echo 'id="div-query-' . $i . '" style="display: none; position: relative; left: -72.5%; width: 80vw; max-width: 900px; margin-top: 10px;"' ?> >
+                                <div <?php echo 'id="div-query-' . $i . '" class="display-data-items-container"' ?> >
                                 <!-- <pre> -->
                                     
                                 <fieldset class="display-data-items">
@@ -116,11 +116,11 @@
         let link = this;
         console.log(selfElement);
             if(div.style.display === "none") {
-                selfElement.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+                selfElement.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
                 div.style.display = "block";
                 // console.log(children[i] + ': ' + children[i].style.display);
             } else {
-                selfElement.innerHTML = '<i class="fa-solid fa-eye"></i>';
+                selfElement.innerHTML = '<i class="bi bi-eye-fill"></i>';
                 div.style.display = "none";
                 // console.log(children[i].style.display);
             }
