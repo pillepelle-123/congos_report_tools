@@ -60,7 +60,7 @@ $cakeDescription = 'Congos Report Tools';
 
                 <?php if ($this->Identity->isLoggedIn()): ?>
                     <ul id="user-menu">
-                        <li><i class="fa-solid fa-user"></i>&nbsp;
+                        <li><i style="font-size: 22px" class="bi bi-person-circle"></i>&nbsp;
                         <?php echo $this->Identity->get('username'); ?></li>
                         <li><?php echo $this->Html->link('Logout', url: ['controller' => 'Users', 'action' => 'logout']); ?></li>
                         <li>
@@ -77,6 +77,7 @@ $cakeDescription = 'Congos Report Tools';
             
         </nav>
     </div>
+    <?php if ($this->Identity->isLoggedIn()): ?>
     <div class="breadcrumb-container">
         <div class="left">
         <ul class="breadcrumb-container-list" id="breadcrumb">
@@ -161,6 +162,7 @@ $cakeDescription = 'Congos Report Tools';
     </nav>
     */ ?>
         </div>
+        <?php endif; ?>
     </div>
         <!-- Breadcrumb Navi eingebunden, s. element\breadcrumb.php -->
         <?php // $this->element('breadcrumb'/*, ['user' => $user]*/) ?>

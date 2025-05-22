@@ -169,20 +169,22 @@ class InitMenuCommand extends Command
                                 'controller' => 'Users',
                                 'action' => 'edit',
                                 'url'=> 'users/edit/*'
-                            ],
+                            ]
+                        ]
+                    ],
+                    // User Settings-Bereich
+
+                    [
+                        'title' => 'User Settings',
+                        'controller' => 'Users',
+                        'action' => 'settings',
+                        'url'=> 'users/settings/*',
+                        'children' => [
                             [
-                                'title' => 'User Settings',
+                                'title' => 'Change Password',
                                 'controller' => 'Users',
-                                'action' => 'settings',
-                                'url'=> 'users/settings/*',
-                                'children' => [
-                                    [
-                                        'title' => 'Change Password',
-                                        'controller' => 'Users',
-                                        'action' => 'changePassword',
-                                        'url'=> 'users/change-password/*'
-                                    ]
-                                ]
+                                'action' => 'changePassword',
+                                'url'=> 'users/change-password/*'
                             ]
                         ]
                     ],

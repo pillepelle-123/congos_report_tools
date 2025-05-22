@@ -38,6 +38,59 @@ $report = $this->request->getSession()->read('crt.report');
                     <?php foreach ($dataItems as $item => $value) : ?>
                     <tr>
                         <td>
+                        <div class="input checkbox-container">
+                            <?php // $this->Form->hidden('selected_items[]', ['value' => $item]); ?>
+                            <?= $this->Form->checkbox('selected_items[]', [
+                                'value' => $item,
+                                'type' => 'checkbox',
+                                'hiddenField' => false,
+                                'class' => 'checkbox-checked', // btn-check
+                                'id' => 'active',
+                                'autocomplete' => 'off',
+                                'label' => false,
+                                ]); ?>
+                            <?php // label wird für Checkbox benötigt
+                            echo $this->Form->label('Checkbox Click Area', '', [
+                                    'class' => 'checkbox',
+                                    'for' => 'selected_items[]',
+                                ]); ?>
+                            <span class="checkmark"></span>
+                        </div>
+                                <?php /*
+                            <div class="input checkbox-container">
+                                <?= $this->Form->hidden('selected_items[]', ['value' => $item]); ?>
+                                <?= $this->Form->checkbox('selected_items[]', [
+            'type' => 'checkbox',
+            // 'hiddenField' => false,
+            'class' => 'checkbox-checked', // btn-check
+            'id' => 'active-' . $item,
+            'autocomplete' => 'off',
+            'label' => false,
+                                ]); ?>
+                                <?php // label wird für Checkbox benötigt
+                                echo $this->Form->label('Checkbox Click Area', '', [
+                                        'class' => 'checkbox',
+                                        'for' => 'selected_items[]',
+                                    ]); ?>
+                                <span class="checkmark"></span>
+                            </div>
+                            */ ?>
+
+                            <?php /*
+                            <div class="input checkbox-container">
+                                <?= $this->Form->hidden('selected_items[]', ['value' => $item]); ?>
+                                <?= $this->Form->checkbox('selected_items[]', [
+                                    'type' => 'checkbox',
+                                    'class' => 'checkbox-checked',
+                                    'id' => 'active',
+                                    'autocomplete' => 'off',
+                                    'label' => false,
+                                ]) ?>
+                                <?= $this->Form->label('Checkbox Click Area', '', ['class' => 'checkbox', 'for' => 'selected_items[]', ]); ?>
+                                <span class="checkmark"></span>
+                            </div>
+                            */ ?>
+                            <?php /*
                             <div class="form-check">
                                 
                             <label class="checkbox-container" style="margin: 6px auto;">
@@ -53,6 +106,7 @@ $report = $this->request->getSession()->read('crt.report');
                             <span class="checkmark"></span>
                             </label>
                             </div>  
+                            */ ?>
                         </td>
                         <td><?= h($item) ?></td>
                         <td style="font-family: monospace, monospace; font-size: 1.2rem;"><?= wordwrap($value['expression'], 100, '</br>') ?></td>
@@ -68,15 +122,35 @@ $report = $this->request->getSession()->read('crt.report');
                 <legend><h3>Data Item Name anpassen</h3></legend>
             <?= $this->Form->control('name_search', ['label' => '', 'placeholder' => 'Zu suchender Text']) ?>
             <?= $this->Form->control('name_replace', ['label' => '', 'placeholder' => 'Ersetzen mit']) ?>
-            <p>
+            <div style="display: flex; flex-direction: row; gap: 10px;">
+
+                <div class="input checkbox-container">
+                    <?= $this->Form->hidden('name_ignore_case', ['value' => 0]); ?>
+                    <?= $this->Form->checkbox('name_ignore_case',                                 [
+                                    'type' => 'radio',
+                                    'class' => 'radio-checked',
+                                    'id' => 'active',
+                                    'autocomplete' => 'off',
+                                    'label' => false,
+                                    'hiddenField' => false,
+                                ]); ?>
+                    <?php // label wird für Checkbox benötigt
+                    echo $this->Form->label('Checkbox Click Area', '', [
+                            'class' => 'checkbox',
+                            'for' => 'name_ignore_case',
+                        ]); ?>
+                    <span class="checkmark"></span>
+                </div>
+                <?php /*
                 <label class="checkbox-container" style="display: inline-block; margin-right: 20px;">
                 <?= $this->Form->checkbox('name_ignore_case') ?>
                 <span class="checkmark" style="margin-right: 30px"></span>
                 </label>
+                */ ?>
                 <span>
-            Groß-und Kleinschreibung ignorieren
-            </span>
-            </p> 
+                Groß-und Kleinschreibung ignorieren
+                </span>
+            </div> 
 
             <?php // $this->Form->control('name_ignore_case', ['type' => 'radio', 'label' => 'Ignoriere Groß-und Kleinschreibung']) ?>
             </fieldset>
@@ -87,14 +161,34 @@ $report = $this->request->getSession()->read('crt.report');
                 <legend><h3>Expression anpassen</h3></legend>
             <?= $this->Form->control('expr_search', ['label' => '', 'placeholder' => 'Zu suchender Text']) ?>
             <?= $this->Form->control('expr_replace', ['label' => '', 'placeholder' => 'Ersetzen mit']) ?>
-            <p>
+            <div style="display: flex; flex-direction: row; gap: 10px;">
+                <div class="input checkbox-container">
+                    <?= $this->Form->hidden('expr_ignore_case', ['value' => 0]); ?>
+                    <?= $this->Form->checkbox('expr_ignore_case',                                 [
+                                    'type' => 'radio',
+                                    'class' => 'radio-checked',
+                                    'id' => 'active',
+                                    'autocomplete' => 'off',
+                                    'label' => false,
+                                    'hiddenField' => false,
+                                ]); ?>
+                    <?php // label wird für Checkbox benötigt
+                    echo $this->Form->label('Checkbox Click Area', '', [
+                            'class' => 'checkbox',
+                            'for' => 'expr_ignore_case',
+                        ]); ?>
+                    <span class="checkmark"></span>
+                </div>
+
+                <?php /*
                 <label class="checkbox-container" style="display: inline-block; margin-right: 20px;">
                 <?= $this->Form->checkbox('expr_ignore_case') ?>
                 <span class="checkmark" style="margin-right: 30px"></span>
                 </label>
+                */ ?> 
                 <span>
-            Groß-und Kleinschreibung ignorieren
-            </span>
+                Groß-und Kleinschreibung ignorieren
+                </span>     
             </p> 
             </fieldset>
 

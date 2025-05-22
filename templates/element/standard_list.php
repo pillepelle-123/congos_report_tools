@@ -5,6 +5,11 @@ use Cake\Utility\Inflector;
  * @var iterable<\App\Model\Entity\Report> $entities
  */
 ?>
+<!-- 
+ #############################################
+ ################## Actions ##################
+ #############################################
+-->
 <div class="actions-container">
     <div class="links">
         <?php // $this->Html->link(__('Related Reports'), '#reports', ['class' => 'side-nav-item'])
@@ -70,6 +75,7 @@ use Cake\Utility\Inflector;
                         <tr>
                     <?php foreach ($fields as $field ) : ?>
                         <?php if ($field[1] === 'user' || $field[1] === $this->Identity->get('role')) : ?>
+                        <!-- Für related Entities. Notation, z.B. "user.username" -->
                         <?php if (str_contains($field[0], '.')) : ?>
                             <?php
                                 $rel_entity = explode('.', $field[0])[0]; 

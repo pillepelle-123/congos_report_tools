@@ -26,7 +26,6 @@
     <?= $this->Form->create(null, [
         'url' => ['action' => 'processSelection']
     ]) ?>
-    <!-- <fieldset> -->
         <legend><?= __('Verfügbare Reports') ?></legend>
         
         <?php if (empty($reports)): ?>
@@ -46,6 +45,22 @@
                     <?php foreach ($reports->toArray() as $report): ?>
                         <tr>
                             <td>
+                                <div class="input radio-container">
+                                <?= $this->Form->radio('selected_report', [
+                                    ['value' => $report->id, 'text' => 'Id']], [
+                                    'label' => false,
+                                    // 'required' => true,
+                                    'hiddenField' => false,
+                                    ]); ?>
+                                <?php /* // label wird für Radio nicht benötigt
+                                 $this->Form->label('Checkbox Click Area', '', [
+                                        'class' => 'radio',
+                                        'for' => 'selected_query',
+                                    ]); */ ?>
+                                <span class="checkmark"></span>
+                            </div>
+
+                                <?php /*
                                 <label class="radio-container">
                                 <?= $this->Form->radio('selected_report', [
                                     ['value' => $report->id, 'text' => 'Id']], [
@@ -55,6 +70,7 @@
                                     ]); ?>
                                     <span class="checkmark"></span>
                                 </label>
+                                */ ?>
                             </td>
                             <td><?= h($report->name) ?></td>
                             <td><?= h($report->created) ?></td>
@@ -74,34 +90,7 @@
                 </ul>
                 <p class="paginator-counter"><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
             </div>
-            <?php /*
-                <?php foreach ($reports as $index => $report): ?>
-                    <div class="report-option">
-                        <div>
-                        <?= $this->Form->radio('selected_report', [
-                                [
-                                    'value' => $report->id,
-                                    'text' => h($report->name),
-                                    'label' => [
-                                        'class' => 'report-label',
-                                        'escape' => false,
-                                        'text' => $this->Html->tag('strong', h($report->name)),
-                                    ]
-                                ]
-                            ], [
-                                'required' => true,
-                                'hiddenField' => ($index === 0) // Nur für erstes Element
-                            ]) 
-                        ?>
-                        </div>
-                        <div>
-                            <?= h($report->created) ?>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-                */ ?>
         <?php endif; ?>
-    <!-- </fieldset> -->
     
     <?= $this->Form->button(__('Nächster Schritt'), [
         'class' => 'button'
@@ -110,34 +99,3 @@
     <?= $this->Form->end() ?>
     </div>
 </div>
-<style>
-
-
-.table-responsive input[type="radio"] {
-    width: 25px;
-    height: 25px;
-    float: left;
-    clear: none;
-    display: inline;
-    margin: 8px 10px;
-}
-.report-option:hover {
-    background-color: #f5f5f5;
-}
-.report-label {
-    width: 100%;
-    float: left;
-    clear: none;
-    display: inline;
-    cursor: pointer;
-}
-.report-label strong {
-    font-weight: normal;
-    display: inline-block;
-    font-size: 1.2em;
-}
-.no-reports {
-    color: #666;
-    font-style: italic;
-}
-</style>

@@ -1,6 +1,11 @@
 <?php
 use Cake\Utility\Inflector;
 ?>
+<!-- 
+ #############################################
+ ################## Actions ##################
+ #############################################
+-->
 <div class="actions-container">
     <!-- <div class="title">
         <h4><?php // __('Actions') ?></h4>
@@ -23,6 +28,11 @@ use Cake\Utility\Inflector;
     </div>
         <!-- </div> -->
 </div>
+<!-- 
+ #############################################
+ ############### Entity View #################
+ #############################################
+-->
 <div class="column">
     <div class="users view content vertical-table">
         <?= $this->Form->create($entity) ?>
@@ -30,18 +40,21 @@ use Cake\Utility\Inflector;
         <h3 style="word-break: normal;"><?= h($model_name_singular . ': ' . $instance_name) ?></h3>
             <?php foreach ($fields as $field): ?>
                 <?php if ($field['form_options']['type'] == 'checkbox') : ?>
-                    <?= $this->Form->label($field['name'],  __(ucfirst(Inflector::humanize($field['name']))), [
-                            'for' => $field['name'],
-                        ]);                    
-                    ?>
-                    <div class="input checkbox-container">
-                        <?= $this->Form->hidden($field['name'], ['value' => 0]); ?>
-                        <?= $this->Form->checkbox($field['name'], $field['form_options']); ?>
-                        <?= $this->Form->label('Checkbox Click Area', '' /* __(ucfirst(Inflector::humanize($field['name'])))*/, [
-                                'class' => 'checkbox checkbox-outline',
+                    <div class="checkbox-container-wrapper">
+                        <?= $this->Form->label($field['name'],  __(ucfirst(Inflector::humanize($field['name']))), [
                                 'for' => $field['name'],
-                            ]); ?>
-                        <span class="checkmark"></span>
+                            ]);                    
+                        ?>
+                        <div class="input checkbox-container">
+                            <?= $this->Form->hidden($field['name'], ['value' => 0]); ?>
+                            <?= $this->Form->checkbox($field['name'], $field['form_options']); ?>
+                            <?php // label wird für Checkbox benötigt
+                            echo $this->Form->label('Checkbox Click Area', '', [
+                                    'class' => 'checkbox',
+                                    'for' => $field['name'],
+                                ]); ?>
+                            <span class="checkmark"></span>
+                        </div>
                     </div>
                     <?php else : ?>
                     <?= $this->Form->control($field['name'], $field['form_options']); ?>

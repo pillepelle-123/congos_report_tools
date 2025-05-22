@@ -76,7 +76,7 @@ class AppController extends Controller
         // $this->viewBuilder()->setHelpers(helpers: ['SessionLink']); // wichtig für Views!
 
         $this->identity = $this->request->getAttribute('identity') ?? [];
-   
+        
         if($this->identity) {
             // Datenbank-Abfragen
             $this->users_table = $this->fetchTable('Users');

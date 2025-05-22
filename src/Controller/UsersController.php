@@ -25,6 +25,7 @@ use CakeDC\Users\Loader\LoginComponentLoader;
  *
  * //@property \App\Model\Table\UsersTable $Users
  * @property \Cake\ORM\Table $UsersTable
+ * @property \Authentication\Controller\Component\AuthenticationComponent|null $Authentication
  */
 // class UsersController extends AppController
 class UsersController extends BaseUsersController
@@ -52,6 +53,8 @@ class UsersController extends BaseUsersController
         // $this->Crud->initialize(['model_name' => '', 'request' => $this->request]);
 
         $this->UsersTable = $this->getUsersTable();
+
+        // $this->Authentication = parent::getAuthentication();
     }
     
     /**
@@ -160,12 +163,16 @@ class UsersController extends BaseUsersController
 
     public function settings()
     {
-        $this->set(['user' => $this->my_user, 'title' => 'My User Settings']);
+        $users_table = $this->fetchTable('Users');
+        $my_user = $users_table->get($this->identity['id']);
+
+        $this->Crud->setQuery();
+        $this->set(['user' => $my_user, 'title' => 'My User Settings']);
         if (!$this->getRequest()->is(['patch', 'post', 'put'])) {
             return;
         }
-        $user = $this->UsersTable->patchEntity($this->my_user, $this->getRequest()->getData());
-        if ($this->UsersTable->save($user)) {
+        $user = $this->users_table->patchEntity($my_user, $this->getRequest()->getData());
+        if ($this->users_table->save($user)) {
             $this->Flash->success(__d('cake_d_c/users', 'Changes have been saved'));
             return;
         }

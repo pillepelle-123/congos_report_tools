@@ -286,7 +286,6 @@ input::file-selector-button {
 /* ########## Checkbox ############ */
 /* ################################ */
 
-
 .checkbox-container {
     display: flex;
     position: relative;
@@ -301,13 +300,13 @@ input::file-selector-button {
     margin-bottom: 2.0rem;
 }
 
-.checkbox-container input {
+/* .checkbox-container input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
     height: 0;
     width: 0;
-}
+} */
 
 .checkbox {
     /* background-color: var(--color-crt-blau-stufe-4); */
@@ -330,6 +329,15 @@ input::file-selector-button {
     white-space: nowrap;
     z-index: 2;
     margin-bottom: 0;
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    width: 26px;
+    height: 26px;
+    z-index: 12;
 }
 
 
@@ -405,14 +413,21 @@ input::file-selector-button {
     border: 1px solid var(--color-crt-grau-stufe-4);
 }
 
-.checkbox-container:hover input ~ .checkmark {
+/* .checkbox-container:hover input ~ .checkmark {
     background-color: var(--color-crt-blau-stufe-4);
-}
+} */
 
 .checkbox-container input:checked ~ .checkmark {
     background-color: var(--color-crt-blau-stufe-12);
   border: 1px solid var(--color-crt-blau-stufe-12);
 }
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+/* .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+} */
 
 .checkbox-container .checkmark:after {
     display: none;
@@ -424,18 +439,135 @@ input::file-selector-button {
 
 /* Haken in Checkbox */
 .checkbox-container .checkmark:after {
-  left: 8px;
-  top: 3px;
-  width: 9px;
-  height: 16px;
-  border: solid white;
-  border-width: 0 4px 4px 0;
-  -webkit-transform: rotate(35deg);
-  -ms-transform: rotate(35deg);
-  transform: rotate(35deg);
+    content: "";
+    position: absolute;
+    display: none;
+    left: 8px;
+    top: 3px;
+    width: 9px;
+    height: 16px;
+    border: solid white;
+    border-width: 0 4px 4px 0;
+    -webkit-transform: rotate(35deg);
+    -ms-transform: rotate(35deg);
+    transform: rotate(35deg);
 }
 
 
+
+/* ################################ */
+/* ########### RADIO ############## */
+/* ################################ */
+
+
+.radio-container {
+    display: flex;
+    position: relative;
+    cursor: pointer;
+    width: 26px;
+    height: 26px;
+    font-size: 1.4rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* margin-bottom: 2.0rem; */
+}
+
+
+.radio-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+}
+
+.radio {
+    /* background-color: var(--color-crt-blau-stufe-4); */
+    border: none;
+    /* margin: 15px 0px; */
+    /* border-radius: .4rem; */
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    /* font-size: 1.1rem;
+    font-weight: 700; */
+    width: 26px;
+    height: 26px;
+    /* letter-spacing: .1rem;
+    line-height: 3.8rem;
+    padding: 0 1.0rem;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap; */
+    z-index: 1;
+    margin-bottom: 0;
+}
+
+
+.radio-checked:disabled+.radio, .radio-checked[disabled]+.radio {
+    /* pointer-events: none; */
+    cursor: not-allowed;
+    filter: none;
+    opacity: .65;
+    /* background-color: var(--color-crt-grau-stufe-2); */
+    background-image: linear-gradient(135deg, var(--color-crt-grau-stufe-2) 2.38%, var(--color-white) 2.38%, var(--color-white) 50%, var(--color-crt-grau-stufe-2) 50%, var(--color-crt-grau-stufe-2) 52.38%, var(--color-white) 52.38%, var(--color-white) 100%);
+    background-size: 15px 15px;
+}
+
+.radio-container > .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* z-index: 1; */
+    height: 100%;
+    width: 100%;
+    background-color: var(--color-white);
+    border-radius: 4px;
+    border: 1px solid var(--color-crt-grau-stufe-4);
+    border-radius: 50%;
+}
+
+
+.radio-container input:checked ~ .checkmark {
+    background-color: var(--color-crt-blau-stufe-12);
+    border: 1px solid var(--color-crt-blau-stufe-12);
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+/* .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+} */
+
+.radio-container .checkmark:after { 
+    display: none;
+}
+
+
+.radio-container input:checked ~ .checkmark:after, .radio-container input:hover ~ .checkmark:after {
+    display: block;
+} 
+
+
+/* Weißer Punkt */
+.radio-container > .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border: solid white;
+    background-color: var(--color-white);
+    border-width: 4px;
+    border-radius: 50%;
+}
 
 /* .btn-check:disabled+.btn, .btn-check[disabled]+.btn {
     pointer-events: none;
@@ -533,9 +665,14 @@ input::file-selector-button {
     margin: 0;
     padding: 0;
 }
+
 #user-menu li {
     display: inline;
     margin-right: 4px;
+}
+
+#user-menu li i {
+    font-size: 22px;
 }
 
 /* ################################### */
@@ -739,30 +876,6 @@ input::file-selector-button {
 }
 
 
-/* Utility */
-.table-responsive {
-    display: block;
-    /* width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch; */
-    overflow-x: scroll;
-    overflow-y: hidden;
-    /* -webkit-overflow-scrolling: touch; */
-}
-
-.table-responsive table {
-    min-width: 100%;
-    width: max-content;
-}
-
-.table-responsive th, .table-responsive td {
-    padding: 4px 6px;
-}
-
-.table-responsive tr:nth-child(even) {
-    background-color: var(--color-crt-blau-stufe-1);
-}
-
 /* ############################### */
 /* ########### Main ############## */
 /* ############################### */
@@ -832,10 +945,33 @@ input::file-selector-button {
 
 /* ####### List Tables (Users, Reports etc. ######### */
 
-.table-responsive > table > tbody > tr > td {
-    max-width: 180px;
+.table-responsive {
+    display: block;
+    /* width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; */
+    overflow-x: scroll;
+    overflow-y: hidden;
+    /* -webkit-overflow-scrolling: touch; */
 }
 
+.table-responsive table {
+    min-width: 100%;
+    width: max-content;
+}
+
+.table-responsive th, .table-responsive td {
+    padding: 4px 6px;
+}
+
+.table-responsive > table > tbody > tr > td {
+    max-width: 180px;
+    background-color: transparent;
+}
+
+.table-responsive tr:nth-child(even) {
+    background-color: var(--color-crt-blau-stufe-1);
+}
 .actions a {
     font-size: 2rem;
     font-weight: bold;
@@ -850,6 +986,9 @@ input::file-selector-button {
 .related {
     margin-top: 2rem;
 }
+
+
+
 
 /* ############################## */
 /* ##### SEITEN-SPEZIFISCH ###### */
@@ -1333,85 +1472,6 @@ input[type='text']:focus, input[type='password']:focus, input[type='datetime-loc
     transition: background .4s, border .4s;
 }
 
-/* ######## Radio ######### */
-
-input[type="radio"] {
-    width: 25px;
-    height: 25px;
-    float: left;
-    clear: none;
-    display: inline;
-    margin: 8px 10px;
-}
-
-.radio-container {
-    display: block;
-    position: relative;
-    cursor: pointer;
-    width: 26px;
-    height: 26px;
-    margin: 0px auto;
-    font-size: 1.4rem;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.radio-container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-
-.radio-container > .checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: var(--color-white);
-    /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;   */
-border-radius: 50%;
-    border: 1px solid var(--color-crt-grau-stufe-3);
-
-  /* border: 1px solid var(--color-crt-grau-stufe-3); */
-}
-
-.radio-container:hover input ~ .checkmark {
-  background-color: var(--color-crt-grau-stufe-2);
-}
-
-/* When the radio button is checked, add a blue background */
-.radio-container input:checked ~ .checkmark {
-  background-color: var(--color-crt-blau-stufe-12);
-  border: 1px solid var(--color-crt-blau-stufe-12);
-}
-
-/* Create the indicator (the dot/circle - hidden when not checked) */
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-.radio-container input:checked ~ .checkmark:after {
-  display: block;
-}
-
-/* Style the indicator (dot/circle) */
-.radio-container .checkmark:after {
- 	top: 8px;
-	left: 8px;
-	width: 8px;
-	height: 8px;
-	border-radius: 50%;
-	background: white;
-}
-
-
 input[type='color'] {
     max-width: 4rem;
     padding: 0.3rem .5rem 0.3rem;
@@ -1513,8 +1573,27 @@ input[type='color'] {
 /* ########### bis 640 px ######### */
 /* ################################ */
 
+@media screen and (min-width: 2560px) {
+    .display-data-items-container {
+    left: -25vw;
+    }
+}
+
+@media screen and (min-width: 2160px) and (max-width: 2559px) {
+    .display-data-items-container {
+    left: -30vw;
+    }
+}
+
+@media screen and (min-width: 1670px) and (max-width: 2159px) {
+    .display-data-items-container {
+    left: -35vw;
+    } 
+}
+
 @media screen and (max-width: 640px) {
     /* Fix milligram not having a responsive column system */
+
     .row .column[class*='column-'] {
         flex: 0 0 100%;
         max-width: 100%
@@ -1567,11 +1646,9 @@ input[type='color'] {
     }
 
     .display-data-items-container {
-    /* display: none;
-    position: relative; */
     left: -130%;
-    /* width: 80vw;
-    max-width: 900px;
-    margin-top: 10px; */
+    }
 }
-}
+
+
+

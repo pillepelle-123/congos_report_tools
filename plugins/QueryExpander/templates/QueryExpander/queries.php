@@ -36,12 +36,32 @@
                 foreach ($queries as $index => $query): ?> 
                     <tr>
                         <td>
+                            <div class="input radio-container">
+                                <?= $this->Form->radio('selected_query', [$index => $query['name']], 
+                                [
+                                    'type' => 'radio',
+                                    'class' => 'radio-checked',
+                                    'id' => 'active',
+                                    'autocomplete' => 'off',
+                                    'label' => false,
+                                    'hiddenField' => false,
+                                ]); ?>
+                                <?php /* // label wird für Radio nicht benötigt
+                                 $this->Form->label('Checkbox Click Area', '', [
+                                        'class' => 'radio',
+                                        'for' => 'selected_query',
+                                    ]); */ ?>
+                                <span class="checkmark"></span>
+                            </div>
+                            <?php /*
+                            // ALTE VARIANTE - Funktioniert auch noch 
                             <label class="radio-container">
                                 <?= $this->Form->radio('selected_query', [
                                     $index => $query['name'] // Nur der Name wird angezeigt
-                                ], ['label' => false, 'hiddenField' => false /* , 'required' => true */]) ?>
+                                ], ['label' => false, 'hiddenField' => false ]) ?>
                                 <span class="checkmark"></span>
                             </label>
+                            */ ?>
                         </td>
                         <td>
                             <?= h($query['name']) ?>
