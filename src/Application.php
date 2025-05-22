@@ -57,10 +57,9 @@ class Application extends BaseApplication
         
         // Load my own custom users.php config file
         Configure::write('Users.config', ['users']);
-
-        
-        $wd = $this->addPlugin('QueryExpander', ['routes' => true]);
-        // debug($wd);
+        // Load all the plugins
+        $this->addPlugin('QueryExpander', ['routes' => true]);
+        // $this->addPlugin('CakeDC/Users', ['routes' => true, 'bootstrap' => true]);
     }
 
     /**

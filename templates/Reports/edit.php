@@ -31,7 +31,7 @@ $fields = [
         'name' => 'user_id',
         'form_options' => [
             'type' => 'select',
-            'options' => $usernames,
+            'options' => array_map(fn($u) => $u->username, $users->toArray()), // $usernames,
             'default' => $this->Identity->get('id'),
             // 'empty' => true,
             // 'label' => __('User'),

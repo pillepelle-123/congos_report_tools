@@ -61,11 +61,19 @@ return function (RouteBuilder $routes): void {
          * its action called 'display', and we pass a param to select the view file
          * to use (in this case, templates/Pages/home.php)...
          */
-        $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+
+         $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+
+         
+
+        (new \CakeDC\Users\Plugin())->routes($routes);
+
+        // $routes->connect('/', ['controller' => 'Pages', 'action' => 'display']);
+        // $routes->connect('/home', ['controller' => 'Pages', 'action' => 'display', 'home']);
         /*
          * ...and connect the rest of 'Pages' controller's URLs.
          */
-        $routes->connect('/pages/*', 'Pages::display');
+        // $routes->connect('/pages/*', 'Pages::display');
         $routes->connect('/user-settings', defaults: ['controller' => 'Users', 'action' => 'settings']);
         $routes->connect('/user-settings/change-password', defaults: ['controller' => 'Users', 'action' => 'changePassword']);
         /*
@@ -109,7 +117,6 @@ return function (RouteBuilder $routes): void {
             $routes->loadPlugin('QueryExpander');
 
         });
-
 
         $routes->fallbacks();
     });

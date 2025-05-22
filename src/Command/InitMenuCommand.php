@@ -68,6 +68,7 @@ class InitMenuCommand extends Command
         $menuData = [
         [
                 'title' => 'Home',
+                'plugin' => 'false',
                 'controller' => 'Pages',
                 'action' => 'display',
                 'url' => '/',
@@ -75,12 +76,14 @@ class InitMenuCommand extends Command
                     // Tools-Bereich
                     [
                         'title' => 'Admin: Tools',
+                        'plugin' => 'false',
                         'controller' => 'Tools',
                         'action' => 'index',
                         'url'=> 'tools/list',
                         'children' => [
                             [
                                 'title' => 'View Tool',
+                                'plugin' => 'false',
                                 'controller' => 'Tools',
                                 'action' => 'view',
                                 'url' => 'tools/view/*'
@@ -88,12 +91,14 @@ class InitMenuCommand extends Command
                             ],
                             [
                                 'title' => 'Add Tool',
+                                'plugin' => 'false',
                                 'controller' => 'Tools',
                                 'action' => 'add',
                                 'url'=> 'tools/add'
                             ],
                             [
                                 'title' => 'Edit Tool',
+                                'plugin' => 'false',
                                 'controller' => 'Tools',
                                 'action' => 'edit',
                                 'url'=> 'tools/edit/*'
@@ -103,12 +108,14 @@ class InitMenuCommand extends Command
 
                     [
                         'title' => 'Select Tool',
+                        'plugin' => 'false',
                         'controller' => 'Tools',
                         'action' => 'selectTool',
                         'url'=> 'tools/',
                         'children' => [
                             [
                                 'title' => 'Select Report',
+                                'plugin' => 'false',
                                 'controller' => 'Tools',
                                 'action' => 'selectReport',
                                 'url'=> 'tools/select-report',
@@ -148,24 +155,28 @@ class InitMenuCommand extends Command
                     // Users-Bereich
                     [
                         'title' => 'Admin: Users',
+                        'plugin' => 'false',
                         'controller' => 'Users',
                         'action' => 'index',
                         'url'=> 'users/',
                         'children' => [
                             [
                                 'title' => 'View User',
+                                'plugin' => 'false',
                                 'controller' => 'Users',
                                 'action' => 'view',
                                 'url'=> 'users/view/*'
                             ],
                             [
                                 'title' => 'Add User',
+                                'plugin' => 'false',
                                 'controller' => 'Users',
                                 'action' => 'add',
                                 'url'=> 'users/add'
                             ],
                             [
                                 'title' => 'Edit User',
+                                'plugin' => 'false',
                                 'controller' => 'Users',
                                 'action' => 'edit',
                                 'url'=> 'users/edit/*'
@@ -176,15 +187,17 @@ class InitMenuCommand extends Command
 
                     [
                         'title' => 'User Settings',
+                        'plugin' => 'false',
                         'controller' => 'Users',
                         'action' => 'settings',
-                        'url'=> 'users/settings/*',
+                        'url'=> 'user-settings/',
                         'children' => [
                             [
                                 'title' => 'Change Password',
+                                'plugin' => 'false',
                                 'controller' => 'Users',
                                 'action' => 'changePassword',
-                                'url'=> 'users/change-password/*'
+                                'url'=> 'user-settings/change-password/'
                             ]
                         ]
                     ],
@@ -192,24 +205,28 @@ class InitMenuCommand extends Command
                     // Reports-Bereich
                     [
                         'title' => 'My Reports',
+                        'plugin' => 'false',
                         'controller' => 'Reports',
                         'action' => 'index',
                         'url'=> 'reports/',
                         'children' => [
                             [
                                 'title' => 'View Report',
+                                'plugin' => 'false',
                                 'controller' => 'Reports',
                                 'action' => 'view',
                                 'url'=> 'reports/view/*',
                             ],
                             [
                                 'title' => 'Add Report',
+                                'plugin' => 'false',
                                 'controller' => 'Reports',
                                 'action' => 'add',
                                 'url'=> 'reports/add',
                             ],
                             [
                                 'title' => 'Edit Report',
+                                'plugin' => 'false',
                                 'controller' => 'Reports',
                                 'action' => 'edit',
                                 'url'=> 'reports/edit/*',
@@ -219,6 +236,7 @@ class InitMenuCommand extends Command
                     ],
                     [
                         'title' => 'Admin: Reports',
+                        'plugin' => 'false',
                         'controller' => 'Reports',
                         'action' => 'indexAdmin',
                         'url'=> 'reports/index-admin'

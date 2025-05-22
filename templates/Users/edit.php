@@ -5,8 +5,6 @@
  */
 ?>
 <?php
-// $fields2 = [['id', 'admin'], ['name', 'user'], ['user.username', 'admin'], ['created', 'user'], ['modified', 'user']]; // Feldname, 
-
 
 $fields = [
     [

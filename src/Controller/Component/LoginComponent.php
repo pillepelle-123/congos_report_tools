@@ -23,11 +23,13 @@ use CakeDC\Auth\Traits\IsAuthorizedTrait;
 use CakeDC\Users\Plugin;
 use CakeDC\Users\Utility\UsersUrl;
 use Laminas\Diactoros\Uri;
+use CakeDC\Users\Controller\Component\LoginComponent as BaseLoginComponent;
+
 
 /**
  * LoginFailure component
  */
-class LoginComponent extends Component
+class LoginComponent extends BaseLoginComponent
 {
     use IsAuthorizedTrait;
 

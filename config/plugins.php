@@ -11,6 +11,9 @@ return [
     'Migrations' => [
         'onlyCli' => true,
     ],
-    'CakeDC/Users' => [],
+    'CakeDC/Users' => [
+        'routes' => true
+    ],
     // 'QueryExpander' => [],
+    // 'QueryExpander', ['routes' => true]
 ];

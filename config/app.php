@@ -49,8 +49,10 @@ return [
     'App' => [
         'namespace' => 'App',
         'encoding' => env('APP_ENCODING', 'UTF-8'),
-        'defaultLocale' => env('APP_DEFAULT_LOCALE', 'de_DE'),
-        'defaultTimezone' => env('APP_DEFAULT_TIMEZONE', 'UTC'),
+        'defaultLocale' => env('APP_DEFAULT_LOCALE', 'en_US'),
+        'fallbackLocale' => env('APP_FALLBACK_LOCALE', 'en_US'),
+
+        'defaultTimezone' => env('APP_DEFAULT_TIMEZONE', 'Europe/Berlin'),
         'base' => false,
         'dir' => 'src',
         'webroot' => 'webroot',

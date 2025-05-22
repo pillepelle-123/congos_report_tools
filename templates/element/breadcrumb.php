@@ -23,7 +23,7 @@
                         if ($info['controller'] === 'Users') {
                             if ($info['action'] === 'changePassword') {
                                 $lastPageTitle = 'My User Settings';
-                                $lastPageLink = ['controller' => 'Users', 'action' => 'settings', $this->Identity->get('id')];
+                                $lastPageLink = ['controller' => 'Users', 'action' => 'settings'];
                                 $backLinkText .= $delimiter . $this->Html->link($lastPageTitle, url: $lastPageLink);
                             }
                             if ($info['action'] === 'edit' || $info['action'] === 'view' || $info['action'] === 'add') {

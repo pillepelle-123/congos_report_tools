@@ -10,15 +10,12 @@ use Cake\Datasource\Exception\RecordNotFoundException;
  * Reports Controller
  *
  * //@property \App\Model\Table\ReportsTable $Reports
- * @property \Cake\ORM\Table $ReportsTable
  */
 class ReportsController extends AppController
 {
     public function initialize(): void
     {
         parent::initialize();
-        $this->ReportsTable = $this->fetchTable('Reports');
-
         $this->loadComponent('Crud');
 
     }

@@ -10,7 +10,6 @@ use Cake\Datasource\Exception\RecordNotFoundException;
  * Tools Controller
  *
  * @property \App\Model\Table\ToolsTable $Tools
- * @property \Cake\ORM\Table $ToolsTable
  * @property \App\Model\Entity\Tool $Tool
  */
 class ToolsController extends AppController
@@ -19,8 +18,6 @@ class ToolsController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-        $this->ToolsTable = $this->fetchTable('Tools');
-
         $this->loadComponent('Crud');
 
 
@@ -74,7 +71,7 @@ class ToolsController extends AppController
     public function selectReport()
     {
         // Neue Report-Instanz, die die den vom User ausgewählten Report repräsentiert
-        $report = $this->reports_table->newEmptyEntity();
+        $report = $this->fetchTable('Reports')->newEmptyEntity();
         //$tool_controller = $this->request->getQuery('tool');
         $tool = $this->request->getSession()->read('crt.tool');
         // debug($tool_controller);

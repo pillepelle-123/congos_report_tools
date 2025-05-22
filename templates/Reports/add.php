@@ -1,9 +1,44 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Report $report
+ * //@var \App\Model\Entity\Report $report
  */
 ?>
+<?php
+$fields = [
+    [
+        'name' => 'name', 'form_options' => ['type' => 'text']
+    ],
+    [
+        'name' => 'xml', 'form_options' => ['type' => 'textarea']
+    ],
+[
+        'name' => 'user_id',
+        'form_options' => [
+            
+            'type' => 'select',
+            'options' => array_map(fn($u) => $u->username, $users->toArray()) => array_map(fn($u) => $u->username, $users->toArray()), // array_map($users, 'username'), // $users->username,
+            'class' => 'input select',
+            ],
+    ],
+];
+
+echo $this->element('standard_add', [
+
+
+    // 'rel_entity_fields' => [
+    //     'Users' => ['username', 'created', 'modified'],
+    //     'Tools' => ['name']
+    //  ],
+    // 'rel_entity_pages' => [$user],
+    'entity' => $newEntity,
+    // 'instance_name' => $newEntity->username,
+    'fields' => $fields,
+    'editable' => true,
+
+]);
+?>
+<?php /*
 <div class="row">
     <aside class="column">
         <div class="side-nav">
@@ -45,3 +80,4 @@
         </div>
     </div>
 </div>
+*/ ?>

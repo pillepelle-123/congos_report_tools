@@ -697,7 +697,8 @@ input::file-selector-button {
     list-style: none;
     /* padding: 0; */
     /* gap: 0.5em; */
-    margin-bottom: 3.4rem;
+
+    /* margin-bottom: 3.4rem; */
 }
 
 
@@ -884,9 +885,7 @@ input::file-selector-button {
     padding-top: 40px;
 } */
 .container {
-    padding-bottom: 12rem;
-    padding-left: 1%;
-    padding-right: 1%;
+    padding: 0rem 1% 12rem 1%;
 }
 
 /* ######### Content ######### */
@@ -941,6 +940,11 @@ input::file-selector-button {
 }
 .content form {
     margin: 0;
+}
+
+/* Container der Login Maske muss etwas tiefer sein, damit Flash zu sehen ist */
+.login {
+    margin-top: 3.5rem;
 }
 
 /* ####### List Tables (Users, Reports etc. ######### */
@@ -1335,6 +1339,7 @@ input::file-selector-button {
         0 3px 6px 0 rgba(0, 0, 0, 0.07);
     margin-left: 5rem solid var(--color-message-info-border);
     margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
     cursor: pointer;
 }
 .message > .icon {

@@ -35,7 +35,6 @@ class AppController extends Controller
     public $helpers = ['Html', 'Form', 'Flash'];
     protected $identity;
     protected $my_user; // beinhaltet auch die Reports des Users
-    protected $all_users;
     protected $users_table;
     protected $all_reports;
     protected $reports_table;
@@ -78,53 +77,39 @@ class AppController extends Controller
         $this->identity = $this->request->getAttribute('identity') ?? [];
         
         if($this->identity) {
-            // Datenbank-Abfragen
-            $this->users_table = $this->fetchTable('Users');
-            // Alle User
-            $this->all_users = $this->users_table->find()
-                ->contain(['Reports']);
-            // Mein User
-            $this->my_user = $this->users_table->get($this->identity['id'], [
-                'contain' => ['Reports'],
-            ]);  
-            // Alle Reports
-            $this->reports_table = $this->fetchTable('Reports');
-            $this->all_reports = $this->reports_table->find()
-                ->contain(['Users']);
-            // Meine Reports
-            $this->my_reports = $this->reports_table->find()
+            $this->my_user = $this->fetchTable('Users')->get(
+                $this->identity['id'], 
+                ['contain' => ['Reports'], ]
+            );  
+            $this->my_reports = $this->fetchTable('Reports')->find()
                 ->where(['user_id' => $this->identity['id']])
                 ->contain(['Users']);
-            // Alle Apps
-            $this->tools_table = $this->fetchTable('Tools');
-            // $this->all_tools = $this->tools_table->find()
-            $modelName = $this->name; // z. B. 'Reports', 'Users', etc.
 
             $this->paginate = [
             'limit' => 10,
             'maxLimit' => 100
             ];
             // Für Pages gibt es keine Tabellen, daher wird hier übersprungen
-            $this->model_name = $this->name;
+            // $this->model_name = $this->name;
             if (\Cake\ORM\TableRegistry::getTableLocator()->exists($this->name)) {
                 $this->table = $this->{$this->name};
             }
         }
     }
 
-    public function index()
-    {
-        try {
-            $entities = $this->paginate($this->query);
-            // Dynamisch an die View übergeben
-            $this->set('entities', $entities);
-            // _serialize() gibt die Entity als JSON zurück, das ist perfekt für einen API-Call (dann ist das Template nicht nötig)
-            $this->set('_serialize', ['entities']);
-        } catch (RecordNotFoundException $e) {
-            $this->Flash->error('Keine Einträge gefunden.');
-            return $this->referer();
-        }
-    }
+    // public function index()
+    // {
+    //     try {
+    //         $entities = $this->paginate($this->query);
+    //         // Dynamisch an die View übergeben
+    //         $this->set('entities', $entities);
+    //         // _serialize() gibt die Entity als JSON zurück, das ist perfekt für einen API-Call (dann ist das Template nicht nötig)
+    //         $this->set('_serialize', ['entities']);
+    //     } catch (RecordNotFoundException $e) {
+    //         $this->Flash->error('Keine Einträge gefunden.');
+    //         return $this->referer();
+    //     }
+    // }
 
     // public function view($id = null)
     // {
@@ -253,12 +238,17 @@ class AppController extends Controller
         $this->set('breadcrumbs', $this->Breadcrumb->getBreadcrumbs(
             $this->request->getParam('controller'),
             $this->request->getParam('action'),
-            $this->request->getParam('plugin')
+            $this->request->getParam('plugin'),
+            
+
+            
         ));
     }
 
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
+        // parent::beforeFilter($event);
+
         $clickpath = $this->request->getSession()->read('clickpath', []);
         
         array_unshift($clickpath, [
@@ -267,6 +257,11 @@ class AppController extends Controller
         ]);
         
         $this->request->getSession()->write('clickpath', array_slice($clickpath, 0, 10));
+
+
+            
+    // debug($this->getRequest()->getAttribute('params'));
+    // debug($this->getRequest()->getAttribute('here'));
     }
 
 }

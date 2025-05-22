@@ -25,11 +25,31 @@ use Cake\Core\Configure;
             echo $this->User->addReCaptcha();
         }
         if (Configure::read('Users.RememberMe.active')) {
-            echo $this->Form->control(Configure::read('Users.Key.Data.rememberMe'), [
+            // echo $this->Form->control(Configure::read('Users.Key.Data.rememberMe'), [
+            //     'type' => 'checkbox',
+            //     'label' => __d('cake_d_c/users', 'Remember me'),
+            //     'checked' => Configure::read('Users.RememberMe.checked')
+            // ]);
+            ?>
+            
+            <?php // $this->Form->label('Remember me',  __(ucfirst('Remember me')), ['for' => Configure::read('Users.Key.Data.rememberMe')]);                    
+            ?>
+                <?= __d('cake_d_c/users', 'Remember me') ?>
+            <div class="input checkbox-container">
+                <?php // $this->Form->hidden(Configure::read('Users.Key.Data.rememberMe'), ['value' => 0]); ?>
+                <?= $this->Form->checkbox(Configure::read('Users.Key.Data.rememberMe'), [
                 'type' => 'checkbox',
                 'label' => __d('cake_d_c/users', 'Remember me'),
                 'checked' => Configure::read('Users.RememberMe.checked')
-            ]);
+                ]); ?>
+                <?php // label wird für Checkbox benötigt
+                echo $this->Form->label('Checkbox Click Area', '', [
+                        'class' => 'checkbox',
+                        'for' => Configure::read('Users.Key.Data.rememberMe'),
+                    ]); ?>
+                <span class="checkmark"></span>
+            </div>
+            <?php
         }
         ?>
         <?php

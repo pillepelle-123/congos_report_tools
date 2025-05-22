@@ -40,11 +40,13 @@ class PagesController extends AppController
         parent::initialize();
         //$this->Reports = $this->fetchTable('Users');
 
-        $this->user = $this->fetchTable('Users')->find()
-            ->where(['id' => $this->identity->get('id')])
-            ->contain(['Reports'])
-            ->first();
+        // $this->user = $this->fetchTable('Users')->find()
+        //     ->where(['id' => $this->identity->get('user')])
+        //     ->contain(['Reports'])
+        //     ->first();
 
+        // $this->user = $this->identity->getRequest()->getAttribute('user');
+        $this->user = $this->identity->getOriginalData();
             // $reports = $this->Reports->find()
             // ->where(['user_id' => $this->identity->get('id')])
             // ->orderBy(['modified' => 'DESC']);
@@ -63,10 +65,9 @@ class PagesController extends AppController
      */
     public function display(string ...$path): ?Response
 
-    {
+    {   
 
-
-        $reports = $this->user->get('reports');
+        // $reports = $this->user->get('reports');
             //->orderBy(['modified' => 'DESC']);
         // $reports = $this->Reports->find()
         //     ->where(['user_id' => $this->identity->get('id')])
@@ -76,8 +77,11 @@ class PagesController extends AppController
         // Inhalte an Templates übergeben
         //$this->set(compact('user', 'reports')); /alte Variante, klappt aber nicht direkt mit $this->user
         //$this->set(['user' => $this->user, 'reports' => $reports]);
-
+        if ($path === 'home') {
+            $this->Authorization->skipAuthorization();
+        }
         if (!$path) {
+            // $path = ['home'];
             return $this->redirect('/');
         }
         if (in_array('..', $path, true) || in_array('.', $path, true)) {
@@ -91,7 +95,7 @@ class PagesController extends AppController
         if (!empty($path[1])) {
             $subpage = $path[1];
         }
-        $this->set(compact('page', 'subpage', 'reports'));
+        $this->set(compact('page', 'subpage' /* , 'reports' */ ));
         $this->set(['title' => ucfirst($page), 'user' => $this->user]);
 
         try {

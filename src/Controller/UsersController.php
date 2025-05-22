@@ -163,16 +163,17 @@ class UsersController extends BaseUsersController
 
     public function settings()
     {
-        $users_table = $this->fetchTable('Users');
-        $my_user = $users_table->get($this->identity['id']);
+
+        $users_table = $this->Users;
+        $my_user = $this->identity->getOriginalData(); // $users_table->get($this->identity['id']);
 
         $this->Crud->setQuery();
         $this->set(['user' => $my_user, 'title' => 'My User Settings']);
         if (!$this->getRequest()->is(['patch', 'post', 'put'])) {
             return;
         }
-        $user = $this->users_table->patchEntity($my_user, $this->getRequest()->getData());
-        if ($this->users_table->save($user)) {
+        $user = $users_table->patchEntity($my_user, $this->getRequest()->getData());
+        if ($users_table->save($user)) {
             $this->Flash->success(__d('cake_d_c/users', 'Changes have been saved'));
             return;
         }
@@ -194,17 +195,17 @@ class UsersController extends BaseUsersController
                 // superuser editing any account's password
                 $user->set('id', $id);
                 $validatePassword = false;
-                $redirect = ['action' => 'settings', $userId];
+                $redirect = ['action' => 'settings'];
             } elseif (!$id || $id === $userId) {
                 // normal user editing own password
                 $user->set('id', $userId);
                 $validatePassword = true;
-                $redirect = ['action' => 'settings', $userId]; //Configure::read('Users.Profile.route');
+                $redirect = ['action' => 'settings']; //Configure::read('Users.Profile.route');
             } else {
                 $this->Flash->error(
                     __d('cake_d_c/users', 'Changing another user\'s password is not allowed'),
                 );
-                $this->redirect(['action' => 'settings', $userId]);
+                $this->redirect(['action' => 'settings']);
 
                 return;
             }

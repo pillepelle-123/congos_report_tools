@@ -101,6 +101,21 @@ $cakeDescription = 'Congos Report Tools';
         <li class="breadcrumb-container-item<?= $isCollapsible ? ' collapsed' : '' ?><?= $isLast ? ' breadcrumb-container-item-last' : '' ?>"
             <?= $isCollapsible ? 'data-collapsible="true"' : '' ?>>
             <?php // $lastCrumb = $crumb; ?>
+            <?php 
+                $link = array(
+                        'controller' => $crumb->controller,
+                        'action' => $crumb->action,
+                        'plugin' => filter_var($crumb->plugin, FILTER_VALIDATE_BOOLEAN)
+                );
+                // if ($crumb->plugin) {
+                //     $link['plugin'] = $crumb->plugin;
+                // }
+            ?>
+                <?= $isLast
+                    ? h($crumb->title)
+                    : $this->Html->link($crumb->title, 
+                    $link) ?>
+            <?php /*
             <?= $isLast
                 ? h($crumb->title)
                 : $this->Html->link($crumb->title, [
@@ -108,6 +123,7 @@ $cakeDescription = 'Congos Report Tools';
                     'controller' => $crumb->controller,
                     'action' => $crumb->action
                 ]) ?>
+            */ ?>
         </li>
     <?php endforeach; ?>
     <li class="breadcrumb-collapse-control hidden" title="Einklappen" onclick="toggleBreadcrumb(this)"><i class="bi bi-dash-circle"></i></li>
@@ -115,19 +131,36 @@ $cakeDescription = 'Congos Report Tools';
 </div> 
                 <div class="right">      
                 <?php
+
+
+
                 if ($secondLastCrumb) {
-                    $lastPageTitle = $secondLastCrumb->title;
-                    $lastPageLink = [
-                        'plugin' => $secondLastCrumb->plugin,
+
+                    $lastPageLink = array(
                         'controller' => $secondLastCrumb->controller,
-                        'action' => $secondLastCrumb->action
-                    ];
+                        'action' => $secondLastCrumb->action,
+                        'plugin' => filter_var($secondLastCrumb->plugin, FILTER_VALIDATE_BOOLEAN)
+                    );
+                    // if ($secondLastCrumb->plugin) {
+                    //     $link['plugin'] = $secondLastCrumb->plugin;
+                    // }
+
+                    $lastPageTitle = $secondLastCrumb->title;
+                    // $lastPageLink = [
+                    //     'plugin' => $secondLastCrumb->plugin,
+                    //     'controller' => $secondLastCrumb->controller,
+                    //     'action' => $secondLastCrumb->action
+                    // ];
+                    // debug($lastPageLink);
+                    // die();
                     echo $this->Html->Link('<i class="bi bi-arrow-left-circle"></i>', $lastPageLink, [
                         'escape' => false,
                         'title' => $lastPageTitle,
                         'class' => 'breadcrumb-back-link'
                     ]);
                     // echo $this->Html->image('icons/material_arrow_circle_back_292929.svg', array('title' => $lastPageTitle, 'url' => $lastPageLink, isset($sessionData) ? $sessionData : ''));
+                } else {
+                    echo '<i class="bi bi-arrow-left-circle" style="visibility: hidden"></i>';                    
                 }
                 //  $this->Html->link($lastCrumb->title, [
                 //     'plugin' => $crumb->plugin,

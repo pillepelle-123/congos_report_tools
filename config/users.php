@@ -18,4 +18,9 @@ return[
     //     // Uncomment the line below to use your custom users.php config file
     //     // 'config' => ['users'],
     // ],
+    'Auth' => [
+        'Authorization' => [
+            'localeAware' => false // Wichtig!
+        ]
+    ]
 ];
