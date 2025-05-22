@@ -66,6 +66,7 @@ return function (RouteBuilder $routes): void {
          * ...and connect the rest of 'Pages' controller's URLs.
          */
         $routes->connect('/pages/*', 'Pages::display');
+        $routes->connect('/user-settings', defaults: ['controller' => 'Users', 'action' => 'settings']);
 
         /*
          * Connect catchall routes for all controllers.
@@ -119,7 +120,6 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/add', ['controller' => 'Users', 'action' => 'add']);
         $routes->connect('/edit/*', ['controller' => 'Users', 'action' => 'edit']);
         $routes->connect('/delete/*', defaults: ['controller' => 'Users', 'action' => 'delete']);
-        $routes->connect('/settings/*', defaults: ['controller' => 'Users', 'action' => 'settings']);
         $routes->connect('/change-password/*', defaults: ['controller' => 'Users', 'action' => 'changePassword']);
 
         $routes->fallbacks();
