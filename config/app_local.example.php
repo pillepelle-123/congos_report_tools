@@ -25,7 +25,8 @@ return [
      *   You should treat it as extremely sensitive data.
      */
     'Security' => [
-        'salt' => env('SECURITY_SALT', '__SALT__'),
+        'salt' => env('SECURITY_SALT',
+        'f00ce0c07824e6419a893f8a11035e351c15a8961a5bf689cd4f7d53dc231ff5'),
     ],
 
     /*
@@ -44,10 +45,10 @@ return [
              */
             //'port' => 'non_standard_port_number',
 
-            'username' => 'my_app',
-            'password' => 'secret',
+            'username' => 'root',
+            'password' => 'root',
 
-            'database' => 'my_app',
+            'database' => 'congos_report_tools',
             /*
              * If not using the default 'public' schema with the PostgreSQL driver
              * set it here.
@@ -59,7 +60,22 @@ return [
              */
             'url' => env('DATABASE_URL', null),
         ],
-
+        'localhost' => [
+            'host' => 'localhost',
+            'port' => '3306',
+            'username' => 'root',
+            'password' => 'root',
+            'database' => 'congos_report_tools',
+            'url' => env('DATABASE_URL', null),
+        ],
+        'crt.pillepelle.de' => [
+            'host' => '10.35.47.212',
+            'port' => '3306',
+            'username' => 'k95763_crt_admin',
+            'password' => 'Hv*6qo50ve/_',
+            'database' => 'k95763_crt',
+            'url' => env('DATABASE_URL', null),
+        ],
         /*
          * The test connection is used during the test suite.
          */
