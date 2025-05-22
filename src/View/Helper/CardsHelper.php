@@ -46,7 +46,7 @@ class CardsHelper extends Helper
                 'header' => 'My User Settings', 
                 'description' => 'Ändern von Benutzerdaten, wie E-Mail, Passwort, Avatar...',
                 'controller' => 'Users',
-                'action' => 'settings/' . $identity_id,
+                'action' => 'settings',
                 'role' => 'user',
                 'icon' => '/img/icons/user_settings_ffffff.svg',
             ],

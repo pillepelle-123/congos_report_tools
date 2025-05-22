@@ -67,7 +67,7 @@ return function (RouteBuilder $routes): void {
          */
         $routes->connect('/pages/*', 'Pages::display');
         $routes->connect('/user-settings', defaults: ['controller' => 'Users', 'action' => 'settings']);
-
+        $routes->connect('/user-settings/change-password', defaults: ['controller' => 'Users', 'action' => 'changePassword']);
         /*
          * Connect catchall routes for all controllers.
          *
@@ -120,7 +120,7 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/add', ['controller' => 'Users', 'action' => 'add']);
         $routes->connect('/edit/*', ['controller' => 'Users', 'action' => 'edit']);
         $routes->connect('/delete/*', defaults: ['controller' => 'Users', 'action' => 'delete']);
-        $routes->connect('/change-password/*', defaults: ['controller' => 'Users', 'action' => 'changePassword']);
+
 
         $routes->fallbacks();
     });

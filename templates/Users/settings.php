@@ -30,7 +30,7 @@
                     //echo'<h3>'.h($user->username).'</h3>';
                     echo $this->Form->control('email');
                     echo '<label>'.__('Password').'</label>';
-                    echo '<p>'.$this->Html->link(__('Change Password'), ['controller' => 'Users', 'action' => 'changePassword', $user->id]).'</p>';                    
+                    echo '<p>'.$this->Html->link(__('Change Password'), ['controller' => 'Users', 'action' => 'changePassword']).'</p>';                    
                     echo $this->Form->control('first_name');
                     echo $this->Form->control('last_name');
                     echo '<label>'.__('Role').'</label>';
