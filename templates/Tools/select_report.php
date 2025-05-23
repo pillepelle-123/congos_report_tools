@@ -1,4 +1,5 @@
 <?php
+use Cake\Utility\Inflector;
 /**
  * @var \App\View\AppView $this
  */
@@ -21,6 +22,33 @@
             </div>
         </div>
 
+    </div>
+    <div class="actions-container">
+        <div class="links">
+            <?php // $this->Html->link(__('Related Reports'), '#reports', ['class' => 'side-nav-item'])
+            // debug($entities->pagingParams()['alias']);
+            // if(count($entities) > 0) {
+            // $model_name_plural = $entities->pagingParams()['alias'];
+            // $model_name_singular = Inflector::singularize($model_name_plural);
+
+            // $model_name_singular = (new \ReflectionClass($entities->toArray()[0]))->getShortName(); // Singular
+            // $model_name_plural = Inflector::pluralize($model_name_singular);
+
+            // debug($this->getRequest()->getParam('controller'));
+            // die();
+            // if($editable ? $editable : 1==2 ) {
+
+            $referer = $this->RefererParam->create( $this->getRequest()->getParam('controller'), $this->getRequest()->getParam('action'));
+            // debug($r);
+            // die();
+
+                echo $this->Html->link('<i class="bi bi-plus-square"></i>&nbsp; Add Report', ['controller' => 'Reports', 'action' => 'add', '?' => ['referer' =>  $referer]], ['title' => 'Add Report', 'class' => 'side-nav-item', 'escape' => false]); // /*'?' => ['template' => $this->getTemplate()]*
+            // }
+            // }
+
+            // echo $this->Html->link('<i class="bi bi-arrow-left-square"></i>&nbsp;' . $model_name_plural, ['controller' => $model_name_plural, 'action' => 'index'], ['title' => 'List of ' . $model_name_plural, 'class' => 'side-nav-item', 'escape' => false]);
+            ?>
+        </div>
     </div>
     <div class="body" >
     <?= $this->Form->create(null, [

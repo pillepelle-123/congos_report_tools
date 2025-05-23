@@ -13,8 +13,13 @@ use Cake\Utility\Inflector;
 <div class="actions-container">
     <div class="links">
         <?php // $this->Html->link(__('Related Reports'), '#reports', ['class' => 'side-nav-item'])
-        $model_name_singular = (new \ReflectionClass($entities->toArray()[0]))->getShortName(); // Singular
-        $model_name_plural = Inflector::pluralize($model_name_singular);
+        // debug($entities->pagingParams()['alias']);
+        // if(count($entities) > 0) {
+        $model_name_plural = $entities->pagingParams()['alias'];
+        $model_name_singular = Inflector::singularize($model_name_plural);
+
+        // $model_name_singular = (new \ReflectionClass($entities->toArray()[0]))->getShortName(); // Singular
+        // $model_name_plural = Inflector::pluralize($model_name_singular);
 
         $link_addon = '';
         if ($model_name_singular == 'Report') {
@@ -24,6 +29,8 @@ use Cake\Utility\Inflector;
         if($editable ? $editable : 1==2 ) {
             echo $this->Html->link('<i class="bi bi-plus-square"></i>&nbsp; Add ' . $model_name_singular, ['controller' => $model_name_plural, 'action' => 'add'], ['title' => 'Add ' . $model_name_singular, 'class' => 'side-nav-item', 'escape' => false]); // /*'?' => ['template' => $this->getTemplate()]*
         }
+        // }
+
         // echo $this->Html->link('<i class="bi bi-arrow-left-square"></i>&nbsp;' . $model_name_plural, ['controller' => $model_name_plural, 'action' => 'index'], ['title' => 'List of ' . $model_name_plural, 'class' => 'side-nav-item', 'escape' => false]);
         ?>
     </div>
@@ -76,16 +83,16 @@ use Cake\Utility\Inflector;
                     <?php foreach ($fields as $field ) : ?>
                         <?php if ($field[1] === 'user' || $field[1] === $this->Identity->get('role')) : ?>
                         <!-- Für related Entities. Notation, z.B. "user.username" -->
-                        <?php if (str_contains($field[0], '.')) : ?>
-                            <?php
-                                $rel_entity = explode('.', $field[0])[0]; 
-                                $rel_field = explode('.', $field[0])[1]; 
-                                $rel_controller_name = Inflector::pluralize($rel_entity); // Plural
-                            ?>
-                            <td><?= $this->Html->link($entity->{$rel_entity}->{$rel_field}, ['controller' => $rel_controller_name, 'action' => 'view', $entity->{$rel_entity}->id]) ?></td>
-                        <?php else: ?>
-                            <td><?= h($entity->{$field[0]} . ' ') ?></td>
-                        <?php endif; ?>
+                            <?php if (str_contains($field[0], '.')) : ?>
+                                <?php
+                                    $rel_entity = explode('.', $field[0])[0]; 
+                                    $rel_field = explode('.', $field[0])[1]; 
+                                    $rel_controller_name = Inflector::pluralize($rel_entity); // Plural
+                                ?>
+                                <td><?= $this->Html->link($entity->{$rel_entity}->{$rel_field}, ['controller' => $rel_controller_name, 'action' => 'view', $entity->{$rel_entity}->id]) ?></td>
+                            <?php else: ?>
+                                <td><?= h($entity->{$field[0]} . ' ') ?></td>
+                            <?php endif; ?>
                         <?php endif; ?>
                     <?php endforeach; ?>
 

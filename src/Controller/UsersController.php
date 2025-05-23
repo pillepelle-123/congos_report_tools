@@ -46,11 +46,11 @@ class UsersController extends BaseUsersController
         }
 
         $this->loadComponent('FormProtection');
-        if ($this->request->getParam('_csrfToken') === false) {
+        if ($this->getRequest()->getParam('_csrfToken') === false) {
             $this->loadComponent('Csrf');
         }
         // $this->loadComponent('Crud');
-        // $this->Crud->initialize(['model_name' => '', 'request' => $this->request]);
+        // $this->Crud->initialize(['model_name' => '', 'request' => $this->getRequest()]);
 
         $this->UsersTable = $this->getUsersTable();
 
@@ -119,7 +119,7 @@ class UsersController extends BaseUsersController
         // CrudComponent aufrufrufen
         $newEntity = $this->Crud->add();
 
-        if ($this->request->is('post')) {
+        if ($this->getRequest()->is('post')) {
             return $this->redirect(['action' => 'index']);
         }
         $this->set('newEntity', $newEntity);
@@ -140,7 +140,7 @@ class UsersController extends BaseUsersController
         $this->Crud->setQuery();
         $entity = $this->Crud->edit($id);
         $this->set(compact('entity'));
-        if ($this->request->is(['patch', 'post', 'put'])) {
+        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
             // return $this->redirect(['action' => 'view', $id]);
         }
     }
@@ -155,7 +155,7 @@ class UsersController extends BaseUsersController
     public function delete($id = null)
     {
 
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
         $this->Crud->delete($id);
 
         return $this->redirect(url: $this->referer());

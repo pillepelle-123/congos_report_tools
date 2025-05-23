@@ -22,6 +22,8 @@ use Cake\ORM\Entity;
 use Cake\ORM\Table;
 use Cake\ORM\Query\SelectQuery;
 
+use function PHPSTORM_META\map;
+
 /**
  * Application Controller
  *
@@ -65,16 +67,16 @@ class AppController extends Controller
         $this->loadComponent('Flash');
         $this->loadComponent('Breadcrumb');
         $this->loadComponent('Crud', [
-            'model_name' => $this->name,
-            'request' => $this->request
+            'model_name' => $this->getName(),
+            'request' => $this->getRequest()
         ]);
-        // $this->Crud->initialize(['model_name' => $this->name, 'request' => $this->request]);
+        // $this->Crud->initialize(['model_name' => $this->getName(), 'request' => $this->getRequest()]);
 
         
         $this->viewBuilder()->setHelpers(helpers: ['Authentication.Identity']); // wichtig für Views!
         // $this->viewBuilder()->setHelpers(helpers: ['SessionLink']); // wichtig für Views!
 
-        $this->identity = $this->request->getAttribute('identity') ?? [];
+        $this->identity = $this->getRequest()->getAttribute('identity') ?? [];
         
         if($this->identity) {
             $this->my_user = $this->fetchTable('Users')->get(
@@ -90,9 +92,9 @@ class AppController extends Controller
             'maxLimit' => 100
             ];
             // Für Pages gibt es keine Tabellen, daher wird hier übersprungen
-            // $this->model_name = $this->name;
-            if (\Cake\ORM\TableRegistry::getTableLocator()->exists($this->name)) {
-                $this->table = $this->{$this->name};
+            // $this->model_name = $this->getName();
+            if (\Cake\ORM\TableRegistry::getTableLocator()->exists($this->getName())) {
+                $this->table = $this->{$this->getName()};
             }
         }
     }
@@ -113,7 +115,7 @@ class AppController extends Controller
 
     // public function view($id = null)
     // {
-    //     $modelName = $this->name; // z. B. 'Reports', 'Users', etc.
+    //     $modelName = $this->getName(); // z. B. 'Reports', 'Users', etc.
     //     // $this->table // bei Bedarf: Tabelle laden
 
     //     try {
@@ -132,9 +134,9 @@ class AppController extends Controller
     // public function add() {
     //     $table = $this->getTable();
     //     $newEntity = $table->newEmptyEntity();
-    //     if ($this->request->is('post')) {
+    //     if ($this->getRequest()->is('post')) {
     //         // $A = $this->Reports;
-    //         $newEntity = $table->patchEntity($newEntity, $this->request->getData());
+    //         $newEntity = $table->patchEntity($newEntity, $this->getRequest()->getData());
     //         if ($this->Reports->save($newEntity)) {
     //             $this->Flash->success(__('The report has been saved.'));
     //         } else {
@@ -152,16 +154,16 @@ class AppController extends Controller
 
     public function getTable(): Table 
     {
-        return $this->{$this->name};
+        return $this->{$this->getName()};
     }
 
     // public function setQuery(array $contain, bool $only_user_data): void
     // {
-    //     // $this->query = $this->{$this->name}->find('all')
+    //     // $this->query = $this->{$this->getName()}->find('all')
     //     //     ->where($only_user_data ? ['user_id' => $this->identity['id']] : ['1' => '1'])
     //     //     ->contain($contain);
 
-    //     $this->query = $this->{$this->name}->find('all')
+    //     $this->query = $this->{$this->getName()}->find('all')
     //         ->where($only_user_data ? ['user_id' => $this->identity['id']] : ['1' => '1'])
     //         ->contain($contain);
     // }
@@ -200,8 +202,8 @@ class AppController extends Controller
         // Auto-generate title for Templates if not already set
         if (!$this->viewBuilder()->getVar('title')) {
 
-            $controller = $this->request->getParam('controller');
-            $action = $this->request->getParam('action');
+            $controller = $this->getRequest()->getParam('controller');
+            $action = $this->getRequest()->getParam('action');
             if ($action !== 'index') {
                 $controller = substr($controller, 0, -1);
             } else {
@@ -222,9 +224,9 @@ class AppController extends Controller
         // // Versuchen, den aktuellen Menüpunkt zu finden
         // $current = $menuNodes->find()
         //     ->where([
-        //         'controller' => $this->request->getParam('controller'),
-        //         'action' => $this->request->getParam('action'),
-        //         //'plugin' => $this->request->getParam('plugin') ? $this->request->getParam('plugin') : '' // kann auch null sein
+        //         'controller' => $this->getRequest()->getParam('controller'),
+        //         'action' => $this->getRequest()->getParam('action'),
+        //         //'plugin' => $this->getRequest()->getParam('plugin') ? $this->getRequest()->getParam('plugin') : '' // kann auch null sein
         //     ])
         //     ->first();
 
@@ -236,9 +238,9 @@ class AppController extends Controller
 
         // $this->set('breadcrumbs', $breadcrumbs);
         $this->set('breadcrumbs', $this->Breadcrumb->getBreadcrumbs(
-            $this->request->getParam('controller'),
-            $this->request->getParam('action'),
-            $this->request->getParam('plugin'),
+            $this->getRequest()->getParam('controller'),
+            $this->getRequest()->getParam('action'),
+            $this->getRequest()->getParam('plugin'),
             
 
             
@@ -249,14 +251,22 @@ class AppController extends Controller
     {
         // parent::beforeFilter($event);
 
-        $clickpath = $this->request->getSession()->read('clickpath', []);
+        $clickpath = $this->getRequest()->getSession()->read('clickpath', []);
         
         array_unshift($clickpath, [
-            'url' => $this->request->getUri()->getPath(),
-            'time' => time()
+            'url' => $this->getRequest()->getUri()->getPath(),
+            'plugin' => $this->getRequest()->getParam('plugin'),
+            'controller' => $this->getRequest()->getParam('controller'),
+            'action' => $this->getRequest()->getParam('action'),
+            'pass' => $this->getRequest()->getParam('pass'),
+            'query' => serialize($this->getRequest()->getQuery()), // Header-Parameter der URL
+            'time' => time(), 
+            'data' => serialize($this->getRequest()->getData()), // POST-Parameter der URL
+            'title' => $title = $this->viewBuilder()->getOption('title')
         ]);
+        // debug($clickpath);
         
-        $this->request->getSession()->write('clickpath', array_slice($clickpath, 0, 10));
+        // $this->getRequest()->getSession()->write('clickpath', array_slice($clickpath, 0, 10));
 
 
             

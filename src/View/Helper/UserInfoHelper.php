@@ -21,7 +21,7 @@ class UserInfoHelper extends Helper
 
         $this->identity = $this->getView()->getRequest()->getAttribute('identity');
 
-        //$identity = $this->request->getAttribute('identity');
+        //$identity = $this->getRequest()->getAttribute('identity');
 
         $this->user = \Cake\ORM\TableRegistry::getTableLocator()->get('Users')->find()
         ->where(['id' => $this->identity->get('id')])

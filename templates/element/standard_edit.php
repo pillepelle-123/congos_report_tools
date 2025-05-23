@@ -62,7 +62,7 @@ use Cake\Utility\Inflector;
 
             <?php endforeach; ?>
         </fieldset>
-        <?= $this->Html->Link('Cancel', $this->request->referer() ? $this->request->referer() : ['controller' => $model_name_plural, 'action' => 'view', $entity->id], ['type' => 'button', 'class' => 'button', 'title' => 'Cancel']); ?>
+        <?= $this->Html->Link('Cancel', $this->getRequest()->referer() ? $this->getRequest()->referer() : ['controller' => $model_name_plural, 'action' => 'view', $entity->id], ['type' => 'button', 'class' => 'button', 'title' => 'Cancel']); ?>
         <?= $this->Form->button(__('Save')) ?>
         <?= $this->Form->end() ?>
     </div>

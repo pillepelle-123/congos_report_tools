@@ -50,6 +50,11 @@ $cakeDescription = 'Congos Report Tools';
 
 </head>
 <body>
+<!-- 
+ #############################################
+ ################# Top Nav ###################
+ #############################################
+-->
     <div class="top-nav-container">
         <nav class="top-nav">
             <div class="top-nav-title">
@@ -62,7 +67,7 @@ $cakeDescription = 'Congos Report Tools';
                     <ul id="user-menu">
                         <li><i style="font-size: 22px" class="bi bi-person-circle"></i>&nbsp;
                         <?php echo $this->Identity->get('username'); ?></li>
-                        <li><?php echo $this->Html->link('Logout', url: ['controller' => 'Users', 'action' => 'logout']); ?></li>
+                        <li><?php echo $this->Html->link('Logout', url: ['plugin' => false, 'controller' => 'Users', 'action' => 'logout']); ?></li>
                         <li>
                             <?php  /*$this->Html->link(
                         $user->username, //$this->Avatar->display($user),
@@ -77,6 +82,11 @@ $cakeDescription = 'Congos Report Tools';
             
         </nav>
     </div>
+<!-- 
+ #############################################
+ ################ Breadcrumb #################
+ #############################################
+-->
     <?php if ($this->Identity->isLoggedIn()): ?>
     <div class="breadcrumb-container">
         <div class="left">
@@ -92,6 +102,47 @@ $cakeDescription = 'Congos Report Tools';
             if ($isSecondLast) {
                 $secondLastCrumb = $crumb;
             }
+
+
+            if ($crumb->controller === 'Reports' && $crumb->action === 'index') {
+                $clickpath_array = $this->getRequest()->getSession()->read('clickpath');
+                foreach ($clickpath_array as $key => $value) {
+                    if ($value['controller'] === 'Reports' && str_contains($value['action'], 'index')) {
+                        // debug($value['action']);
+                        $crumb->action = $value['action'];
+                        $crumb->title = $value['action'] === 'indexAdmin' ? 'Admin: Reports' : 'My Reports';
+                        break;
+                    }
+                }
+            }
+
+
+            // if ($crumb->controller === 'Reports' && $crumb->action === 'index') { 
+                // if($clickpath_array['action'] === 'index' || $clickpath_array['action'] === 'indexAdmin') {
+                //     foreach ($clickpath_array as $key => $value) {
+                //         if 
+                //         if ($value['controller'] === 'Reports' && str_contains($value['action'], 'index') ||str_contains($value['action'], 'indexAdmin')) {
+                //             debug($value['action']);
+                //         }
+                //     }
+                // }
+                
+                // $clickpath_array = $this->getRequest()->getSession()->read('clickpath');
+                // foreach ($clickpath_array as $key => $value) {
+                //     if ($value['controller'] === 'Reports' && str_contains($value['action'], 'index')) {
+                //         array_search('index', $clickpath)
+                //         $clickpath = $this->getRequest()->getSession()->read('clickpath');
+                //         $clickpath->
+
+                //         debug($this->getRequest()->getSession()->read('clickpath')[1]['url']);
+                //     }
+                // }
+                
+
+                // [1]['action']);
+                // debug(array_search('index', $clickpath_array));
+            // }
+
         ?>
 
         <?php if ($i === 1 && $total > 3): ?>
@@ -228,6 +279,11 @@ $cakeDescription = 'Congos Report Tools';
         <?php endif; ?>
         */ ?>
         <!-- Breadcrumb Navi -------------------------------------- -->
+<!-- 
+ #############################################
+ ################### Main ####################
+ #############################################
+-->         
     <main class="main">
         <div class="container">
             <?php
@@ -241,6 +297,11 @@ $cakeDescription = 'Congos Report Tools';
             <?= $this->fetch('content') ?>
         </div>
     </main>
+<!-- 
+ #############################################
+ ################## Footer ###################
+ #############################################
+-->   
     <footer>
     </footer>
         <script>

@@ -18,14 +18,20 @@
 
 $fields = [
     [
-        'name' => 'username', 'form_options' => ['type' => 'text']
+        'name' => 'username', 'form_options' => ['type' => 'text'], 'access' => 'admin'
     ],
     [
-        'name' => 'email', 'form_options' => ['type' => 'text']
+        'name' => 'email', 'form_options' => ['type' => 'text'], 'access' => 'admin'
     ],
-    ['name' => 'password', 'form_options' => ['type' => 'text']],
-    ['name' => 'first_name', 'form_options' => ['type' => 'text']],
-    ['name' => 'last_name', 'form_options' => ['type' => 'text']],
+    [
+        'name' => 'password', 'form_options' => ['type' => 'password'], 'access' => 'admin'
+    ],
+    [
+        'name' => 'first_name', 'form_options' => ['type' => 'text'], 'access' => 'admin'
+    ],
+    [
+        'name' => 'last_name', 'form_options' => ['type' => 'text'], 'access' => 'admin'
+    ],
     [
         'name' => 'role',
         'form_options' => [
@@ -35,7 +41,8 @@ $fields = [
                 'user' => __('User'),
             ],
             'class' => 'input select',
-            ],
+        ],
+        'access' => 'admin'
     ],
     [
         'name' => 'active',
@@ -47,6 +54,7 @@ $fields = [
             'autocomplete' => 'off',
             'label' => false,
         ],
+        'access' => 'admin'
     ],
     
 

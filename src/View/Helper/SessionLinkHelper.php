@@ -23,7 +23,7 @@ class SessionLinkHelper extends Helper
             '?' => $sessionData,
             '_redirect' => $url
         ];
-        // $this->request->getSession()->write($sessionData->get('tool'));
+        // $this->getRequest()->getSession()->write($sessionData->get('tool'));
         return $this->Html->link($title, ['controller' => 'Tools', 'action' => 'storeTool', '?' => $sessionData]);
     }
 
@@ -44,7 +44,7 @@ class SessionLinkHelper extends Helper
             '?' => $sessionData,
             '_redirect' => $url
         ];
-        // $this->request->getSession()->write($sessionData->get('tool'));
+        // $this->getRequest()->getSession()->write($sessionData->get('tool'));
         return $this->Html->image($image_path, ['controller' => 'Tools', 'action' => 'storeTool', '?' => $sessionData]);
     }
 }

@@ -34,7 +34,7 @@
 //     ['controller' => 'Tools', 'action' => 'storeTool'],
 //     ['tool' => 'QueryExpander']    ) 
     ?>
-<!-- $info = $this->UserInfo->getInfo($this, $this->request); -->
+<!-- $info = $this->UserInfo->getInfo($this, $this->getRequest()); -->
 
 
  </div>

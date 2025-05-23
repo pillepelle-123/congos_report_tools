@@ -27,18 +27,18 @@ class CrudComponent extends Component {
 
     // protected $_defaultConfig = [
     //     'model_name' => $this->model_name,
-    //     'request' => $this->request,
+    //     'request' => $this->getRequest(),
     // ];
 
     // public function initialize(): void {
     //     $this->model_name = $config['model_name'] ?? '';
-    //     $this->request = $config['request'] ?? '';
+    //     $this->getRequest() = $config['request'] ?? '';
     // }
 
     // public function initialize(array $config): void {
     //     parent::initialize($config);
     //     $this->model_name = $config['model_name'] ?? '';
-    //     $this->request = $config['request'] ?? '';
+    //     $this->getRequest() = $config['request'] ?? '';
     // }
 
     public function __construct(ComponentRegistry $registry, array $config = []) 
@@ -62,6 +62,7 @@ class CrudComponent extends Component {
     }
 
     public function add(/*$entity_name, $request*/): EntityInterface {
+
         $request = $this->config['request'];
         $model_name = $this->config['model_name'];
         $table = \Cake\ORM\TableRegistry::getTableLocator()->get($model_name);

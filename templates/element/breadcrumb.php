@@ -10,7 +10,7 @@
                         // debug($this);
                         // debug($this->plugin);
                         // die();
-                        $info = $this->UserInfo->getInfo($this, $this->request);
+                        $info = $this->UserInfo->getInfo($this, $this->getRequest());
 
                         //debug($info);
                         //die();
@@ -34,7 +34,7 @@
                         }
                         if ($info['controller'] === 'Reports') {
                             if ($info['action'] === 'edit' || $info['action'] === 'view' || $info['action'] === 'add') {
-                                if($this->request->getSession()->read('clickpath')[1]['url'] === '/reports/list-admin') {
+                                if($this->getRequest()->getSession()->read('clickpath')[1]['url'] === '/reports/list-admin') {
                                     $lastPageTitle = 'Admin: Reports';
                                     $lastPageLink = ['controller' => 'Reports', 'action' => 'indexAdmin'];
                                 } else {
@@ -98,7 +98,7 @@
 
 
                         //     if ($info['action'] === 'edit' || $info['action'] === 'view' || $info['action'] === 'add') {
-                        //         if($this->request->getSession()->read('clickpath')[1]['url'] === '/reports/list-admin') {
+                        //         if($this->getRequest()->getSession()->read('clickpath')[1]['url'] === '/reports/list-admin') {
                         //             $lastPageTitle = 'Admin: Reports';
                         //             $lastPageLink = ['controller' => 'Reports', 'action' => 'indexAdmin'];
                         //         } else {

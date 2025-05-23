@@ -164,15 +164,16 @@ return [
         ],
         [
             'role' => '*',
+            'plugin' => false,
             'controller' => 'Tools',
-            'action' => ['view', 'edit', 'index'],
+            'action' => ['index', 'view', 'edit', 'index', 'selectTool', 'storeTool', 'selectReport', 'processSelection'],
         ],
-        // [
-        //     'role' => '*',
-        //     //'plugin'=> 'QueryExpander',
-        //     'controller' => 'QueryExpander',
-        //     'action' => ['queries', 'index'],
-        // ],
+        [
+            'role' => '*',
+            'plugin'=> 'QueryExpander',
+            'controller' => 'QueryExpander',
+            'action' => ['queries', 'data', 'result', 'resultDownload'],
+        ],
 
     ]
 ];

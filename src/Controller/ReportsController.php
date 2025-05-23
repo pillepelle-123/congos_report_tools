@@ -90,13 +90,22 @@ class ReportsController extends AppController
     public function add()
     {
         // $type = $this->request->getParam('type');
-        $type = $this->request->getQuery('type');
+        $type = $this->getRequest()->getQuery('type');
         $users = $this->fetchTable('Users')->find('all');
         // CrudComponent aufrufrufen
         $newEntity = $this->Crud->add([]);
 
-        if ($this->request->is('post')) {
-            return $this->redirect(['action' => 'index']);
+        if($this->getRequest()->getQuery('referer')) {
+            list($controller, $action) = explode('.', $this->getRequest()->getQuery('referer'));
+        }
+
+        if ($this->getRequest()->is('post')) {
+            if  (!empty($controller) && !empty($action)) {
+                return $this->redirect(['controller' => $controller, 'action' => $action]);
+            } else {
+                return $this->redirect(['action' => 'index']);
+            }
+            
         }
 
         $this->set(compact('newEntity', 'users', 'type'));
@@ -117,13 +126,13 @@ class ReportsController extends AppController
         $users = $this->fetchTable('Users')->find('all');
 
         $this->set(compact('entity', 'users'));
-        if ($this->request->is(['patch', 'post', 'put'])) {
+        if ($this->getRequest()->is(['patch', 'post', 'put'])) {
             return $this->redirect(['action' => 'view', $id]);
         }
         // $report = $this->reports_table->get($id, contain: ['Users']);
-        // if ($this->request->is(['patch', 'post', 'put'])) {
-        //     // debug($this->request->getData());
-        //     $report = $this->reports_table->patchEntity($report, $this->request->getData());
+        // if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+        //     // debug($this->getRequest()->getData());
+        //     $report = $this->reports_table->patchEntity($report, $this->getRequest()->getData());
         //     if ($this->reports_table->save($report)) {
         //         $this->Flash->success(__('The report has been saved.'));
 
@@ -144,7 +153,7 @@ class ReportsController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
         $this->Crud->delete($id);
 
         return $this->redirect(url: $this->referer());

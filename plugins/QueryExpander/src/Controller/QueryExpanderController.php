@@ -24,15 +24,15 @@ class QueryExpanderController extends AppController
 
     public function queries()  // Umbenannt von queryExpander()
     {
-        $method =  ($this->request->getMethod());
+        $method =  ($this->getRequest()->getMethod());
         $user = $this->my_user;
-        $report = $this->request->getSession()->read('crt.report');
-        $tool = $this->request->getSession()->read('crt.tool');
-        // $this->request->getSession()->delete('crt.selectedQuery');
+        $report = $this->getRequest()->getSession()->read('crt.report');
+        $tool = $this->getRequest()->getSession()->read('crt.tool');
+        // $this->getRequest()->getSession()->delete('crt.selectedQuery');
 
-        // debug($this->request->getSession()->read('clickpath')[1]['url']);
+        // debug($this->getRequest()->getSession()->read('clickpath')[1]['url']);
                 
-            //debug($this->request->getSession()->read('crt.report'));
+            //debug($this->getRequest()->getSession()->read('crt.report'));
 
         $content = $report->xml;
 
@@ -63,10 +63,10 @@ class QueryExpanderController extends AppController
                 $error_message = implode(', ', $error_messages);
 
                 // Redirect zur selben Seite select-report
-                if($this->request->getSession()->read('clickpath')[1]['url'] === '/tools/process-selection') {
+                // if($this->getRequest()->getSession()->read('clickpath')[1]['url'] === '/tools/process-selection') {
                     $this->Flash->error('Fehler beim Parsen der XML-Datei: ' . $error_message);
-                }
-                return $this->redirect('/tools/store?tool='. $this->getPlugin());
+                // }
+                return $this->redirect(['plugin' => false, 'controller' => 'Tools', 'action' => 'selectReport']);
             };
 
             //Namespace-unabhängige XPath-Abfrage nach "Query"-Elementen
@@ -100,7 +100,8 @@ class QueryExpanderController extends AppController
 
 
             if (empty($queries)) {
-                die("Keine Queries in der XML-Datei gefunden. Ist dies eine gültige Congos Report Definition?");
+                $this->Flash->error('Keine Queries in der XML-Datei gefunden. Ist dies eine gültige Congos Report Definition?');
+                return $this->redirect(['plugin' => false, 'controller' => 'Tools', 'action' => 'selectReport']);
             }
             
             $this->set(compact('queries'));
@@ -117,14 +118,14 @@ class QueryExpanderController extends AppController
 
     public function data()  // Umbenannt von queryExpanderDataItems()
     {
-        // $this->request->allowMethod(['get', 'post']);
+        // $this->getRequest()->allowMethod(['get', 'post']);
         $user = $this->my_user;
-        $report = $this->request->getSession()->read('crt.report');
-        $tool = $this->request->getSession()->read('crt.tool');
-        $selectedQuery = $this->request->getSession()->read('crt.selectedQuery');
+        $report = $this->getRequest()->getSession()->read('crt.report');
+        $tool = $this->getRequest()->getSession()->read('crt.tool');
+        $selectedQuery = $this->getRequest()->getSession()->read('crt.selectedQuery');
 
-        if ($this->request->is('post')) {
-            $data = $this->request->getData();  
+        if ($this->getRequest()->is('post')) {
+            $data = $this->getRequest()->getData();  
 
             if(!isset($data['selected_query'])) {
                 $this->Flash->warning('Bitte wähle eine Query aus');
@@ -152,16 +153,16 @@ class QueryExpanderController extends AppController
             $dataItems = QueryExpanderUtility::extractDataItems($xml);
     #
             $this->set(compact('user', 'report', 'selectedQuery', 'dataItems'));
-            $this->request->getSession()->write(['crt.selectedQuery'=> $selectedQuery]);
-            $this->request->getSession()->write(['crt.dataItems'=> $dataItems]);
+            $this->getRequest()->getSession()->write(['crt.selectedQuery'=> $selectedQuery]);
+            $this->getRequest()->getSession()->write(['crt.dataItems'=> $dataItems]);
 
             //$this->Flash->error('Ungültiger Zugriff');
             //return $this->redirect(['action' => 'queryExpander']);
         } else {
             $user = $this->my_user;
-            $report = $this->request->getSession()->read('crt.report');
-            $selectedQuery = $this->request->getSession()->read('crt.selectedQuery');
-            $dataItems = $this->request->getSession()->read('crt.dataItems');
+            $report = $this->getRequest()->getSession()->read('crt.report');
+            $selectedQuery = $this->getRequest()->getSession()->read('crt.selectedQuery');
+            $dataItems = $this->getRequest()->getSession()->read('crt.dataItems');
         }
         $this->set('title', 'Data Item Settings');
         $this->set(compact('tool', 'user', 'report', 'selectedQuery', 'dataItems'));
@@ -172,23 +173,23 @@ class QueryExpanderController extends AppController
     public function result()  // Umbenannt von queryExpanderResult()
     {
         $user = $this->my_user;
-        //$session = $this->request->getSession();
+        //$session = $this->getRequest()->getSession();
         //$dataItems = $session->read('crt.dataItems');
-        $report = $this->request->getSession()->read('crt.report');
-        $tool = $this->request->getSession()->read('crt.tool');
-        $modifiedXmlContent = $this->request->getSession()->read('crt.modifiedXmlContent');
-        $selectedQuery = $this->request->getSession()->read('crt.selectedQuery');
+        $report = $this->getRequest()->getSession()->read('crt.report');
+        $tool = $this->getRequest()->getSession()->read('crt.tool');
+        $modifiedXmlContent = $this->getRequest()->getSession()->read('crt.modifiedXmlContent');
+        $selectedQuery = $this->getRequest()->getSession()->read('crt.selectedQuery');
         
-        // $selectedQuery = $this->request->getSession()->read('crt.selectedQuery');
+        // $selectedQuery = $this->getRequest()->getSession()->read('crt.selectedQuery');
 
         $xml = $report->xml;
 
  
-        if ($this->request->is('post') /* && $this->request->getQuery('form') === 'form_data_items' */ ) {
+        if ($this->getRequest()->is('post') /* && $this->getRequest()->getQuery('form') === 'form_data_items' */ ) {
         
             // Daten aus dem Formular
-            $data = $this->request->getData();
-            // $query = $this->request->getQuery();
+            $data = $this->getRequest()->getData();
+            // $query = $this->getRequest()->getQuery();
             // debug($data['name_search']);
 
             $no_items_selected = !isset($data['selected_items']);
@@ -224,7 +225,8 @@ class QueryExpanderController extends AppController
             $xml = simplexml_load_string($tempXmlContent);
             
             if ($xml === false) {
-                die("Fehler beim Parsen der XML-Datei: " . implode("\n", libxml_get_errors()));
+                $this->Flash->error('Fehler beim Parsen der XML-Datei' . implode("\n", libxml_get_errors()));
+                // return $this->redirect(['action' => 'selectReport']);
             }
         
             $selectedItems = $data['selected_items'];
@@ -294,8 +296,8 @@ class QueryExpanderController extends AppController
             );
         
             // $this->set(name: compact('tool', 'user', 'report', 'selectedQuery', 'modifiedXmlContent'));
-            $this->request->getSession()->write(['crt.modifiedXmlContent'=> $modifiedXmlContent]);
-        } else if ($this->request->is('post') && $this->request->getQuery()['form'] = 'form_download') {
+            $this->getRequest()->getSession()->write(['crt.modifiedXmlContent'=> $modifiedXmlContent]);
+        } else if ($this->getRequest()->is('post') && $this->getRequest()->getQuery()['form'] = 'form_download') {
             $this->resultDownload();
         }
         $this->set(['title' => 'Ergebnis']);
@@ -305,12 +307,12 @@ class QueryExpanderController extends AppController
     public function resultDownload()  // Umbenannt von downloadModifiedXml()
     {
         // 1. Nur POST erlauben
-        $this->request->allowMethod(['post']);
+        $this->getRequest()->allowMethod(['post']);
 
         // 2. Session-Daten lesen
-        $session = $this->request->getSession();
+        $session = $this->getRequest()->getSession();
         $xmlContent = $session->read('crt.modifiedXmlContent');
-        $report = $this->request->getSession()->read('crt.report');
+        $report = $this->getRequest()->getSession()->read('crt.report');
 
         // 3. Validierung
         if (empty($xmlContent)) {

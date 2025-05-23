@@ -688,7 +688,7 @@ input::file-selector-button {
     width: 100%;
     height: fit-content;
     max-width: 112rem;
-    padding: 10px 1% 0px 1%;
+    padding: 10px 1% 15px 1%;
     /* padding-top: 10px;
     padding-left: 1%;
     padding-right: 1%; */
@@ -1445,12 +1445,22 @@ select, input[type='select'] {
     border-radius: 6px 6px 0px 0px;
     border: none;
     border-bottom: 2px solid var(--color-crt-grau-stufe-3);
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23005f8c'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1.25rem center;
+    background-size: 47px 34px;
 }
 
 select:focus, input[type='select']:focus {
     border-color: var(--color-crt-blau-stufe-8);
     border-bottom: 2px solid var(--color-crt-blau-stufe-8);
     transition: border .4s;
+        appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23005f8c'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1.25rem center;
+    background-size: 47px 34px;
 }
 
 select:focus ::after {
@@ -1458,10 +1468,11 @@ select:focus ::after {
     transition: border .4s;
 }
 
-select:focus {
+
+/* select:focus {
     border-bottom: 2px solid var(--color-crt-blau-stufe-8);
     transition: border .4s;
-}
+} */
 
 input[type='text'], input[type='password'], input[type='datetime-local'], input[type='email'], input[type='url'], input[type='search'], input[type='tel'], input[type='number'] {
     background-color: var(--color-crt-grau-stufe-1);

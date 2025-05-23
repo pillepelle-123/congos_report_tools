@@ -53,8 +53,8 @@ class ToolsController extends AppController
 
     public function storeTool()
     {
-        // $session = $this->request->getSession();
-        $tool_id = $this->request->getQuery();
+        // $session = $this->getRequest()->getSession();
+        $tool_id = $this->getRequest()->getQuery();
         try { 
             $tool = $this->Tools->get($tool_id);
         } catch (RecordNotFoundException $e) {
@@ -62,7 +62,7 @@ class ToolsController extends AppController
             return $this->redirect(['action' => 'selectTool']);
         }
 
-        $this->request->getSession()->write(['crt.tool'=> $tool]);
+        $this->getRequest()->getSession()->write(['crt.tool'=> $tool]);
 
         return $this->redirect(['action' => 'selectReport']);
     }
@@ -72,8 +72,8 @@ class ToolsController extends AppController
     {
         // Neue Report-Instanz, die die den vom User ausgewählten Report repräsentiert
         $report = $this->fetchTable('Reports')->newEmptyEntity();
-        //$tool_controller = $this->request->getQuery('tool');
-        $tool = $this->request->getSession()->read('crt.tool');
+        //$tool_controller = $this->getRequest()->getQuery('tool');
+        $tool = $this->getRequest()->getSession()->read('crt.tool');
         // debug($tool_controller);
 
         if (!$tool) {
@@ -82,7 +82,7 @@ class ToolsController extends AppController
 
 
         $reports = $this->paginate($this->my_reports);
-        // $this->request->getSession()->write(['crt.tool'=> $tool]);
+        // $this->getRequest()->getSession()->write(['crt.tool'=> $tool]);
 
         $this->set('title', 'Select Report');
         $this->set('tool', $tool);
@@ -91,7 +91,7 @@ class ToolsController extends AppController
 
     public function processSelection()
     {
-        $request = $this->request->getData('selected_report');
+        $request = $this->getRequest()->getData('selected_report');
 
         if(!isset($request)) {
             $this->Flash->warning(__('Bitte wähle einen Report aus'));
@@ -103,16 +103,19 @@ class ToolsController extends AppController
             ->where(['Reports.id' => $request])
             ->first();
 
-        $tool = $this->request->getSession()->read('crt.tool');
+        $tool = $this->getRequest()->getSession()->read('crt.tool');
         // debug($tool->get('plugin'));
         // debug($tool->get('controller'));
 
-        $a = Plugin::isLoaded('Tools/QueryExpander');
+        $a = Plugin::isLoaded('QueryExpander');
         $b = Plugin::loaded();
 
-
+        // debug($tool);       
+        // debug($a);
+        // debug($b);
+        // die();
         if ($report) {
-            $this->request->getSession()->write(['crt.report'=> $report]);
+            $this->getRequest()->getSession()->write(['crt.report'=> $report]);
             return $this->redirect(['plugin' => 'QueryExpander'/* $tool->get('plugin') */, 'controller' => 'QueryExpander' /*$tool->get('controller')*/, 'action' => 'queries']);
         } else {
             $this->Flash->error(__('No report selected.'));
@@ -144,12 +147,12 @@ class ToolsController extends AppController
      */
     public function add()
     {
-        // $type = $this->request->getParam('type');
-        $type = $this->request->getQuery('type');
+        // $type = $this->getRequest()->getParam('type');
+        $type = $this->getRequest()->getQuery('type');
         // CrudComponent aufrufrufen
         $newEntity = $this->Crud->add([]);
 
-        if ($this->request->is('post')) {
+        if ($this->getRequest()->is('post')) {
             return $this->redirect(['action' => 'index']);
         }
 
@@ -171,8 +174,8 @@ class ToolsController extends AppController
         $this->set(compact('entity'));
         return $this->redirect(['action' => 'view', $id]);
         // $tool = $this->Tools->get($id, contain: []);
-        // if ($this->request->is(['patch', 'post', 'put'])) {
-        //     $tool = $this->Tools->patchEntity($tool, $this->request->getData());
+        // if ($this->getRequest()->is(['patch', 'post', 'put'])) {
+        //     $tool = $this->Tools->patchEntity($tool, $this->getRequest()->getData());
         //     if ($this->Tools->save($tool)) {
         //         $this->Flash->success(__('The tool has been saved.'));
 
@@ -192,7 +195,7 @@ class ToolsController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->getRequest()->allowMethod(['post', 'delete']);
         $tool = $this->Tools->get($id);
         if ($this->Tools->delete($tool)) {
             $this->Flash->success(__('The tool has been deleted.'));

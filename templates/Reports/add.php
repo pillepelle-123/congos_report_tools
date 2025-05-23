@@ -5,21 +5,29 @@
  */
 ?>
 <?php
+
+$userMap = [];
+foreach ($users as $user) {
+    $userMap[$user->id] = $user->username;
+}
+
 $fields = [
     [
-        'name' => 'name', 'form_options' => ['type' => 'text']
+        'name' => 'name', 'form_options' => ['type' => 'text'], 'access' => 'user'
     ],
     [
-        'name' => 'xml', 'form_options' => ['type' => 'textarea']
+        'name' => 'xml', 'form_options' => ['type' => 'textarea'], 'access' => 'user'
     ],
 [
         'name' => 'user_id',
         'form_options' => [
             
             'type' => 'select',
-            'options' => array_map(fn($u) => $u->username, $users->toArray()) => array_map(fn($u) => $u->username, $users->toArray()), // array_map($users, 'username'), // $users->username,
+            'options' => $userMap, // [array_map(fn($u) => $u->id, $users->toArray()) => array_map(fn($u) => $u->username, $users->toArray())],
+            /*$users->username, array_map(fn($u) => $u->username, $users->toArray()), // $users->username, array_map(fn($u) => $u->username, $users->toArray()) => array_map(fn($u) => $u->username, $users->toArray()), */
             'class' => 'input select',
-            ],
+        ],
+        'access' => 'admin'
     ],
 ];
 
