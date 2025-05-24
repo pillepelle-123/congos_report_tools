@@ -8,6 +8,8 @@
         <div class="left">
             <h3>Query auswählen</h3>
         </div>
+        <p><?= $this->Html->Link( 'Link', ['controller' => 'QueryExpander', 'action' => 'data'] );?></p>
+        <p><?= $this->Html->Link( 'Link mit Plugin', ['plugin' => 'QueryExpander', 'controller' => 'QueryExpander', 'action' => 'data'] );?></p>
 
         <div class="right">
             <div class="display-tool" style="">

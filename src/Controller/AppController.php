@@ -195,6 +195,22 @@ class AppController extends Controller
                 ->contain($contain);
     }
 
+    public function getTitle(): string
+    {
+        // debug($this->getRequest()->getParam('plugin'));
+        // die();
+        $plugin = $this->getRequest()->getParam('plugin') == null ? 'false' : $this->getRequest()->getParam('plugin');
+        $menu_nodes_query = $this->fetchTable('MenuNodes')->find()
+            ->where([
+                'controller' => $this->getRequest()->getParam('controller'),
+                'action' => $this->getRequest()->getParam('action'),
+                'plugin' => $plugin
+            ])
+            ->first();
+        return $menu_nodes_query->title;
+        // return $this->viewBuilder()->getVar('title') ?? '';
+    }
+
     public function beforeRender(\Cake\Event\EventInterface $event)
     {
         parent::beforeRender($event);

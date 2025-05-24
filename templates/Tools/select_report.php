@@ -8,7 +8,7 @@ use Cake\Utility\Inflector;
     <div class="title">
 
         <div class="left">
-            <h3><?= __('Report auswählen') ?></h3>
+            <h3><?= __($this->get('title')) ?></h3>
         </div>
 
         <div class="right">
@@ -51,9 +51,9 @@ use Cake\Utility\Inflector;
         </div>
     </div>
     <div class="body" >
-    <?= $this->Form->create(null, [
-        'url' => ['action' => 'processSelection']
-    ]) ?>
+    <?= $this->Form->create(null
+    //, ['url' => ['action' => 'processSelection']    ]
+    ) ?>
         <legend><?= __('Verfügbare Reports') ?></legend>
         
         <?php if (empty($reports)): ?>

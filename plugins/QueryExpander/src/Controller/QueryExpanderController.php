@@ -38,6 +38,14 @@ class QueryExpanderController extends AppController
             $report = $this->getRequest()->getSession()->read('crt.report');
         }     
 
+        if (empty($report)) {
+            $this->Flash->error('Kein Report ausgewählt. Bitte wähle einen Report aus.');
+            return $this->redirect(['plugin' => false, 'controller' => 'Tools', 'action' => 'selectReport']);
+        } else if (empty($tool)) {
+            $this->Flash->error('Kein Tool ausgewählt. Bitte wähle ein Tool aus.');
+            return $this->redirect(['plugin' => false, 'controller' => 'Tools', 'action' => 'selectTool']);
+        }
+
 
         $method =  ($this->getRequest()->getMethod());
         $user = $this->my_user;

@@ -159,10 +159,11 @@ $cakeDescription = 'Congos Report Tools';
             <?= $isCollapsible ? 'data-collapsible="true"' : '' ?>>
             <?php // $lastCrumb = $crumb; ?>
             <?php 
+                $plugin = $crumb->plugin === 'false' ? false : $crumb->plugin;
                 $link = array(
                         'controller' => $crumb->controller,
                         'action' => $crumb->action,
-                        'plugin' => filter_var($crumb->plugin, FILTER_VALIDATE_BOOLEAN)
+                        'plugin' => $plugin,
                 );
                 // if ($crumb->plugin) {
                 //     $link['plugin'] = $crumb->plugin;
