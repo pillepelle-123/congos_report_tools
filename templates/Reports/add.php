@@ -18,7 +18,7 @@ $fields = [
     [
         'name' => 'xml', 'form_options' => ['type' => 'textarea'], 'access' => 'user'
     ],
-[
+    [
         'name' => 'user_id',
         'form_options' => [
             
@@ -27,6 +27,7 @@ $fields = [
             /*$users->username, array_map(fn($u) => $u->username, $users->toArray()), // $users->username, array_map(fn($u) => $u->username, $users->toArray()) => array_map(fn($u) => $u->username, $users->toArray()), */
             'class' => 'input select',
         ],
+        'hidden_value' => ['use' => $this->Identity->get('id'), 'display' => $this->Identity->get('username')],
         'access' => 'admin'
     ],
 ];

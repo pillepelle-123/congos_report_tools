@@ -16,7 +16,8 @@ $fields = [
         'name' => 'name', 
         'form_options' => [
             'type' => 'text',
-        ]
+        ], 
+        'access' => 'user'
     ],
     [
         'name' => 'xml',
@@ -25,7 +26,8 @@ $fields = [
             'class' => 'form-xml',
             'maxlength' => 1000000,
             'resize' => 'none'
-        ]
+        ], 
+        'access' => 'user'
     ],
     [
         'name' => 'user_id',
@@ -36,7 +38,9 @@ $fields = [
             // 'empty' => true,
             // 'label' => __('User'),
             // 'disabled' => ($this->Identity->get('role') !== 'admin')
-        ]
+        ], 
+        'hidden_value' => ['use' => $this->Identity->get('id'), 'display' => $this->Identity->get('username')],
+        'access' => 'admin'
     ]
 ];
 

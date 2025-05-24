@@ -65,7 +65,7 @@ $cakeDescription = 'Congos Report Tools';
 
                 <?php if ($this->Identity->isLoggedIn()): ?>
                     <ul id="user-menu">
-                        <li><i style="font-size: 22px" class="bi bi-person-circle"></i>&nbsp;
+                        <li><i style="font-size: 22px" class="bi bi-person-square"></i>&nbsp;
                         <?php echo $this->Identity->get('username'); ?></li>
                         <li><?php echo $this->Html->link('Logout', url: ['plugin' => false, 'controller' => 'Users', 'action' => 'logout']); ?></li>
                         <li>
@@ -111,6 +111,12 @@ $cakeDescription = 'Congos Report Tools';
                         // debug($value['action']);
                         $crumb->action = $value['action'];
                         $crumb->title = $value['action'] === 'indexAdmin' ? 'Admin: Reports' : 'My Reports';
+                        break;
+                    } else if ($value['controller'] === 'Tools' && str_contains($value['action'], 'selectReport')) {
+                        // debug($value['action']);
+                        $crumb->controller = 'Tools';
+                        $crumb->action = $value['action'];
+                        $crumb->title = 'Select Report';
                         break;
                     }
                 }

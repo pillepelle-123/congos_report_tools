@@ -6,7 +6,33 @@
 ?>
 
 <?php
-$fields = ['id', 'name', 'created', 'modified'];
+$fields = [
+    [
+        'name' => 'id',
+        'type' => 'display',
+        'access' => 'admin'
+    ],
+    [
+        'name' => 'name',
+        'type' => 'display',
+        'access' => 'user'
+    ],
+    [
+        'name' => 'xml',
+        'type' => 'fieldset',
+        'access' => 'user'
+    ],
+    [
+        'name' => 'created',
+        'type' => 'display',
+        'access' => 'user'
+    ],
+    [
+        'name' => 'modified',
+        'type' => 'display',
+        'access' => 'user'
+    ]
+];
 
 echo $this->element('standard_view', [
 

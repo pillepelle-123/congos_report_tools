@@ -976,10 +976,16 @@ input::file-selector-button {
 .table-responsive tr:nth-child(even) {
     background-color: var(--color-crt-blau-stufe-1);
 }
+
 .actions a {
     font-size: 2rem;
     font-weight: bold;
     padding: 0 0.8rem 0.4rem 0.8rem;
+}
+
+.actions img {
+    width: 30px;
+    height: 30px;
 }
 
 /* ############ View action ############ */
@@ -1208,7 +1214,7 @@ input::file-selector-button {
     font-size: 24px;
 }
 
-.display-modified-xml {
+.fieldset-xml {
     height: 40rem;
     border: 1px solid var(--color-crt-grau-stufe-2);
     border-radius: 10px;
@@ -1222,7 +1228,7 @@ input::file-selector-button {
     font-size: 1.2rem;
 }
 
-/* .display-modified-xml legend {
+/* .fieldset-xml legend {
     float: right;
     background-color: var(--color-crt-blau-stufe-8);
     color: var(--color-white);
@@ -1233,13 +1239,13 @@ input::file-selector-button {
     height: 20;
 } */
 
-.display-modified-xml > span {
+.fieldset-xml > span {
     font-family: monospace, monospace;
         position: relative;
     top: 2;
     }
 
-.display-modified-xml > legend > span {
+.fieldset-xml > legend > span {
     position: relative;
     top: 2;
     font-weight: normal;
@@ -1252,7 +1258,7 @@ input::file-selector-button {
     border-right: 2px solid var(--color-crt-grau-stufe-4); */
 
 
-.display-modified-xml > legend > span{
+.fieldset-xml > legend > span{
     /* font-family: monospace, monospace; */
     /* font-size: 1.2rem; */
     /* border-top: 2px solid var(--color-crt-grau-stufe-4);
@@ -1438,6 +1444,7 @@ textarea:focus {
     resize: none;
     height: 30rem;  
     width: 100%;
+    font-family: monospace;
 }
 
 select, input[type='select'] {
@@ -1569,10 +1576,10 @@ input[type='color'] {
     color: initial;
 }
 .asc:after {
-    content: " \2193";
+    content: " \25B2"; /*" \2191"; */
 }
 .desc:after {
-    content: " \2191";
+     content: " \25BC" /*" \2193"; */
 }
 
 /* Error in non debug mode */

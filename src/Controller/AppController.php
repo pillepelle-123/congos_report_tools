@@ -266,7 +266,7 @@ class AppController extends Controller
         ]);
         // debug($clickpath);
         
-        // $this->getRequest()->getSession()->write('clickpath', array_slice($clickpath, 0, 10));
+        $this->getRequest()->getSession()->write('clickpath', array_slice($clickpath, 0, 10));
 
 
             

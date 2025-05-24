@@ -94,7 +94,7 @@ class CrudComponent extends Component {
             if ($table->save($entity)) {
                 $this->Flash->success(__('The ' . $model_name . ' has been saved'));
             } else {
-                $this->Flash->error(__('The ' . $model_name . 'could not be saved'));
+                $this->Flash->error(__('The ' . Inflector::singularize($model_name) . ' could not be saved'));
             }
         }
         return $entity;

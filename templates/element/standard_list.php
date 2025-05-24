@@ -108,6 +108,13 @@ use Cake\Utility\Inflector;
                             <?=  $this->Form->postLink('<i class="bi bi-dash-square"></i>', ['controller' => $model_name_plural, 'action' => 'delete', $entity->id], ['title' => __('Delete'), 'confirm' => __('Are you sure you want to delete {0} {1}?',$model_name_singular, $entity->{$instance_name}), 'escape' => false, 'alt' => 'Delete']
                             ) ?>
 
+                            <!-- Momentan ist hier als Tool fix ID = 1 (entspricht Query Expander) ausgewählt-->
+                            <?php if ($model_name_plural === 'Reports'): ?>
+
+                                <?= $this->Html->image('icons/crt_292929.svg', array('title' => 'Run App in Query Expander', 'alt' => 'Run App in Query Expander', 'url' => ['plugin' => 'QueryExpander', 'controller' => 'QueryExpander', 'action' => 'queries', '?' => ['referer' => $this->RefererParam->create( $this->getRequest()->getParam('controller'), $this->getRequest()->getParam('action')), 'tool' => 1, 'report' => $entity->id]])) ?>
+
+                                <?php // $this->Html->link('Run', ['plugin' => 'QueryExpander', 'controller' => 'QueryExpander', 'action' => 'queries', '?' => ['referer' => $this->RefererParam->create( $this->getRequest()->getParam('controller'), $this->getRequest()->getParam('action')), 'tool' => 1, 'report' => $entity->id]], ['escape' => false, 'title' => __('Run'), 'alt' => 'Run']); ?>
+                            <?php endif; ?>
                                 
                             <?php /*
                                 echo $this->Html->image('icons/material_view_292929.svg', array('title' => 'View', 'alt' => 'View', 'url' => ['controller' => $model_name_plural, 'action' => 'view', $entity->id]));

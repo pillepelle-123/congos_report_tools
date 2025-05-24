@@ -16,6 +16,13 @@ use Cake\Utility\Inflector;
         $model_name_plural = Inflector::pluralize($model_name_singular);
 
         $backlink = array();
+        if($this->getRequest()->getQuery('referer')) {
+            list($controller, $action) = explode('.', $this->getRequest()->getQuery('referer'));
+
+            echo $this->Html->link('<i class="bi bi-arrow-left-square"></i>&nbsp;' . Inflector::humanize(Inflector::underscore($action)), ['controller' => $controller, 'action' => $action], ['title' => Inflector::humanize(Inflector::underscore($action)), 'class' => 'side-nav-item', 'escape' => false]);
+
+        }
+
         if($model_name_plural === 'Reports') {
             if($this->Identity->get('role') === 'admin') {
                 array_push($backlink, ['title_part' => 'Admin: ', 'action' => 'indexAdmin']);
@@ -72,9 +79,10 @@ use Cake\Utility\Inflector;
                     <?php endif; ?>
                 <?php else : ?>
                     <label><?= __(ucfirst(Inflector::humanize($field['name']))) ?></label>
-                    <?php //if (isset($entity->{$field}) && !empty($entity->{$field})): ?>
-                       <p><?= h($this->Identity->get('username')) ?></p>
-                    <?php //endif; ?>
+                    <p><?= h($field['hidden_value']['display']) ?></p>
+                    <?php if($field['hidden_value']): ?>
+                        <?= $this->Form->hidden($field['name'], ['value' => $field['hidden_value']['use']]); ?>
+                    <?php endif; ?>
                 <?php endif; ?>
             <?php endforeach; ?>
         </fieldset>

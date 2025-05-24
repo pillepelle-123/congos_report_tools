@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace QueryExpander\Controller;
 
-use ParseError;
 use QueryExpander\Controller\AppController;
 use QueryExpander\Lib\QueryExpanderUtility;
+
 
 /**
  * QueryExpander Controller
@@ -24,10 +24,26 @@ class QueryExpanderController extends AppController
 
     public function queries()  // Umbenannt von queryExpander()
     {
+                // $report = $this->getRequest()->getSession()->read('crt.report');
+        if ($this->getRequest()->getQuery('referer') !== null && $this->getRequest()->getQuery('report') !== null && $this->getRequest()->getQuery('tool') !== null) {
+            list($controller, $action) = explode('.', $this->getRequest()->getQuery('referer'));
+            // $referer = ['plugin' => false, 'controller' => $controller, 'action' => $action];
+            $tool = $this->fetchTable('Tools')->get($this->getRequest()->getQuery('tool'));
+            $report = $this->fetchTable('Reports')->get($this->getRequest()->getQuery('report'));
+            $this->getRequest()->getSession()->write(['crt.tool'=> $tool]);
+            $this->getRequest()->getSession()->write(['crt.report'=> $report]);
+        } else {
+            // $referer = $this->getRequest()->getSession()->read('clickpath')[1]['url'];
+            $tool = $this->getRequest()->getSession()->read('crt.tool');
+            $report = $this->getRequest()->getSession()->read('crt.report');
+        }     
+
+
         $method =  ($this->getRequest()->getMethod());
         $user = $this->my_user;
-        $report = $this->getRequest()->getSession()->read('crt.report');
-        $tool = $this->getRequest()->getSession()->read('crt.tool');
+
+        // $report = $this->getRequest()->getSession()->read('crt.report');
+        // $tool = $this->getRequest()->getSession()->read('crt.tool');
         // $this->getRequest()->getSession()->delete('crt.selectedQuery');
 
         // debug($this->getRequest()->getSession()->read('clickpath')[1]['url']);
@@ -66,7 +82,8 @@ class QueryExpanderController extends AppController
                 // if($this->getRequest()->getSession()->read('clickpath')[1]['url'] === '/tools/process-selection') {
                     $this->Flash->error('Fehler beim Parsen der XML-Datei: ' . $error_message);
                 // }
-                return $this->redirect(['plugin' => false, 'controller' => 'Tools', 'action' => 'selectReport']);
+                return $this->redirect($this->referer()); 
+                // return $this->redirect(['plugin' => false, 'controller' => 'Tools', 'action' => 'selectReport']);
             };
 
             //Namespace-unabhängige XPath-Abfrage nach "Query"-Elementen
@@ -101,13 +118,14 @@ class QueryExpanderController extends AppController
 
             if (empty($queries)) {
                 $this->Flash->error('Keine Queries in der XML-Datei gefunden. Ist dies eine gültige Congos Report Definition?');
-                return $this->redirect(['plugin' => false, 'controller' => 'Tools', 'action' => 'selectReport']);
+                return $this->redirect($this->referer());
+                // return $this->redirect(['plugin' => false, 'controller' => 'Tools', 'action' => 'selectReport']);
             }
             
             $this->set(compact('queries'));
 
-        } catch ( ParseError $e2) {
-            $this->Flash->error('Fehler beim Parsen und Auslesen der Queries: ' . $e2->getMessage());
+        } catch (\Error $e) {
+            $this->Flash->error('Fehler beim Parsen und Auslesen der Queries: ' . $e->getMessage());
             $this->redirect($this->referer());
             // return $this->redirect(['controller' => 'Reports', 'action' => 'index']);
         } 

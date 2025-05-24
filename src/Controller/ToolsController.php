@@ -80,7 +80,7 @@ class ToolsController extends AppController
             return $this->redirect(['action' => 'selectReport']);
         }
 
-
+        parent::setPaginationConfig(['field' => 'created', 'direction' => 'desc']);
         $reports = $this->paginate($this->my_reports);
         // $this->getRequest()->getSession()->write(['crt.tool'=> $tool]);
 
@@ -103,18 +103,19 @@ class ToolsController extends AppController
             ->where(['Reports.id' => $request])
             ->first();
 
-        $tool = $this->getRequest()->getSession()->read('crt.tool');
-        // debug($tool->get('plugin'));
-        // debug($tool->get('controller'));
+        // $tool = $this->getRequest()->getSession()->read('crt.tool');
+        // // debug($tool->get('plugin'));
+        // // debug($tool->get('controller'));
 
-        $a = Plugin::isLoaded('QueryExpander');
-        $b = Plugin::loaded();
+        // $a = Plugin::isLoaded('QueryExpander');
+        // $b = Plugin::loaded();
 
         // debug($tool);       
         // debug($a);
         // debug($b);
         // die();
         if ($report) {
+
             $this->getRequest()->getSession()->write(['crt.report'=> $report]);
             return $this->redirect(['plugin' => 'QueryExpander'/* $tool->get('plugin') */, 'controller' => 'QueryExpander' /*$tool->get('controller')*/, 'action' => 'queries']);
         } else {

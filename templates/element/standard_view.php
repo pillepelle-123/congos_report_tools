@@ -12,6 +12,20 @@ use Cake\Utility\Inflector;
         $model_name_singular = (new \ReflectionClass($entity))->getShortName(); // Singular
         $model_name_plural = Inflector::pluralize($model_name_singular);
 
+        $backlink = array();
+        if($model_name_plural === 'Reports') {
+            if($this->Identity->get('role') === 'admin') {
+                array_push($backlink, ['title_part' => 'Admin: ', 'action' => 'indexAdmin']);
+            } 
+                array_push($backlink, ['title_part' => 'My ', 'action' => 'index']);
+        } 
+        else {
+            array_push($backlink,['title_part' => 'Admin: ', 'action' => 'index']);
+        }
+        foreach ($backlink as $key => $value) {
+            echo $this->Html->link('<i class="bi bi-arrow-left-square"></i>&nbsp;' . $value['title_part'] . $model_name_plural, ['controller' => $model_name_plural, 'action' => $value['action']], ['title' => 'Add ' . $model_name_singular, 'class' => 'side-nav-item', 'escape' => false]);
+        }
+
         if($editable ? $editable : 1==2 ) {
             echo $this->Html->link('<i class="bi bi-pencil-square"></i>&nbsp;Edit ' . $model_name_singular, ['controller' => $model_name_plural, 'action' => 'edit', $entity->id], ['class' => 'side-nav-item', 'escape' => false]);
 
@@ -19,7 +33,7 @@ use Cake\Utility\Inflector;
 
             echo $this->Form->postLink(__('<i class="bi bi-dash-square"></i>&nbsp;Delete ' . $model_name_singular), ['controller' => $model_name_plural, 'action' => 'delete', $entity->id], ['confirm' => __('Are you sure you want to delete {0} {1}?',$model_name_singular, $instance_name), 'class' => 'side-nav-item', 'escape' => false]);
         }
-        echo $this->Html->link('<i class="bi bi-arrow-left-square"></i>&nbsp;' . $model_name_plural, ['controller' => $model_name_plural, 'action' => 'index'], ['class' => 'side-nav-item', 'escape' => false]) 
+        // echo $this->Html->link('<i class="bi bi-arrow-left-square"></i>&nbsp;' . $model_name_plural, ['controller' => $model_name_plural, 'action' => 'index'], ['class' => 'side-nav-item', 'escape' => false]) 
         ?>
     </div>
 </div>
@@ -33,12 +47,27 @@ use Cake\Utility\Inflector;
         <h3 style="word-break: normal;"><?= h($model_name_singular . ': ' . $instance_name) ?></h3>
         <table>
             <?php foreach ($fields as $field): ?>
-                <?php //if (isset($entity->{$field}) && !empty($entity->{$field})): ?>
+                <?php if ($field['access'] === 'user' || $field['access'] === $this->Identity->get('role')) : ?>
                     <tr>
-                        <th><?= __(ucfirst(Inflector::humanize($field))) ?></th>
-                        <td><?= h($entity->{$field} . ' ') ?></td>
+                        <th><?= __(ucfirst(Inflector::humanize($field['name']))) ?></th>
+                        <?php if ($field['type'] == 'display') : ?>
+                            <td><?= h($entity->{$field['name']} . ' ') ?></td>
+                        <?php elseif ($field['type'] == 'fieldset') : ?>
+                            <td>
+                                <fieldset class="form-group card-body fieldset-xml">
+                                    
+                                        <span>
+                                        <?= h($entity->{$field['name']}) ?>
+                                        </span>
+                                </fieldset>
+                            </td>
+                        <?php endif; ?>
                     </tr>
-                <?php //endif; ?> 
+                <?php endif; ?>
+                <!-- <tr>
+                    <th><?php // __(ucfirst(Inflector::humanize($field))) ?></th>
+                    <td><?php // h($entity->{$field} . ' ') ?></td>
+                </tr> -->
             <?php endforeach; ?>
         </table>
     </div>

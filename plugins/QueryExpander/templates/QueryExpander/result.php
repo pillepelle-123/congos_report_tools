@@ -37,7 +37,7 @@
         </div>
         
         <div class="card mb-4">
-            <fieldset class="form-group card-body display-modified-xml">
+            <fieldset class="form-group card-body fieldset-xml">
                 <legend><span style="font-weight: normal; margin: 0px 5px; ">Modifiziertes XML</span></legend>
                     <span>
                     <?= h($modifiedXmlContent) ?>
