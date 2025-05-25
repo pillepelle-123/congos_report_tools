@@ -2,6 +2,9 @@
 // $modifiedXmlContent = $this->getRequest()->getSession()->read('crt.modifiedXmlContent');
 // $report = $this->getRequest()->getSession()->read('crt.report');
 
+use Demyanovs\PHPHighlight\Highlighter;
+use Demyanovs\PHPHighlight\Themes\DefaultTheme;
+
 ?>
 <div class="query-expander-result content">
     <div class="title">
@@ -38,9 +41,20 @@
         
         <div class="card mb-4">
             <fieldset class="form-group card-body fieldset-xml">
-                <legend><span style="font-weight: normal; margin: 0px 5px; ">Modifiziertes XML</span></legend>
+                <!-- <legend><span style="font-weight: normal; margin: 0px 5px; ">Modifiziertes XML</span></legend> -->
                     <span>
-                    <?= h($modifiedXmlContent) ?>
+                    <?php
+                        $text = '
+                        <pre style="display:none;"  data-lang="xml">' . $modifiedXmlContent . ' 
+                        </pre>
+                        '; // optional für graue Leiste mit Dateinamen: data-file="php-highlight/examples/index.php"
+
+                        $highlighter = new Highlighter($text, DefaultTheme::TITLE);
+                        // Configuration
+                        $highlighter->showLineNumbers(true);
+                        $highlighter->showActionPanel(true);
+                        echo $highlighter->parse();
+                        ?>
                     </span>
             </fieldset>
         </div>

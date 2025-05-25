@@ -81,8 +81,9 @@ use Cake\Utility\Inflector;
                     <?php foreach ($entities->toArray() as $entity ) : ?>
                         <tr>
                     <?php foreach ($fields as $field ) : ?>
+                            
+
                         <?php if ($field[1] === 'user' || $field[1] === $this->Identity->get('role')) : ?>
-                        <!-- Für related Entities. Notation, z.B. "user.username" -->
                             <?php if (str_contains($field[0], '.')) : ?>
                                 <?php
                                     $rel_entity = explode('.', $field[0])[0]; 
@@ -91,7 +92,17 @@ use Cake\Utility\Inflector;
                                 ?>
                                 <td><?= $this->Html->link($entity->{$rel_entity}->{$rel_field}, ['controller' => $rel_controller_name, 'action' => 'view', $entity->{$rel_entity}->id]) ?></td>
                             <?php else: ?>
-                                <td><?= h($entity->{$field[0]} . ' ') ?></td>
+                                <?php if (is_numeric($entity->{$field[0]})) : ?>
+                                    <td><?= h(number_format($entity->{$field[0]},
+                                    0,
+                                    ",",
+                                    "."
+                                )) ?></td>
+                                <?php else: ?>
+                                    <td><?= h($entity->{$field[0]} . ' ') ?></td>
+
+                                    
+                                <?php endif; ?>
                             <?php endif; ?>
                         <?php endif; ?>
                     <?php endforeach; ?>

@@ -4,7 +4,7 @@
  */
 ?>
 <?php
-$fields = [['id', 'admin'], ['name', 'user'], ['user.username', 'admin'], ['created', 'user'], ['modified', 'user']]; // Feldname, 
+$fields = [['id', 'admin'], ['name', 'user'], ['user.username', 'admin'], ['xml_length', 'user'], ['created', 'user'], ['modified', 'user']]; // Feldname, 
 
 echo $this->element('standard_list', [
 

@@ -5,7 +5,19 @@
  */
 ?>
 <?php
-$fields = ['id', 'name', 'description', 'icon', 'plugin', 'controller', 'action', 'active', 'created', 'modified'];
+$fields = [
+    ['name' => 'id', 'type' => 'display', 'access' => 'admin'],
+    ['name' => 'name', 'type' => 'display', 'access' => 'admin'],
+    ['name' => 'description', 'type' => 'display', 'access' => 'admin'],
+    ['name' => 'icon', 'type' => 'image_display', 'access' => 'admin'],
+    ['name' => 'plugin', 'type' => 'display', 'access' => 'admin'],
+    ['name' => 'controller', 'type' => 'display', 'access' => 'admin'],
+    ['name' => 'action', 'type' => 'display', 'access' => 'admin'],
+    ['name' => 'active', 'type' => 'display', 'access' => 'admin'],
+    ['name' => 'created', 'type' => 'display', 'access' => 'admin'],
+    ['name' => 'modified', 'type' => 'display', 'access' => 'admin']
+];
+    // 'name', 'description', 'icon', 'plugin', 'controller', 'action', 'active', 'created', 'modified'];
 
     // $report->hasValue('user') ? $this->Html->link($report->user->username, ['controller' => 'Users', 'action' => 'view', $report->user->id]) : '';
 

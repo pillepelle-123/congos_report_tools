@@ -6,11 +6,26 @@
     <div class="title">
 
         <div class="left">
-            <h3>Query auswählen</h3>
-        </div>
-        <p><?= $this->Html->Link( 'Link', ['controller' => 'QueryExpander', 'action' => 'data'] );?></p>
-        <p><?= $this->Html->Link( 'Link mit Plugin', ['plugin' => 'QueryExpander', 'controller' => 'QueryExpander', 'action' => 'data'] );?></p>
+            <h3>
+                <?= __($this->get('title')) ?>&nbsp;&nbsp;
+                <span style="vertical-align: text-bottom;">
 
+                <?= $this->Html->tag('i', '', [
+                    'class' => 'bi bi-question-square help-hover-icon',
+                    'alt' => 'Get Help',
+                    // 'title' => 'Get Help',
+                    'onmouseenter' => 'showHelp(this)',
+                    'onmouseleave' => 'showHelp(this)'
+                    
+                ]); ?>
+                    
+                <!-- <i class="bi bi-question-square" style="font-size: 16px;">
+
+                </i> -->
+                </span>
+            </h3>
+            <div class="help-hover-text" style="position: absolute; left: 250px; top: 18px; display:none;">Bitte wähle eine Query des Reports aus.</div>
+        </div>
         <div class="right">
             <div class="display-tool" style="">
 
@@ -68,17 +83,20 @@
                         <td>
                             <?= h($query['name']) ?>
                         </td>
-                        <td style="vertical-align: top;">
+                        <td>
                             
                             <?php 
-
                             // echo $this->Html->image('icons/material_arrow_circle_dropdown_292929.svg', ['alt' => 'Show Data Items', 'title' => 'Show Data Items', 'class' => 'show-data-items', 'style' => 'width: 30px; height: 30px; display: inline-block;', 'onClick' => 'childrenToggleVisibility('.$i.')']);
                             ?>
-                            
                             <a <?php
-                            echo 'onClick=" childrenToggleVisibility(' . $i .', this)"' ?> class="" style="cursor: pointer;"><i class="bi bi-eye-fill"></i></a>
+                            echo 'onClick=" childrenToggleVisibility(' . $i .', this)"' ?> class="" style="cursor: pointer;">
+                            
+                            <img src="/img/icons/eye_fill_292929.svg" alt="Show Data Items" title="Show Data Items" class="show-data-items" style="width: 25px; height: 25px; display: inline-block;">
+
+                            <!-- <i class="bi bi-eye-fill"> -->
+                            </a>
             
-                                <div <?php echo 'id="div-query-' . $i . '" class="display-data-items-container"' ?> >
+                                <div <?php echo 'id="div-query-' . $i . '" class="display-data-items-container" style="display:none;"' ?> >
                                 <!-- <pre> -->
                                     
                                 <fieldset class="display-data-items">
@@ -133,22 +151,36 @@
     </div>
 </div>
 <script>
-    function childrenToggleVisibility(i, selfElement){
-        let div = document.getElementById(`div-query-${i}`);
-        let link = this;
-        console.log(selfElement);
-            if(div.style.display === "none") {
-                selfElement.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
-                div.style.display = "block";
-                // console.log(children[i] + ': ' + children[i].style.display);
-            } else {
-                selfElement.innerHTML = '<i class="bi bi-eye-fill"></i>';
-                div.style.display = "none";
-                // console.log(children[i].style.display);
-            }
+    // function childrenToggleVisibility(i, selfElement){
+    //     let div = document.getElementById(`div-query-${i}`);
+    //     let link = this;
+    //     console.log('vorher: ' + div.style.display);
+    //     if(div.style.display == "none") {
+    //             selfElement.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
+    //             div.style.display = "block";
+    //             console.log('nachher: ' + div.style.display);
+    //         } else {
+    //             selfElement.innerHTML = '<i class="bi bi-eye-fill"></i>';
+    //             div.style.display = "none";
+    //             console.log(div.style.display);
+    //         }
 
-        // }
-        }
+    //     // }
+    // }
+
+    // function showHelp(element) {
+    //     let div = document.getElementsByClassName(`help-hover-text`)[0];
+    //     if (div.style.display === "none") {
+    //         div.style.display = "inline";
+    //     } else {
+    //         div.style.display = "none";
+    //     }
+
+    //     // viewIconClass = viewIconClass.replace('-fill', '');
+
+    //     // viewIcon.setAttribute('class', viewIconClass.replace('-fill', ''));
+    // }
+
 </script>
 
 <script>

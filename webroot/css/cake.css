@@ -42,7 +42,7 @@
     --color-crt-grau-stufe-9: #1b1b1b;
     --color-crt-grau-stufe-10: #000000;
 
-    /* CRT Colors grau */
+    /* CRT Colors rot */
     --color-crt-rot-stufe-1: #fce4e4;
     --color-crt-rot-stufe-2: #f8d7da;
     --color-crt-rot-stufe-3: #f5c6cb;
@@ -55,6 +55,16 @@
     --color-crt-rot-stufe-10: #4a0000;
     --color-crt-rot-stufe-11: #3b0a45;
     --color-crt-rot-stufe-12: #3b0a45;
+
+    /* CRT Colors gelb */
+    --color-crt-gelb-stufe-1: #fcebbd;
+    --color-crt-gelb-stufe-2: #F8DC6F;
+    --color-crt-gelb-stufe-3: #E9C451;
+    --color-crt-gelb-stufe-4: #D9AE3B;
+    --color-crt-gelb-stufe-5: #BF8E31;
+    --color-crt-gelb-stufe-6: #C08332;
+
+    
 
     /* The following are official CakePHP colors */
     --color-cakephp-red: #442858;
@@ -1155,6 +1165,73 @@ input::file-selector-button {
 
 }
 
+
+/* ############################## */
+/* ########### XML View ######### */
+/* ############################## */
+
+.fieldset-xml {
+    height: 40rem;
+    border: 1px solid var(--color-crt-grau-stufe-2);
+    border-radius: 10px;
+    line-break: anywhere;
+    word-break: break-all; 
+    /* padding-left: 4px; */
+    border-left: 3px solid var(--color-crt-blau-stufe-8);
+    overflow-y: auto;
+    padding: 1rem;
+    border-radius: 0.4rem;
+    font-size: 1.2rem;
+}
+
+/* .fieldset-xml legend {
+    float: right;
+    background-color: var(--color-crt-blau-stufe-8);
+    color: var(--color-white);
+    padding: 0px 5px;
+    position: relative;
+    top: -10;
+    right: -10;
+    height: 20;
+} */
+
+.fieldset-xml > span {
+    font-family: monospace, monospace;
+        position: relative;
+    top: 2;
+    }
+
+.fieldset-xml > legend > span {
+    position: relative;
+    top: 2;
+    font-weight: normal;
+    /* font-size: 1.2rem; */
+    margin: 0px 5px;
+}
+
+/* XML Highlighting Elements */
+.code-highlighter {
+    border: none !important;
+    background-color: var(--color-white) !important;
+}
+
+.code-block span[style*="color: #008000"] {
+    color: var(--color-crt-grau-stufe-7) !important;
+}
+.code-block span[style*="color: #BA2121"] {
+    color: var(--color-crt-blau-stufe-5) !important;
+    font-weight: bold;
+}
+.code-block span[style*="color: #7D9029"] {
+    color: var(--color-crt-gelb-stufe-5) !important;
+    font-weight: bold;
+}
+.code-block span[style*="color: #BC7A00"] {
+    color: var(--color-crt-rot-stufe-9) !important;
+    font-weight: bold;
+}
+
+
 /* ############################## */
 /* ####### PLUGIN TOOLS ######### */
 /* ############################## */
@@ -1210,64 +1287,14 @@ input::file-selector-button {
     /* background-color: red; */
 }
 
-.query-expander-queries i{
+.query-expander-queries .table-responsive i{
     font-size: 24px;
 }
 
-.fieldset-xml {
-    height: 40rem;
-    border: 1px solid var(--color-crt-grau-stufe-2);
-    border-radius: 10px;
-    line-break: anywhere;
-    word-break: break-all; 
-    /* padding-left: 4px; */
-    border-left: 3px solid var(--color-crt-blau-stufe-8);
-    overflow-y: auto;
-    padding: 1rem;
-    border-radius: 0.4rem;
-    font-size: 1.2rem;
-}
 
-/* .fieldset-xml legend {
-    float: right;
-    background-color: var(--color-crt-blau-stufe-8);
-    color: var(--color-white);
-    padding: 0px 5px;
-    position: relative;
-    top: -10;
-    right: -10;
-    height: 20;
-} */
-
-.fieldset-xml > span {
-    font-family: monospace, monospace;
-        position: relative;
-    top: 2;
-    }
-
-.fieldset-xml > legend > span {
-    position: relative;
-    top: 2;
-    font-weight: normal;
-    /* font-size: 1.2rem; */
-    margin: 0px 5px;
-}
-    /* font-size: 1.2rem; */
-    /* border-top: 2px solid var(--color-crt-grau-stufe-4);
-    border-bottom: 2px solid var(--color-crt-grau-stufe-4);
-    border-right: 2px solid var(--color-crt-grau-stufe-4); */
-
-
-.fieldset-xml > legend > span{
-    /* font-family: monospace, monospace; */
-    /* font-size: 1.2rem; */
-    /* border-top: 2px solid var(--color-crt-grau-stufe-4);
-    border-bottom: 2px solid var(--color-crt-grau-stufe-4);
-    border-right: 2px solid var(--color-crt-grau-stufe-4); */
-}
 
 .display-data-items-container {
-    display: none;
+    /* display: none; --> dies im style-Attribut hinterlegt */
     position: relative;
     left: -170%;
     width: 80vw;
@@ -1324,6 +1351,22 @@ input::file-selector-button {
     font-weight: normal;
     font-size: 1.2rem;
     margin: 0px 5px;
+}
+
+.help-hover-icon {
+    font-size: 18px;
+    cursor: help;
+}
+
+.help-hover-text {
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    color: var(--color-crt-grau-stufe-7);
+    padding: 5px;
+    background: var(--color-white);
+    border: 1px solid var(--color-crt-grau-stufe-2);
+    border-radius: 0.4rem;
+    box-shadow: 0 7px 7px 0 rgba(60, 66, 87, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
 }
 
 /* ############################ */
@@ -1651,25 +1694,29 @@ input[type='color'] {
     }
 
     .home-card-list a {
-    flex-grow: 1;
-    /* flex: 1 0 32%; */
-    height: 150px;
-    flex: 0 0 calc((100% - 3%));
-    box-sizing: border-box;
-    flex-grow: 1;
+        flex-grow: 1;
+        /* flex: 1 0 32%; */
+        height: 150px;
+        flex: 0 0 calc((100% - 3%));
+        box-sizing: border-box;
+        flex-grow: 1;
     }
 
     .tool-card {
-    flex-grow: 1;
-    /* flex: 1 0 32%; */
-    height: 150px;
-    flex: 0 0 calc((100% - 3%));
-    box-sizing: border-box;
-    flex-grow: 1;
+        flex-grow: 1;
+        /* flex: 1 0 32%; */
+        height: 150px;
+        flex: 0 0 calc((100% - 3%));
+        box-sizing: border-box;
+        flex-grow: 1;
     }
 
     .display-data-items-container {
-    left: -130%;
+        left: -130%;
+    }
+
+    .actions-container > .links > a {
+        font-size: 16px;
     }
 }
 

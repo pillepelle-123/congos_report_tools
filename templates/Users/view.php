@@ -6,7 +6,16 @@
 ?>
 
 <?php
-$fields = ['id', 'username', 'email', 'first_name', 'last_name', 'role', 'active', 'created', 'modified'];
+$fields = [
+    ['name' => 'id', 'type' => 'display', 'access' => 'admin'],
+    ['name' => 'username', 'type' => 'display', 'access' => 'admin'],
+    ['name' => 'email', 'type' => 'display', 'access' => 'admin'],
+    ['name' => 'first_name', 'type' => 'display', 'access' => 'admin'],
+    ['name' => 'last_name', 'type' => 'display', 'access' => 'admin'],
+    ['name' => 'role', 'type' => 'display', 'access' => 'admin'],
+    ['name' => 'active', 'type' => 'display', 'access' => 'admin'],
+    ['name' => 'created', 'type' => 'display', 'access' => 'admin'],
+    ['name' => 'modified', 'type' => 'display', 'access' => 'admin']];
 
 
     // $report->hasValue('user') ? $this->Html->link($report->user->username, ['controller' => 'Users', 'action' => 'view', $report->user->id]) : '';

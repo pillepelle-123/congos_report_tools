@@ -1,5 +1,7 @@
 <?php
 use Cake\Utility\Inflector;
+use Demyanovs\PHPHighlight\Highlighter;
+use Demyanovs\PHPHighlight\Themes\DefaultTheme;
 ?>
 <!-- 
  #############################################
@@ -51,15 +53,43 @@ use Cake\Utility\Inflector;
                     <tr>
                         <th><?= __(ucfirst(Inflector::humanize($field['name']))) ?></th>
                         <?php if ($field['type'] == 'display') : ?>
-                            <td><?= h($entity->{$field['name']} . ' ') ?></td>
+                            <?php if ($field['name'] == 'id') : ?>
+                                <td><div style="display:flex;justify-content:center;height:max-content;width:max-content;min-width:28px;border:1px solid var(--color-crt-blau-stufe-12);border-radius:5px;padding:0px 4px;background-color:var(--color-crt-blau-stufe-12);color:var(--color-white)"><?= h($entity->{$field['name']}) ?></div></td>
+                            <?php else : ?>
+                                <td><?= h($entity->{$field['name']} . ' ') ?></td>
+                            <?php endif; ?>
+                            
                         <?php elseif ($field['type'] == 'fieldset') : ?>
                             <td>
                                 <fieldset class="form-group card-body fieldset-xml">
                                     
                                         <span>
-                                        <?= h($entity->{$field['name']}) ?>
+                                        <?php // h($entity->{$field['name']}) ?>
+                                        <?php
+                                        $text = '
+                                        <pre style="display:none;"  data-lang="xml">' . $entity->{$field['name']} . ' 
+                                        </pre>
+                                        '; // optional für graue Leiste mit Dateinamen: data-file="php-highlight/examples/index.php"
+
+                                        $highlighter = new Highlighter($text, DefaultTheme::TITLE);
+                                        // Configuration
+                                        $highlighter->showLineNumbers(true);
+                                        $highlighter->showActionPanel(true);
+                                        echo $highlighter->parse();
+                                        ?>
                                         </span>
                                 </fieldset>
+                            </td>
+                        <?php elseif ($field['type'] == 'image_display') : ?>
+                            <td style="display: flex; flex-direction: row; gap: 10px;">
+                                <?= h($entity->{$field['name']}) ?>
+                                <?php if (!empty($entity->{$field['name']})) : ?>
+                                    <div style="display: flex; justify-content: center; background-color: var(--color-crt-waldgrün); width: 60px; height: 30px; padding: 0px 30px;border-radius: 5px;">
+                                    <?= $this->Html->image($entity->{$field['name']}, ['alt' => h($entity->{$field['name']})]) ?>
+                                    </div>
+                                <?php else : ?>
+                                    <?= __('No image available') ?>
+                                <?php endif; ?>
                             </td>
                         <?php endif; ?>
                     </tr>

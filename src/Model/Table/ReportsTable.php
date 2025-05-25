@@ -51,6 +51,7 @@ class ReportsTable extends Table
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',
         ]);
+
     }
 
     /**

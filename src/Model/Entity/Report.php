@@ -19,6 +19,10 @@ use Cake\ORM\Entity;
  */
 class Report extends Entity
 {
+    public $virtualFields = array(
+        'xml_length' => 'Report.LENGTH(xml)',
+    );
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -35,5 +39,6 @@ class Report extends Entity
         'created' => true,
         'modified' => true,
         'user' => true,
+        'xml_length' => true, // Make the virtual field accessible
     ];
 }

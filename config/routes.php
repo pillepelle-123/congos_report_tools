@@ -139,6 +139,8 @@ return function (RouteBuilder $routes): void {
         $routes->connect('/add', ['controller' => 'Reports', 'action' => 'add']);
         $routes->connect('/edit/*', ['controller' => 'Reports', 'action' => 'edit']);
         $routes->connect('/delete/*', ['controller' => 'Reports', 'action' => 'delete']);
+        
+        $routes->connect('/view-sample/*', ['controller' => 'Reports', 'action' => 'viewSample']);
 
         $routes->fallbacks();
     });

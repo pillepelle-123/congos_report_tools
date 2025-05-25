@@ -28,9 +28,13 @@ class ReportsController extends AppController
     {
         $this->Crud->setQuery(true, ['Users']);
         $entities = $this->Crud->index();
+
+        $entities->selectAlso([
+            'xml_length' => $entities->func()->length(['xml' => 'identifier']),
+        ]);
+
         parent::setPaginationConfig(['field' => 'created', 'direction' => 'desc']);
         $entities = $this->paginate($entities);
-        // parent::setPaginationOrder('created', 'desc');
 
         $this->set(['title' => 'My Reports', 'entities' => $entities]);
 
@@ -47,6 +51,13 @@ class ReportsController extends AppController
         $this->set(['title' => 'Admin: Reports', 'entities' => $entities]);
     }
     
+    public function viewSample($id = null) 
+    {
+        $this->Crud->setQuery();
+        $entity = $this->Crud->view($id); //42
+        $this->set(['entity' => $entity]);
+    }
+
     /**
      * View method
      *

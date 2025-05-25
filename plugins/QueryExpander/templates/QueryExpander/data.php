@@ -6,7 +6,24 @@ $report = $this->getRequest()->getSession()->read('crt.report');
     <div class="title">
 
         <div class="left">
-            <h3><?= __($this->get('title')) ?></h3>
+            <h3><?= __($this->get('title')) ?>&nbsp;&nbsp;
+                <span style="vertical-align: text-bottom;">
+
+                <?= $this->Html->tag('i', '', [
+                    'class' => 'bi bi-question-square help-hover-icon',
+                    'alt' => 'Get Help',
+                    // 'title' => 'Get Help',
+                    'onmouseenter' => 'showHelp(this)',
+                    'onmouseleave' => 'showHelp(this)'
+                    
+                ]); ?>
+                    
+                <!-- <i class="bi bi-question-square" style="font-size: 16px;">
+
+                </i> -->
+                </span>
+            </h3>
+            <div class="help-hover-text" style="position: absolute; left: 250px; top: 18px; display:none;">Bitte wähle die Data Items aus, die du bearbeiten möchtest, sowie Suchen- und Ersetzen- Texte.</div>
         </div>
         <div class="right">
             <div class="display-tool" style="">

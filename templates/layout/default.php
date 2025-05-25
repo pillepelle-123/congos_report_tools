@@ -152,7 +152,7 @@ $cakeDescription = 'Congos Report Tools';
         ?>
 
         <?php if ($i === 1 && $total > 3): ?>
-            <li class="breadcrumb-toggle" title="Ausklappen" onclick="toggleBreadcrumb(this)"><i class="bi bi-plus-circle" style="margin-right: 6px;"></i></li>
+            <li class="breadcrumb-toggle" title="Ausklappen" onclick="toggleBreadcrumb(this)"><i class="bi bi-plus-square" style="margin-right: 6px;"></i></li>
         <?php endif; ?>
 
         <li class="breadcrumb-container-item<?= $isCollapsible ? ' collapsed' : '' ?><?= $isLast ? ' breadcrumb-container-item-last' : '' ?>"
@@ -184,7 +184,7 @@ $cakeDescription = 'Congos Report Tools';
             */ ?>
         </li>
     <?php endforeach; ?>
-    <li class="breadcrumb-collapse-control hidden" title="Einklappen" onclick="toggleBreadcrumb(this)"><i class="bi bi-dash-circle"></i></li>
+    <li class="breadcrumb-collapse-control hidden" title="Einklappen" onclick="toggleBreadcrumb(this)"><i class="bi bi-dash-square"></i></li>
 </ul>      
 </div> 
                 <div class="right">      
@@ -193,11 +193,11 @@ $cakeDescription = 'Congos Report Tools';
 
 
                 if ($secondLastCrumb) {
-
+                    $plugin = $secondLastCrumb->plugin === 'false' ? false : $secondLastCrumb->plugin;
                     $lastPageLink = array(
                         'controller' => $secondLastCrumb->controller,
                         'action' => $secondLastCrumb->action,
-                        'plugin' => filter_var($secondLastCrumb->plugin, FILTER_VALIDATE_BOOLEAN)
+                        'plugin' => $plugin,
                     );
                     // if ($secondLastCrumb->plugin) {
                     //     $link['plugin'] = $secondLastCrumb->plugin;
@@ -211,14 +211,14 @@ $cakeDescription = 'Congos Report Tools';
                     // ];
                     // debug($lastPageLink);
                     // die();
-                    echo $this->Html->Link('<i class="bi bi-arrow-left-circle"></i>', $lastPageLink, [
+                    echo $this->Html->Link('<i class="bi bi-arrow-left-square"></i>', $lastPageLink, [
                         'escape' => false,
                         'title' => $lastPageTitle,
                         'class' => 'breadcrumb-back-link'
                     ]);
                     // echo $this->Html->image('icons/material_arrow_circle_back_292929.svg', array('title' => $lastPageTitle, 'url' => $lastPageLink, isset($sessionData) ? $sessionData : ''));
                 } else {
-                    echo '<i class="bi bi-arrow-left-circle" style="visibility: hidden"></i>';                    
+                    echo '<i class="bi bi-arrow-left-square" style="visibility: hidden"></i>';                    
                 }
                 //  $this->Html->link($lastCrumb->title, [
                 //     'plugin' => $crumb->plugin,
@@ -415,6 +415,38 @@ $cakeDescription = 'Congos Report Tools';
                     collapseControl.classList.add('hidden');
                     // dots.style.hidden = 'false';
                 }
+            }
+
+            // Template: query-expander/queries
+            function childrenToggleVisibility(i, selfElement){
+                let div = document.getElementById(`div-query-${i}`);
+                let link = this;
+                // console.log(selfElement);
+                    if(div.style.display === "none") {
+                        selfElement.innerHTML = '<img src="/img/icons/eye_slash_fill_292929.svg" alt="Show Data Items" title="Show Data Items" class="show-data-items" style="width: 25px; height: 25px; display: inline-block;">';
+                        div.style.display = "block";
+                        // console.log(children[i] + ': ' + children[i].style.display);
+                    } else {
+                        selfElement.innerHTML = '<img src="/img/icons/eye_fill_292929.svg" alt="Show Data Items" title="Show Data Items" class="show-data-items" style="width: 25px; height: 25px; display: inline-block;">';
+                        div.style.display = "none";
+                        // console.log(children[i].style.display);
+                    }
+
+                // }
+            }
+
+            // Template: query-expander/queries
+            function showHelp(element) {
+                let div = document.getElementsByClassName(`help-hover-text`)[0];
+                if (div.style.display === "none") {
+                    div.style.display = "inline";
+                } else {
+                    div.style.display = "none";
+                }
+
+                // viewIconClass = viewIconClass.replace('-fill', '');
+
+                // viewIcon.setAttribute('class', viewIconClass.replace('-fill', ''));
             }
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
